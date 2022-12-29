@@ -7,7 +7,7 @@ export default {
   name: 'UserManagement',
 }
 console.log('power');
-console.log("hell");
+console.log("hello");
 </script>
 
 <style scoped></style>
