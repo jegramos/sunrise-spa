@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.12.0",
@@ -29,10 +30,5 @@
     "vfonts": "^0.0.3",
     "vite": "^4.0.0",
     "vite-plugin-eslint": "^1.8.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format && git add ."
-    }
   }
 }
