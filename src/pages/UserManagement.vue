@@ -8,6 +8,7 @@ export default {
 }
 console.log('power');
 console.log("hello");
+console.log('nope');
 </script>
 
 <style scoped></style>
