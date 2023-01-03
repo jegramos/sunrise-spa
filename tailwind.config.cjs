@@ -3,6 +3,7 @@ module.exports = {
   mode: 'jit',
   content: ['./index.html', './src/**/*.{vue,jsx,js,ts,tsx}', './node_modules/flowbite/**/*.js'],
   darkMode: 'class',
+  safelist: ['theme-aqua', 'theme-dark'],
   theme: {
     extend: {
       textColor: {
