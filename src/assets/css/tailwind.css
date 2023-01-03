@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-text-base: #333333;
+    --color-text-muted: #adadad;
+    --color-text-inverted: #c3fed7;
+    --color-text-tooling: #adadad;
+    --color-text-info: #09404d;
+    --color-text-success: #3f5101;
+    --color-text-warning: #4e3f01;
+    --color-text-error: #570100;
+    --color-bg-info: #c8e1e7;
+    --color-bg-success: #def29f;
+    --color-bg-warning: #f7e589;
+    --color-bg-error: #f2b6b5;
+    --color-primary: #519903;
+    --color-bg-content-base: #ffffff;
+    --color-bg-content-section: #e6e6e6;
+    --color-bg-content-section-hover: #d4d4d4;
+    --color-bg-tooling: #4b4646;
+  }
+
+  .theme-dark {
+    --color-text-base: #d7cbcc;
+    --color-text-muted: #afa7a7;
+    --color-text-inverted: #ddffb8;
+    --color-text-tooling: #a8a8a8;
+    --color-text-info: #012b3c;
+    --color-text-success: #01331f;
+    --color-text-warning: #fcbc23;
+    --color-text-error: #470000;
+    --color-bg-info: #3bbff8;
+    --color-bg-success: #38d399;
+    --color-bg-warning: #f7e589;
+    --color-bg-error: #f2b6b5;
+    --color-primary: #1db853;
+    --color-bg-content-base: #171212;
+    --color-bg-content-section: #141010;
+    --color-bg-content-section-hover: #282323;
+    --color-bg-tooling: #0e0b0b;
+  }
+
+  .theme-aqua {
+    --color-text-base: #c8daff;
+    --color-text-muted: #a7bfeb;
+    --color-text-inverted: #005557;
+    --color-text-tooling: #c8daff;
+    --color-text-info: #d2dfff;
+    --color-text-success: #bdfed5;
+    --color-text-warning: #2e1800;
+    --color-text-error: #ffcccc;
+    --color-bg-info: #355ca8;
+    --color-bg-success: #13a348;
+    --color-bg-warning: #db7706;
+    --color-bg-error: #dc2828;
+    --color-primary: #05eaf1;
+    --color-bg-content-base: #335ca8;
+    --color-bg-content-section: #2f5398;
+    --color-bg-content-section-hover: #4062a3;
+    --color-bg-tooling: #3b8bc4;
+  }
+}
+
+@layer components {
+  .navbar-item {
+    @apply text-theme-base flex justify-center shadow-2xl p-0.5 h-7 w-7
+        items-center cursor-pointer;
+  }
+}
