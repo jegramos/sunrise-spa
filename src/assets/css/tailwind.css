@@ -4,63 +4,63 @@
 
 @layer base {
   :root {
-    --color-text-base: #333333;
-    --color-text-muted: #adadad;
-    --color-text-inverted: #c3fed7;
-    --color-text-tooling: #adadad;
-    --color-text-info: #09404d;
-    --color-text-success: #3f5101;
-    --color-text-warning: #4e3f01;
-    --color-text-error: #570100;
-    --color-bg-info: #c8e1e7;
-    --color-bg-success: #def29f;
-    --color-bg-warning: #f7e589;
-    --color-bg-error: #f2b6b5;
-    --color-primary: #519903;
-    --color-bg-content-base: #ffffff;
-    --color-bg-content-section: #e6e6e6;
-    --color-bg-content-section-hover: #d4d4d4;
-    --color-bg-tooling: #4b4646;
+    --color-text-base: 51, 51, 51;
+    --color-text-muted: 173, 173, 173;
+    --color-text-inverted: 195, 254, 215;
+    --color-text-tooling: 173, 173, 173;
+    --color-text-info: 9, 64, 77;
+    --color-text-success: 63, 81, 1;
+    --color-text-warning: 78, 63, 1;
+    --color-text-error: 87, 1, 0;
+    --color-bg-info: 200, 225, 231;
+    --color-bg-success: 222, 242, 159;
+    --color-bg-warning: 247, 229, 137;
+    --color-bg-error: 242, 182, 181;
+    --color-primary: 81, 153, 3;
+    --color-bg-content-base: 255, 255, 255;
+    --color-bg-content-section: 230, 230, 230;
+    --color-bg-content-section-hover: 161, 161, 173;
+    --color-bg-tooling: 75, 70, 70;
   }
 
   .theme-dark {
-    --color-text-base: #d7cbcc;
-    --color-text-muted: #afa7a7;
-    --color-text-inverted: #ddffb8;
-    --color-text-tooling: #a8a8a8;
-    --color-text-info: #012b3c;
-    --color-text-success: #01331f;
-    --color-text-warning: #fcbc23;
-    --color-text-error: #470000;
-    --color-bg-info: #3bbff8;
-    --color-bg-success: #38d399;
-    --color-bg-warning: #f7e589;
-    --color-bg-error: #f2b6b5;
-    --color-primary: #1db853;
-    --color-bg-content-base: #171212;
-    --color-bg-content-section: #141010;
-    --color-bg-content-section-hover: #282323;
-    --color-bg-tooling: #0e0b0b;
+    --color-text-base: 215, 203, 204;
+    --color-text-muted: 175, 167, 167;
+    --color-text-inverted: 221, 255, 184;
+    --color-text-tooling: 168, 168, 168;
+    --color-text-info: 1, 43, 60;
+    --color-text-success: 1, 51, 31;
+    --color-text-warning: 252, 188, 35;
+    --color-text-error: 71, 0, 0;
+    --color-bg-info: 59, 191, 248;
+    --color-bg-success: 56, 211, 153;
+    --color-bg-warning: 247, 229, 137;
+    --color-bg-error: 242, 182, 181;
+    --color-primary: 29, 184, 83;
+    --color-bg-content-base: 23, 18, 18;
+    --color-bg-content-section: 20, 16, 16;
+    --color-bg-content-section-hover: 134, 125, 126;
+    --color-bg-tooling: 14, 11, 11;
   }
 
-  .theme-aqua {
-    --color-text-base: #c8daff;
-    --color-text-muted: #a7bfeb;
-    --color-text-inverted: #005557;
-    --color-text-tooling: #c8daff;
-    --color-text-info: #d2dfff;
-    --color-text-success: #bdfed5;
-    --color-text-warning: #2e1800;
-    --color-text-error: #ffcccc;
-    --color-bg-info: #355ca8;
-    --color-bg-success: #13a348;
-    --color-bg-warning: #db7706;
-    --color-bg-error: #dc2828;
-    --color-primary: #05eaf1;
-    --color-bg-content-base: #335ca8;
-    --color-bg-content-section: #2f5398;
-    --color-bg-content-section-hover: #4062a3;
-    --color-bg-tooling: #3b8bc4;
+  .theme-space {
+    --color-text-base: 179, 196, 238;
+    --color-text-muted: 168, 183, 224;
+    --color-text-inverted: 1, 43, 60;
+    --color-text-tooling: 179, 196, 238;
+    --color-text-info: 204, 241, 255;
+    --color-text-success: 0, 51, 44;
+    --color-text-warning: 66, 46, 0;
+    --color-text-error: 70, 0, 11;
+    --color-bg-info: 12, 166, 233;
+    --color-bg-success: 41, 212, 188;
+    --color-bg-warning: 244, 194, 81;
+    --color-bg-error: 251, 111, 132;
+    --color-primary: 59, 191, 248;
+    --color-bg-content-base: 15, 23, 41;
+    --color-bg-content-section: 11, 19, 34;
+    --color-bg-content-section-hover: 94, 109, 138;
+    --color-bg-tooling: 29, 41, 58;
   }
 }
 

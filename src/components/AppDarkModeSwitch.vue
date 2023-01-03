@@ -2,14 +2,14 @@
   <!-- Start Button -->
   <button data-tooltip-target="tooltip-dark-mode-switch" class="navbar-item rounded-3xl" @click="useCycleThemes">
     <sun-icon
-      class="hover:text-theme-primary hover:scale-125 transition-all duration-300 theme-switcher-light-icon"
+      class="hover:text-theme-primary hover:scale-110 transition-all duration-300 theme-switcher-light-icon"
     ></sun-icon>
     <moon-icon
-      class="hover:text-theme-primary hover:scale-125 transition-all duration-300 theme-switcher-dark-icon"
+      class="hover:text-theme-primary hover:scale-110 transition-all duration-300 theme-switcher-dark-icon"
     ></moon-icon>
-    <beaker-icon
-      class="hover:text-theme-primary hover:scale-125 transition-all duration-300 theme-switcher-aqua-icon"
-    ></beaker-icon>
+    <star-icon
+      class="hover:text-theme-primary hover:scale-110 transition-all duration-300 theme-switcher-space-icon"
+    ></star-icon>
   </button>
   <!-- End Button -->
   <!-- Start tooltip -->
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { LightBulbIcon, SunIcon, MoonIcon, BeakerIcon } from '@heroicons/vue/24/solid'
+import { LightBulbIcon, SunIcon, MoonIcon, StarIcon } from '@heroicons/vue/24/solid'
 import AppTooltip from '@/components/AppTooltip.vue'
 import { useCycleThemes } from '@/composables/theme'
 </script>

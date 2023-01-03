@@ -1,11 +1,11 @@
 import { useColorMode } from '@vueuse/core'
 
-const availableThemes = ['light', 'dark', 'aqua']
+const availableThemes = ['light', 'dark', 'space']
 const theme = useColorMode({
   modes: {
     // custom colors
     dark: 'dark',
-    aqua: 'aqua',
+    space: 'space',
     auto: 'auto',
   },
 })
@@ -69,6 +69,7 @@ const setupThemeSwitcherIcon = (currentTheme) => {
   const nextTheme =
     nextIndex < availableThemes.length ? availableThemes[availableThemes.indexOf(currentTheme) + 1] : availableThemes[0]
 
+  // we're using classname instead of id because hero icons does not render the id attribute of SGVs
   document.getElementsByClassName(`theme-switcher-${nextTheme}-icon`).item(0).classList.remove('hidden')
 
   // hide the inactive theme icons

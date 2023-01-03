@@ -1,29 +1,38 @@
 /** @type {import("tailwindcss").Config} */
+function withOpacity(variableName) {
+  return ({ opacity }) => {
+    if (opacity) {
+      return `rgba(var(${variableName}), ${opacity})`
+    }
+    return `rgba(var(${variableName}))`
+  }
+}
+
 module.exports = {
   mode: 'jit',
   content: ['./index.html', './src/**/*.{vue,jsx,js,ts,tsx}', './node_modules/flowbite/**/*.js'],
   darkMode: 'class',
-  safelist: ['theme-aqua', 'theme-dark'],
+  safelist: ['theme-space', 'theme-dark'],
   theme: {
     extend: {
       textColor: {
         theme: {
-          primary: 'var(--color-primary)',
-          base: 'var(--color-text-base)',
-          tooling: 'var(--color-text-tooling)',
+          primary: withOpacity('--color-primary'),
+          base: withOpacity('--color-text-base'),
+          tooling: withOpacity('--color-text-tooling'),
         },
       },
       backgroundColor: {
         theme: {
-          base: 'var(--color-bg-content-base)',
-          section: 'var(--color-bg-content-section)',
-          'section-hover': 'var(--color-bg-content-section-hover)',
-          tooling: 'var(--color-bg-tooling)',
-          primary: 'var(--color-primary)',
-          info: 'var(--color-bg-info)',
-          success: 'var(--color-bg-success)',
-          warning: 'var(--color-bg-warning)',
-          error: 'var(--color-bg-error)',
+          base: withOpacity('--color-bg-content-base'),
+          section: withOpacity('--color-bg-content-section'),
+          'section-hover': withOpacity('--color-bg-content-section-hover'),
+          tooling: withOpacity('--color-bg-tooling'),
+          primary: withOpacity('--color-primary'),
+          info: withOpacity('var(--color-bg-info)'),
+          success: withOpacity('--color-bg-success'),
+          warning: withOpacity('--color-bg-warning'),
+          error: withOpacity('--color-bg-error'),
         },
       },
     },
