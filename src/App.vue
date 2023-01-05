@@ -14,12 +14,11 @@
 import MenuBar from './components/AppNavBar.vue'
 import FooterComponent from './components/AppFooter.vue'
 import { onMounted } from 'vue'
-import { useThemeStore } from '@/stores/theme.js'
-import { initTheme } from '@/composables/theme.js'
+import { useThemeStore } from '@/stores/theme'
+import { useApplyTheme } from '@/composables/theme'
 
 const theme = useThemeStore()
 onMounted(() => {
-  console.log('selected theme')
-  initTheme(theme.selectedTheme)
+  useApplyTheme(theme.selectedTheme, theme.availableThemes)
 })
 </script>

@@ -16,7 +16,8 @@ export const useThemeStore = defineStore('theme', {
     availableThemes: ['auto', 'light', 'dark', 'space'],
   }),
   actions: {
-    switchTheme: (selectedTheme) => {
+    switchTheme(selectedTheme) {
+      this.selectedTheme = selectedTheme
       theme.value = selectedTheme
     },
   },

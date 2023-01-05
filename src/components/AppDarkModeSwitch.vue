@@ -1,6 +1,10 @@
 <template>
   <!-- Start Button -->
-  <button data-tooltip-target="tooltip-dark-mode-switch" class="navbar-item rounded-3xl" @click="useCycleThemes">
+  <button
+    data-tooltip-target="tooltip-dark-mode-switch"
+    class="navbar-item rounded-3xl hidden md:block"
+    @click="useCycleThemes"
+  >
     <sun-icon
       class="hover:text-theme-primary hover:scale-110 transition-all duration-300 theme-switcher-light-icon"
     ></sun-icon>

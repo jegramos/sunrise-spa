@@ -12,12 +12,16 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@headlessui/tailwindcss": "^0.1.2",
+    "@headlessui/vue": "^1.7.7",
     "@heroicons/vue": "^2.0.13",
     "@vueuse/core": "^9.9.0",
     "axios": "^1.2.2",
     "chalk": "^5.2.0",
+    "daisyui": "^2.46.1",
     "flowbite": "^1.5.5",
     "pinia": "^2.0.28",
+    "pinia-plugin-persistedstate": "^3.0.2",
     "vue": "^3.2.45",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.1.6"
