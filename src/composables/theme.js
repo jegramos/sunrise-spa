@@ -6,21 +6,15 @@ const theme = useColorMode({
     // custom colors
     dark: 'dark',
     space: 'space',
-    auto: 'auto',
   },
+  emitAuto: true,
 })
 
-export const useInitTheme = () => {
-  if (!theme) theme.value = 'auto'
-
-  if (theme && availableThemes.includes(theme.value)) {
-    const themeName = `theme-${theme.value}`
-    document.getElementById('app-wrapper').classList.add(themeName)
-    setupThemeSwitcherTooltipText(theme.value)
-    setupThemeSwitcherIcon(theme.value)
-  }
-
-  return { theme }
+export const initTheme = (selectedTheme) => {
+  const themeClassName = `theme-${selectedTheme}`
+  document.getElementById('app-wrapper').classList.add(themeClassName)
+  setupThemeSwitcherTooltipText(selectedTheme)
+  setupThemeSwitcherIcon(selectedTheme)
 }
 
 export const useCycleThemes = () => {

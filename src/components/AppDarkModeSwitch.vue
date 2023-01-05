@@ -28,4 +28,8 @@
 import { LightBulbIcon, SunIcon, MoonIcon, StarIcon } from '@heroicons/vue/24/solid'
 import AppTooltip from '@/components/AppTooltip.vue'
 import { useCycleThemes } from '@/composables/theme'
+import { useThemeStore } from '@/stores/theme.js'
+
+const theme = useThemeStore()
+theme.switchTheme('space')
 </script>
