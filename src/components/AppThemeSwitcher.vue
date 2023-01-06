@@ -28,7 +28,8 @@
           <div
             v-for="t in theme.availableThemes.filter((th) => th.key !== 'auto')"
             :key="t.key"
-            :class="`flex m-1 px-2 rounded hover:scale-105 transition-transform duration-200 ease-in theme-${t.key} bg-theme-base`"
+            :class="`flex m-1 px-2 rounded hover:scale-105 transition-transform duration-200 ease-in theme-${t.key} bg-theme-base hover:cursor-pointer focus:ring-theme-primary focus:ring-1`"
+            @click="theme.switchTheme(t.key)"
           >
             <div class="flex items-center">
               <div :class="`w-2 h-2 bg-theme-primary mr-1 rounded-lg`"></div>
@@ -36,7 +37,9 @@
               <div :class="`w-2 h-2 bg-theme-error mr-1 rounded-lg`"></div>
               <div :class="`w-2 h-2 bg-theme-warning mr-1 rounded-lg`"></div>
             </div>
-            <button class="flex items-center p-2 w-full text-left text-theme-base" @click="theme.switchTheme(t.key)">
+            <button
+              class="flex items-center p-2 w-full text-left text-theme-base focus-visible:outline-none focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1"
+            >
               <span>{{ t.name }}</span>
               <check-badge-icon v-if="t.key === theme.selectedTheme" class="w-3 h-3 ml-1.5" />
             </button>
@@ -44,9 +47,11 @@
         </div>
         <!-- Start System Pref -->
         <div
-          class="flex my-1 mx-1.5 mb-4 justify-center items-center rounded hover:scale-105 transition-transform duration-200 ease-in"
+          class="flex my-1 mx-1.5 mb-4 justify-center items-center rounded hover:scale-105 transition-all duration-200 ease-in"
         >
-          <button class="flex items-center px-2 w-full text-left text-theme-tooling" @click="theme.switchTheme('auto')">
+          <button
+            class="flex items-center px-2 w-full text-left text-theme-tooling focus-visible:only:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1"
+          >
             <wrench-screwdriver-icon class="w-3 h-3 ml-1.5 mr-1.5" />
             <span class="text-theme-tooling">Use System Preferences</span>
             <check-badge-icon v-if="theme.selectedTheme === 'auto'" class="w-3 h-3 ml-1.5" />

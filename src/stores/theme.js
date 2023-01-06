@@ -14,11 +14,11 @@ export const useThemeStore = defineStore('theme', {
   state: () => ({
     selectedTheme: theme.value,
     availableThemes: [
-      { key: 'light', name: 'Light' },
       {
         key: 'dark',
         name: 'Dark',
       },
+      { key: 'light', name: 'Light' },
       { key: 'space', name: 'Space' },
       { key: 'auto', name: 'System Preference' },
     ],
