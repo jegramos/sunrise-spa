@@ -51,6 +51,7 @@
         >
           <button
             class="flex items-center px-2 w-full text-left text-theme-tooling focus-visible:only:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1"
+            @click="theme.switchTheme('auto')"
           >
             <wrench-screwdriver-icon class="w-3 h-3 ml-1.5 mr-1.5" />
             <span class="text-theme-tooling">Use System Preferences</span>
