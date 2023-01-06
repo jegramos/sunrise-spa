@@ -70,6 +70,16 @@ module.exports = {
           tooling: withOpacity('--color-text-tooling'),
         },
       },
+      textDecorationColor: {
+        theme: {
+          primary: withOpacity('--color-primary'),
+          base: withOpacity('--color-text-base'),
+          muted: withOpacity('--color-text-muted'),
+          inverted: withOpacity('--color-text-inverted'),
+          tooling: withOpacity('--color-text-tooling'),
+          section: withOpacity('--color-bg-content-section'),
+        },
+      },
     },
   },
   plugins: [require('flowbite/plugin'), require('@headlessui/tailwindcss')],

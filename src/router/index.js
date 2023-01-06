@@ -1,44 +1,64 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/HomePage.vue'
-import UserManagement from '@/views/UserManagementPage.vue'
 import Login from '@/views/LoginPage.vue'
 import { vueApp } from '@/app.js'
+import PortfolioPage from '@/views/PortfolioPage.vue'
+import BlogsPage from '@/views/BlogsPage.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
+    label: 'Home',
     component: Home,
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
+    label: 'Login',
     component: Login,
   },
   {
-    path: '/admin/user-management',
-    name: 'UserManagement',
-    component: UserManagement,
+    path: '/portfolio',
+    name: 'portfolio',
+    label: 'Portfolio',
+    component: PortfolioPage,
+  },
+  {
+    path: '/blogs',
+    name: 'blogs',
+    label: 'Blogs',
+    component: BlogsPage,
   },
   {
     path: '/about',
-    name: 'About',
-    component: () => import('../views/AboutPage.vue'),
+    name: 'about',
+    label: 'About',
+    component: () => import('@/views/AboutPage.vue'),
   },
   {
     path: '/reset-password',
     name: 'ResetPassword',
-    component: () => import('../views/ResetPasswordPage.vue'),
+    label: 'Reset Password',
+    component: () => import('@/views/ResetPasswordPage.vue'),
   },
   {
     path: '/forgot-password',
-    name: 'ForgotPassword',
-    component: () => import('../views/ForgotPasswordPage.vue'),
+    name: 'forgot-password',
+    label: 'Forgot Password',
+    component: () => import('@/views/ForgotPasswordPage.vue'),
+  },
+  {
+    path: '/admin/user-management',
+    name: 'UserManagement',
+    label: 'Manage Users',
+    component: () => import('@/views/UserManagementPage.vue'),
   },
   {
     path: '/:catchAll(.*)',
-    name: 'NotFound',
-    component: () => import('../views/404Page.vue'),
+    name: 'not-found',
+    label: 'Page not found',
+    component: () => import('@/views/404Page.vue'),
   },
 ]
 

@@ -13,7 +13,15 @@ const theme = useColorMode({
 export const useThemeStore = defineStore('theme', {
   state: () => ({
     selectedTheme: theme.value,
-    availableThemes: ['auto', 'light', 'dark', 'space'],
+    availableThemes: [
+      { key: 'light', name: 'Light' },
+      {
+        key: 'dark',
+        name: 'Dark',
+      },
+      { key: 'space', name: 'Space' },
+      { key: 'auto', name: 'System Preference' },
+    ],
   }),
   actions: {
     switchTheme(selectedTheme) {
