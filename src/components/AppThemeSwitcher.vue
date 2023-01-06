@@ -24,6 +24,7 @@
       <popover-panel
         class="absolute right-0 origin-top-right w-60 z-10 mt-2 rounded-lg bg-theme-tooling text-theme-tooling text-sm"
       >
+        <!-- Start theme buttons -->
         <div class="flex flex-col p-2 justify-center">
           <div
             v-for="t in theme.availableThemes.filter((th) => th.key !== 'auto')"
@@ -45,7 +46,8 @@
             </button>
           </div>
         </div>
-        <!-- Start System Pref -->
+        <!-- End theme buttons -->
+        <!-- Start System Pref (auto) -->
         <div
           class="flex my-1 mx-1.5 mb-4 justify-center items-center rounded hover:scale-105 transition-all duration-200 ease-in"
         >
@@ -58,7 +60,7 @@
             <check-badge-icon v-if="theme.selectedTheme === 'auto'" class="w-3 h-3 ml-1.5" />
           </button>
         </div>
-        <!-- End System Pref -->
+        <!-- End System Pref (auto) -->
       </popover-panel>
       <!-- End themes list -->
     </transition>
