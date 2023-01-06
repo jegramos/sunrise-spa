@@ -3,7 +3,7 @@
     <div class="flex flex-wrap items-center justify-between">
       <!-- Start Logo and title -->
       <div class="flex items-center lg:w-[25%]">
-        <div class="mr-1 rounded-3xl p-0.5 border-theme-primary">
+        <div class="mr-1 rounded-3xl p-0.5 border-2 border-theme-primary">
           <fire-icon class="text-theme-primary w-5 h-5" />
         </div>
         <h5 class="font-light tracking-wider text-theme-base text-2xl">

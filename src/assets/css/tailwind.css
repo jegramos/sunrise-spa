@@ -23,6 +23,26 @@
     --color-bg-tooling: 75, 70, 70;
   }
 
+  .theme-light {
+    --color-text-base: 51, 51, 51;
+    --color-text-muted: 173, 173, 173;
+    --color-text-inverted: 195, 254, 215;
+    --color-text-tooling: 173, 173, 173;
+    --color-text-info: 9, 64, 77;
+    --color-text-success: 63, 81, 1;
+    --color-text-warning: 78, 63, 1;
+    --color-text-error: 87, 1, 0;
+    --color-bg-info: 200, 225, 231;
+    --color-bg-success: 222, 242, 159;
+    --color-bg-warning: 247, 229, 137;
+    --color-bg-error: 242, 182, 181;
+    --color-primary: 81, 153, 3;
+    --color-bg-content-base: 255, 255, 255;
+    --color-bg-content-section: 230, 230, 230;
+    --color-bg-content-section-hover: 213, 213, 213;
+    --color-bg-tooling: 75, 70, 70;
+  }
+
   .theme-dark {
     --color-text-base: 215, 203, 204;
     --color-text-muted: 175, 167, 167;
