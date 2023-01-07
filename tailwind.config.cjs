@@ -12,9 +12,13 @@ module.exports = {
   mode: 'jit',
   content: ['./index.html', './src/**/*.{vue,jsx,js,ts,tsx}', './node_modules/flowbite/**/*.js'],
   darkMode: 'class',
-  safelist: ['theme-space', 'theme-dark', 'theme-light'],
+  safelist: ['theme-space', 'theme-dark', 'theme-light', 'theme-old'],
   theme: {
     extend: {
+      fontFamily: {
+        logo: ['Josefin Slab', 'serif'],
+        content: ['Lato', 'sans-serif'],
+      },
       textColor: {
         theme: {
           primary: withOpacity('--color-primary'),

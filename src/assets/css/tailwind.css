@@ -3,26 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --color-text-base: 51, 51, 51;
-    --color-text-muted: 173, 173, 173;
-    --color-text-inverted: 195, 254, 215;
-    --color-text-tooling: 173, 173, 173;
-    --color-text-info: 9, 64, 77;
-    --color-text-success: 63, 81, 1;
-    --color-text-warning: 78, 63, 1;
-    --color-text-error: 87, 1, 0;
-    --color-bg-info: 200, 225, 231;
-    --color-bg-success: 222, 242, 159;
-    --color-bg-warning: 247, 229, 137;
-    --color-bg-error: 242, 182, 181;
-    --color-primary: 81, 153, 3;
-    --color-bg-content-base: 255, 255, 255;
-    --color-bg-content-section: 230, 230, 230;
-    --color-bg-content-section-hover: 213, 213, 213;
-    --color-bg-tooling: 75, 70, 70;
-  }
-
+  :root,
   .theme-light {
     --color-text-base: 51, 51, 51;
     --color-text-muted: 173, 173, 173;
@@ -36,7 +17,7 @@
     --color-bg-success: 222, 242, 159;
     --color-bg-warning: 247, 229, 137;
     --color-bg-error: 242, 182, 181;
-    --color-primary: 81, 153, 3;
+    --color-primary: 76, 107, 250;
     --color-bg-content-base: 255, 255, 255;
     --color-bg-content-section: 230, 230, 230;
     --color-bg-content-section-hover: 213, 213, 213;
@@ -81,6 +62,26 @@
     --color-bg-content-section: 11, 19, 34;
     --color-bg-content-section-hover: 19, 32, 56;
     --color-bg-tooling: 29, 41, 58;
+  }
+
+  .theme-old {
+    --color-text-base: 40, 36, 37;
+    --color-text-muted: 77, 72, 66;
+    --color-text-inverted: 184, 4, 116;
+    --color-text-tooling: 231, 218, 182;
+    --color-text-info: 210, 223, 255;
+    --color-text-success: 189, 254, 213;
+    --color-text-warning: 46, 25, 1;
+    --color-text-error: 255, 204, 204;
+    --color-bg-info: 37, 99, 235;
+    --color-bg-success: 19, 163, 72;
+    --color-bg-warning: 219, 119, 6;
+    --color-bg-error: 220, 40, 40;
+    --color-primary: 186, 2, 14;
+    --color-bg-content-base: 229, 216, 180;
+    --color-bg-content-section: 210, 197, 157;
+    --color-bg-content-section-hover: 194, 181, 149;
+    --color-bg-tooling: 124, 114, 89;
   }
 }
 

@@ -20,6 +20,7 @@ export const useThemeStore = defineStore('theme', {
       },
       { key: 'light', name: 'Light' },
       { key: 'space', name: 'Space' },
+      { key: 'old', name: 'Old School' },
       { key: 'auto', name: 'System Preference' },
     ],
   }),

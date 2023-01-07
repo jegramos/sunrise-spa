@@ -2,12 +2,14 @@
   <nav class="py-2.5 px-3 lg:px-12 fixed w-full z-20 top-0 left-0 bg-theme-section">
     <div class="flex flex-wrap items-center justify-between">
       <!-- Start Logo and title -->
-      <div class="flex items-center lg:w-[25%]">
-        <div class="mr-1 rounded-3xl p-0.5 border-2 border-theme-primary">
+      <div
+        class="flex items-center lg:w-[25%] hover:cursor-pointer hover:scale-105 hover:drop-shadow transition-all duration-200 ease-in"
+      >
+        <div class="rounded-3xl p-0.5 ring-2 ring-theme-primary mb-0.5 mr-2">
           <fire-icon class="text-theme-primary w-5 h-5" />
         </div>
-        <h5 class="font-light tracking-wider text-theme-base text-2xl">
-          Camp<span class="font-medium text-theme-primary underline underline-offset-4">fire</span>
+        <h5 class="font-logo tracking-wide text-theme-base text-2xl font-extrabold">
+          Camp<span class="font-extrabold text-theme-primary underline decoration-2 underline-offset-4">fire</span>
         </h5>
       </div>
       <!-- End logo and title -->
@@ -84,8 +86,8 @@
           <li v-for="link in navLinks" :key="link.name">
             <router-link
               :to="{ name: link.name }"
-              active-class="bg-theme-primary lg:bg-theme-section lg:underline lg:decoration-2 lg:underline-offset-4 lg:decoration-theme-primary"
-              class="block py-2 pl-3 pr-4 text-white text-theme-base rounded lg:rounded-xl lg:text-theme-base lg:hover:bg-theme-section-hover lg:py-1 lg:px-2 focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1 focus-visible:no-underline"
+              active-class="bg-theme-primary lg:bg-theme-section lg:underline lg:decoration-2 lg:underline-offset-8 lg:decoration-theme-primary"
+              class="block py-2 pl-3 pr-4 text-white text-theme-base rounded lg:rounded-xl lg:text-theme-base lg:hover:bg-theme-section-hover lg:hover:scale-105 transition-all duration-200 ease-in lg:py-1 lg:px-2 focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1 focus-visible:no-underline"
             >
               {{ link.label }}
             </router-link>
