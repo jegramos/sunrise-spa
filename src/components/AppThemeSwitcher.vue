@@ -2,7 +2,7 @@
   <popover class="relative">
     <!-- Start button -->
     <popover-button
-      class="flex items-center bg-theme-section text-theme-base text-sm py-1 px-2 rounded-2xl hover:bg-theme-section-hover hover:scale-105 transition-all focus:outline-none focus-visible:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1"
+      class="flex items-center bg-theme-section text-theme-base text-sm py-1 px-2 rounded-2xl hover:bg-theme-section-hover hover:scale-105 hover:transition-all focus:outline-none focus-visible:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1"
     >
       <swatch-icon class="w-4 h-4 mr-1" />
       <div>Select theme</div>
@@ -56,7 +56,7 @@
             @click="theme.switchTheme('auto')"
           >
             <wrench-screwdriver-icon class="w-3 h-3 ml-1.5 mr-1.5" />
-            <span class="text-theme-tooling">Use System Preferences</span>
+            <span class="text-theme-tooling">System Preference</span>
             <check-badge-icon v-if="theme.selectedTheme === 'auto'" class="w-3 h-3 ml-1.5" />
           </button>
         </div>

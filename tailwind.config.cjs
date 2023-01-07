@@ -35,6 +35,7 @@ module.exports = {
           section: withOpacity('--color-bg-content-section'),
           'section-hover': withOpacity('--color-bg-content-section-hover'),
           tooling: withOpacity('--color-bg-tooling'),
+          neutral: withOpacity('--color-text-base'),
           primary: withOpacity('--color-primary'),
           info: withOpacity('--color-bg-info'),
           success: withOpacity('--color-bg-success'),
@@ -62,7 +63,7 @@ module.exports = {
           base: withOpacity('--color-text-base'),
           muted: withOpacity('--color-text-muted'),
           inverted: withOpacity('--color-text-inverted'),
-          tooling: withOpacity('--color-text-tooling'),
+          tooling: withOpacity('--color-bg-tooling'),
         },
       },
       outlineColor: {
@@ -86,5 +87,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('flowbite/plugin'), require('@headlessui/tailwindcss')],
+  plugins: [require('@headlessui/tailwindcss')],
 }

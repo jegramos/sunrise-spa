@@ -7,9 +7,6 @@ import '@/router'
 // Import custom styles
 import '@/assets/css/main.css'
 
-// Import Flowbite plugin for tailwind
-import 'flowbite'
-
 // Finally import the Vue instance that the above imports used
 import { vueApp } from '@/app'
 
