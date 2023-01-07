@@ -55,23 +55,23 @@
         </div>
         <!-- End Switcher and icons -->
         <!-- Start mobile hamburger -->
-        <div
+        <button
           id="app-navbar-hamburger-button"
-          class="flex flex-col items-end p-0.5 w-6 lg:hidden"
+          class="flex flex-col group items-end p-0.5 w-6 lg:hidden hover:cursor-pointer focus:ring-theme-primary"
           @click="toggleHamburgerContent"
         >
           <span class="sr-only">Open navigation menu</span>
-          <div class="bg-theme-neutral h-0.5 w-full mb-1 rounded-lg"></div>
-          <div class="bg-theme-neutral h-0.5 w-[75%] mb-1 rounded-lg"></div>
-          <div class="bg-theme-neutral h-0.5 w-full rounded-lg"></div>
-        </div>
+          <span class="bg-theme-neutral h-0.5 w-full mb-1 rounded-lg group-hover:bg-theme-primary"></span>
+          <span class="bg-theme-neutral h-0.5 w-[75%] mb-1 rounded-lg group-hover:bg-theme-primary"></span>
+          <span class="bg-theme-neutral h-0.5 w-full rounded-lg group-hover:bg-theme-primary"></span>
+        </button>
         <!-- End mobile hamburger -->
       </div>
       <!-- End Utils section -->
       <!-- Start Nav links -->
       <div
         id="app-navbar-hamburger-content"
-        class="items-center bg-theme-section justify-center w-full lg:bg-transparent lg:mt-0 lg:flex lg:w-auto lg:order-1 lg:static hover:cursor-pointer transition-all duration-200 ease-in top-[100%] z-50 absolute"
+        class="absolute items-center bg-theme-section justify-center w-full top-[100%] z-50 lg:bg-transparent lg:mt-0 lg:flex lg:w-auto lg:order-1 lg:static hover:cursor-pointer transition-all duration-300 ease-in right-[-200%]"
       >
         <ul
           class="flex mt-2 flex-col rounded-lg lg:bg-theme-section lg:flex-row lg:space-x-8 lg:mt-0 text-sm lg:font-medium"
