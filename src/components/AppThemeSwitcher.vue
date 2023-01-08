@@ -39,10 +39,10 @@
               <div :class="`w-2 h-2 bg-theme-warning mr-1 rounded-lg`"></div>
             </div>
             <button
-              class="flex items-center p-2 w-full text-left text-theme-base focus-visible:outline-none focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1"
+              class="flex items-center justify-between p-2 w-full text-left text-theme-base focus-visible:outline-none focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1"
             >
               <span>{{ t.name }}</span>
-              <check-badge-icon v-if="t.key === theme.selectedTheme" class="w-3 h-3 ml-1.5" />
+              <check-badge-icon v-if="t.key === theme.selectedTheme" class="w-4 h-4" />
             </button>
           </div>
         </div>

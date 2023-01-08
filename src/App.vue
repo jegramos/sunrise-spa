@@ -1,5 +1,5 @@
 <template>
-  <div id="app-wrapper" class="flex flex-col h-screen dark:theme-dark font-content">
+  <div id="app-wrapper" class="flex flex-col h-screen font-content">
     <menu-bar></menu-bar>
     <!-- Start Main Content -->
     <div class="pt-24 bg-theme-base text-theme-base flex-grow">

@@ -71,16 +71,16 @@
       <!-- Start Nav links -->
       <div
         id="app-navbar-hamburger-content"
-        class="absolute items-center bg-theme-section justify-center w-full top-[100%] z-50 lg:bg-transparent lg:mt-0 lg:flex lg:w-auto lg:order-1 lg:static hover:cursor-pointer transition-all duration-300 ease-in right-[-200%]"
+        class="absolute items-center bg-theme-section justify-center w-full top-[100%] right-[-200%] z-50 hover:cursor-pointer transition-all duration-300 ease-in lg:bg-transparent lg:mt-0 lg:flex lg:w-auto lg:order-1 lg:static"
       >
         <ul
-          class="flex mt-2 flex-col rounded-lg lg:bg-theme-section lg:flex-row lg:space-x-8 lg:mt-0 text-sm lg:font-medium"
+          class="flex flex-col rounded-lg lg:bg-theme-section lg:flex-row lg:space-x-8 lg:mt-0 text-sm lg:font-medium"
         >
           <li v-for="link in navLinks" :key="link.name">
             <router-link
               :to="{ name: link.name }"
               active-class="bg-theme-primary mx-1 font-bold text-theme-inverted lg:bg-theme-section lg:mx-0 lg:font-normal lg:underline lg:decoration-2 lg:underline-offset-8 lg:decoration-theme-primary"
-              class="text-left block py-2 pl-6 pr-4 text-theme-base rounded mb-2 lg:b-0 lg:rounded-xl lg:text-theme-base lg:hover:bg-theme-section-hover lg:hover:scale-105 transition-none hover:transition-all duration-200 ease-in lg:py-1 lg:px-2 focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1 focus-visible:no-underline"
+              class="block text-left py-2 pl-6 pr-4 text-theme-base rounded mb-4 lg:mb-0 lg:rounded-xl lg:text-theme-base lg:hover:bg-theme-section-hover lg:hover:scale-105 transition-none hover:transition-all duration-200 ease-in lg:py-1 lg:px-2 focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1 focus-visible:no-underline"
               @click="toggleHamburgerContent"
             >
               <font-awesome-icon :icon="link.icon" class="w-3 h-3 mr-2 lg:hidden"></font-awesome-icon>
@@ -101,6 +101,7 @@ import { FireIcon } from '@heroicons/vue/20/solid'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/20/solid'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const handleOpenGithubPages = () => {
   const githubUser = import.meta.env.VITE_GITHUB_USER
@@ -112,16 +113,33 @@ const handleOpenFacebookPage = () => {
   window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_got_em')
 }
 
-const navLinks = [
-  { name: 'home', label: 'Home', icon: 'fa-solid fa-house-chimney' },
-  { name: 'portfolio', label: 'Portfolio', icon: 'fa-solid fa-suitcase' },
-  {
-    name: 'blogs',
-    label: 'Blogs',
-    icon: 'fa-solid fa-feather',
-  },
-  { name: 'about', label: 'About', icon: 'fa-solid fa-circle-question' },
-]
+const router = useRouter()
+
+const navLinks = []
+
+router.getRoutes().forEach((route) => {
+  console.log(route)
+  if (route.meta.isNavMenu) {
+    const r = { name: route.name, label: route.meta.label }
+
+    switch (route.name) {
+      case 'home':
+        r.icon = 'fa-solid fa-house-chimney'
+        break
+      case 'portfolio':
+        r.icon = 'fa-solid fa-suitcase'
+        break
+      case 'blogs':
+        r.icon = 'fa-solid fa-feather'
+        break
+      default:
+        r.icon = 'fa-solid fa-circle-question'
+        break
+    }
+
+    navLinks.push(r)
+  }
+})
 
 const hamburgerContentIsShown = ref(false)
 const toggleHamburgerContent = () => {

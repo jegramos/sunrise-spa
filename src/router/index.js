@@ -7,64 +7,97 @@ import BlogsPage from '@/views/BlogsPage.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
-    label: 'Home',
     component: Home,
-  },
-  {
-    path: '/login',
-    name: 'login',
-    label: 'Login',
-    component: Login,
+    meta: {
+      label: 'Home',
+      isNavMenu: true,
+    },
   },
   {
     path: '/portfolio',
     name: 'portfolio',
-    label: 'Portfolio',
     component: PortfolioPage,
+    meta: {
+      label: 'Portfolio',
+      isNavMenu: true,
+    },
   },
   {
     path: '/blogs',
     name: 'blogs',
-    label: 'Blogs',
     component: BlogsPage,
+    meta: {
+      label: 'Blogs',
+      isNavMenu: true,
+    },
   },
   {
     path: '/about',
     name: 'about',
-    label: 'About',
     component: () => import('@/views/AboutPage.vue'),
+    meta: {
+      label: 'About',
+      isNavMenu: true,
+    },
+  },
+  {
+    path: '/admin',
+    children: [
+      {
+        path: 'user-management',
+        name: 'UserManagement',
+        component: () => import('@/views/UserManagementPage.vue'),
+        meta: {
+          label: 'Manage Users',
+        },
+      },
+    ],
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: {
+      label: 'Login',
+    },
   },
   {
     path: '/reset-password',
     name: 'ResetPassword',
-    label: 'Reset Password',
     component: () => import('@/views/ResetPasswordPage.vue'),
+    meta: {
+      label: 'Reset Password',
+    },
   },
   {
     path: '/forgot-password',
     name: 'forgot-password',
-    label: 'Forgot Password',
     component: () => import('@/views/ForgotPasswordPage.vue'),
-  },
-  {
-    path: '/admin/user-management',
-    name: 'UserManagement',
-    label: 'Manage Users',
-    component: () => import('@/views/UserManagementPage.vue'),
+    meta: {
+      label: 'Forgot Password',
+    },
   },
   {
     path: '/:catchAll(.*)',
     name: 'not-found',
-    label: 'Page not found',
     component: () => import('@/views/404Page.vue'),
+    meta: {
+      label: 'Page not found',
+    },
   },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+const appName = import.meta.env.VITE_APP_NAME
+router.afterEach((to) => {
+  // Change doc title
+  document.title = `${appName} | ${to.meta.label}` || appName
 })
 
 vueApp.use(router)
