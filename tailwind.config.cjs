@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 function withOpacity(variableName) {
-  return ({ opacity }) => {
-    if (opacity) {
-      return `rgba(var(${variableName}), ${opacity})`
+  return ({ opacityValue }) => {
+    if (opacityValue) {
+      return `rgba(var(${variableName}), ${opacityValue})`
     }
     return `rgba(var(${variableName}))`
   }
@@ -15,6 +15,9 @@ module.exports = {
   safelist: ['theme-space', 'theme-dark', 'theme-light', 'theme-old'],
   theme: {
     extend: {
+      transitionProperty: {
+        right: 'right',
+      },
       fontFamily: {
         logo: ['Josefin Slab', 'serif'],
         content: ['Lato', 'sans-serif'],
@@ -64,15 +67,7 @@ module.exports = {
           muted: withOpacity('--color-text-muted'),
           inverted: withOpacity('--color-text-inverted'),
           tooling: withOpacity('--color-bg-tooling'),
-        },
-      },
-      outlineColor: {
-        theme: {
-          primary: withOpacity('--color-primary'),
-          base: withOpacity('--color-text-base'),
-          muted: withOpacity('--color-text-muted'),
-          inverted: withOpacity('--color-text-inverted'),
-          tooling: withOpacity('--color-text-tooling'),
+          'tooling-text': withOpacity('--color-text-tooling'),
         },
       },
       textDecorationColor: {

@@ -57,13 +57,28 @@
         <!-- Start mobile hamburger -->
         <button
           id="app-navbar-hamburger-button"
-          class="flex flex-col group items-end p-0.5 w-6 lg:hidden hover:cursor-pointer focus:ring-theme-primary"
+          class="flex flex-col group items-end p-0.5 w-6 lg:hidden hover:cursor-pointer focus:ring-theme-primary group"
           @click="toggleHamburgerContent"
         >
           <span class="sr-only">Open navigation menu</span>
-          <span class="bg-theme-neutral h-0.5 w-full mb-1 rounded-lg group-hover:bg-theme-primary"></span>
-          <span class="bg-theme-neutral h-0.5 w-[75%] mb-1 rounded-lg group-hover:bg-theme-primary"></span>
-          <span class="bg-theme-neutral h-0.5 w-full rounded-lg group-hover:bg-theme-primary"></span>
+          <span
+            id="hamburger-button-line-top"
+            :class="`h-0.5 w-full rounded-full my-0.5 bg-theme-neutral transition ease transform duration-300 ${
+              hamburgerContentIsShown ? 'rotate-45 translate-y-1.5' : ''
+            }`"
+          ></span>
+          <span
+            id="hamburger-button-line-middle"
+            :class="`h-0.5 w-[75%] rounded-full my-0.5 bg-theme-neutral transition ease transform duration-300 ${
+              hamburgerContentIsShown ? '-translate-x-3 opacity-0' : 'opacity-100'
+            }`"
+          ></span>
+          <span
+            id="hamburger-button-line-bottom"
+            :class="`h-0.5 w-full rounded-full my-0.5 bg-theme-neutral transition ease transform duration-300 ${
+              hamburgerContentIsShown ? '-rotate-45 -translate-y-1.5' : ''
+            }`"
+          ></span>
         </button>
         <!-- End mobile hamburger -->
       </div>
@@ -71,15 +86,17 @@
       <!-- Start Nav links -->
       <div
         id="app-navbar-hamburger-content"
-        class="absolute items-center bg-theme-section justify-center w-full top-[100%] right-[-200%] z-50 hover:cursor-pointer transition-all duration-300 ease-in lg:bg-transparent lg:mt-0 lg:flex lg:w-auto lg:order-1 lg:static"
+        class="absolute items-center bg-theme-section justify-center w-full top-[100%] right-[-200%] hover:cursor-pointer transition-right duration-300 ease-in lg:bg-transparent lg:mt-0 lg:flex lg:w-auto lg:order-1 lg:static"
       >
         <ul
-          class="flex flex-col rounded-lg lg:bg-theme-section lg:flex-row lg:space-x-8 lg:mt-0 text-sm lg:font-medium"
+          class="flex flex-col mx-2 rounded-lg lg:bg-theme-section shadow-sm lg:shadow-none lg:flex-row lg:space-x-8 lg:mt-0 text-sm lg:font-medium"
         >
+          <!-- Start Account Navlink Section -->
+          <!-- End Account Navlink Section -->
           <li v-for="link in navLinks" :key="link.name">
             <router-link
               :to="{ name: link.name }"
-              active-class="bg-theme-primary mx-1 font-bold text-theme-inverted lg:bg-theme-section lg:mx-0 lg:font-normal lg:underline lg:decoration-2 lg:underline-offset-8 lg:decoration-theme-primary"
+              active-class="bg-theme-primary font-bold text-theme-inverted lg:text-theme-base lg:bg-theme-section lg:mx-0 lg:font-normal lg:underline lg:decoration-2 lg:underline-offset-8 lg:decoration-theme-primary"
               class="block text-left py-2 pl-6 pr-4 text-theme-base rounded mb-4 lg:mb-0 lg:rounded-xl lg:text-theme-base lg:hover:bg-theme-section-hover lg:hover:scale-105 transition-none hover:transition-all duration-200 ease-in lg:py-1 lg:px-2 focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1 focus-visible:no-underline"
               @click="toggleHamburgerContent"
             >
@@ -87,6 +104,17 @@
               {{ link.label }}
             </router-link>
           </li>
+          <li class="lg:hidden">
+            <div class="separator-h mb-3"></div>
+          </li>
+          <li class="lg:hidden">
+            <app-theme-switcher
+              view-mode="modal"
+              class="block w-full bg-theme-section mb-4"
+              @theme-applied="toggleHamburgerContent"
+            />
+          </li>
+          <!-- End Switch theme (mobile) -->
         </ul>
       </div>
       <!-- End Nav links -->

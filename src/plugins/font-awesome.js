@@ -6,6 +6,7 @@ import {
   faSuitcase,
   faFeather,
   faCircleQuestion,
+  faFillDrip,
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faGithubAlt, faCampground, faFacebook, faHouseChimney, faSuitcase, faFeather, faCircleQuestion)
+library.add(faGithubAlt, faCampground, faFacebook, faHouseChimney, faSuitcase, faFeather, faCircleQuestion, faFillDrip)

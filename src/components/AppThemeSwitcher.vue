@@ -1,88 +1,150 @@
 <template>
-  <popover class="relative">
-    <!-- Start button -->
-    <popover-button
-      class="flex items-center bg-theme-section text-theme-base text-sm py-1 px-2 rounded-2xl hover:bg-theme-section-hover hover:scale-105 hover:transition-all focus:outline-none focus-visible:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1"
-    >
-      <swatch-icon class="w-4 h-4 mr-1" />
-      <div>Select theme</div>
-      <chevron-down-icon
-        class="w-4 h-4 ml-1 text-theme-base ui-open:rotate-180 ui-open:transform transition-all duration-300"
-      />
-    </popover-button>
-    <!-- End button -->
-    <!-- Start transition for the panel -->
-    <transition
-      enter-active-class="transition duration-200 ease-out"
-      enter-from-class="translate-y-2 opacity-0"
-      enter-to-class="translate-y-0 opacity-100"
-      leave-active-class="transition duration-150 ease-in"
-      leave-from-class="translate-y-0 opacity-100"
-      leave-to-class="translate-y-2 opacity-0"
-    >
-      <!-- Start themes list -->
-      <popover-panel
-        class="absolute right-0 origin-top-right w-60 z-10 mt-2 rounded-lg bg-theme-tooling text-theme-tooling text-sm"
+  <div>
+    <!-- Start Popover view (desktop) -->
+    <popover v-if="props.viewMode === 'popup'" class="relative">
+      <!-- Start button -->
+      <popover-button
+        class="flex items-center bg-theme-section text-theme-base text-sm py-1 px-2 rounded-2xl hover:bg-theme-section-hover hover:scale-105 hover:transition-all focus:outline-none focus-visible:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1"
       >
-        <!-- Start theme buttons -->
-        <div class="flex flex-col p-2 justify-center">
-          <div
-            v-for="t in theme.availableThemes.filter((th) => th.key !== 'auto')"
-            :key="t.key"
-            :class="`flex m-1 px-2 rounded hover:scale-105 transition-transform duration-200 ease-in theme-${t.key} bg-theme-base hover:cursor-pointer focus:ring-theme-primary focus:ring-1`"
-            @click="theme.switchTheme(t.key)"
-          >
-            <div class="flex items-center">
-              <div :class="`w-2 h-2 bg-theme-primary mr-1 rounded-lg`"></div>
-              <div :class="`w-2 h-2 bg-theme-info mr-1 rounded-lg`"></div>
-              <div :class="`w-2 h-2 bg-theme-error mr-1 rounded-lg`"></div>
-              <div :class="`w-2 h-2 bg-theme-warning mr-1 rounded-lg`"></div>
-            </div>
-            <button
-              class="flex items-center justify-between p-2 w-full text-left text-theme-base focus-visible:outline-none focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1"
+        <swatch-icon class="w-4 h-4 mr-1" />
+        <div>Select theme</div>
+        <chevron-down-icon
+          class="w-4 h-4 ml-1 text-theme-base ui-open:rotate-180 ui-open:transform transition-all duration-300"
+        />
+      </popover-button>
+      <!-- End button -->
+      <!-- Start transition for the panel -->
+      <transition
+        enter-active-class="transition duration-200 ease-out"
+        enter-from-class="translate-y-2 opacity-0"
+        enter-to-class="translate-y-0 opacity-100"
+        leave-active-class="transition duration-150 ease-in"
+        leave-from-class="translate-y-0 opacity-100"
+        leave-to-class="translate-y-2 opacity-0"
+      >
+        <!-- Start themes list -->
+        <popover-panel
+          class="absolute right-0 origin-top-right w-60 z-10 mt-2 pb-1 rounded-lg bg-theme-tooling text-theme-tooling text-sm"
+        >
+          <!-- Start theme buttons -->
+          <theme-buttons />
+          <!-- End theme buttons -->
+        </popover-panel>
+        <!-- End themes list -->
+      </transition>
+      <!-- End transition for panel -->
+    </popover>
+    <!-- End Popover view (desktop) -->
+
+    <!-- Start Dialog view (mobile) -->
+    <div v-else>
+      <button
+        type="button"
+        class="flex w-full h-full items-center text-theme-base font-bold py-2 pl-5 pr-4 rounded"
+        @click="setDialogIsOpen(true)"
+      >
+        <swatch-icon class="w-3.5 h-3.5 mr-2"></swatch-icon>
+        Switch Theme
+      </button>
+    </div>
+    <transition-root appear :show="dialogIsOpen" as="template">
+      <main-dialog as="div" class="relative z-20">
+        <transition-child
+          as="template"
+          enter="duration-300 ease-out"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="duration-200 ease-in"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
+          <div class="fixed inset-0 bg-theme-tooling bg-opacity-30" />
+        </transition-child>
+
+        <div class="fixed inset-0 overflow-y-auto">
+          <div class="flex min-h-full items-center justify-center p-4 text-center">
+            <transition-child
+              as="template"
+              enter="duration-300 ease-out"
+              enter-from="opacity-0 scale-95"
+              enter-to="opacity-100 scale-100"
+              leave="duration-200 ease-in"
+              leave-from="opacity-100 scale-100"
+              leave-to="opacity-0 scale-95"
             >
-              <span>{{ t.name }}</span>
-              <check-badge-icon v-if="t.key === theme.selectedTheme" class="w-4 h-4" />
-            </button>
+              <dialog-panel
+                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-opacity-75 bg-theme-tooling backdrop-blur-md p-6 text-left align-middle shadow-xl transition-all"
+              >
+                <dialog-title as="div" class="text-md font-medium text-theme-tooling text-center mb-2">
+                  <span>Tap on the color scheme you like</span>
+                </dialog-title>
+                <div class="mt-2">
+                  <!-- Start theme buttons -->
+                  <theme-buttons />
+                  <!-- End theme buttons -->
+                </div>
+
+                <div class="mt-4 px-2">
+                  <button
+                    type="button"
+                    class="inline-flex w-full justify-center rounded-md border border-transparent bg-theme-primary py-2 text-sm items-center font-medium text-theme-inverted focus:outline-none"
+                    @click="setDialogIsOpen(false)"
+                  >
+                    <font-awesome-icon icon="fa-solid fa-fill-drip" class="h-3 w-3 mr-1.5"></font-awesome-icon>
+                    <span>{{ theme.selectedTheme === 'auto' ? 'Let my browser decide' : 'Apply this theme' }}</span>
+                  </button>
+                </div>
+              </dialog-panel>
+            </transition-child>
           </div>
         </div>
-        <!-- End theme buttons -->
-        <!-- Start System Pref (auto) -->
-        <div
-          class="flex my-1 mx-1.5 mb-4 justify-center items-center rounded hover:scale-105 transition-all duration-200 ease-in"
-        >
-          <button
-            class="flex items-center px-2 w-full text-left text-theme-tooling focus-visible:only:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1"
-            @click="theme.switchTheme('auto')"
-          >
-            <wrench-screwdriver-icon class="w-3 h-3 ml-1.5 mr-1.5" />
-            <span class="text-theme-tooling">System Preference</span>
-            <check-badge-icon v-if="theme.selectedTheme === 'auto'" class="w-3 h-3 ml-1.5" />
-          </button>
-        </div>
-        <!-- End System Pref (auto) -->
-      </popover-panel>
-      <!-- End themes list -->
-    </transition>
-    <!-- End transition for panel -->
-  </popover>
+      </main-dialog>
+    </transition-root>
+    <!-- End dialog view (mobile) -->
+  </div>
 </template>
 
 <script setup>
+import ThemeButtons from '@/components/app-theme-switcher/ThemeButtons.vue'
 import { useThemeStore } from '@/stores/theme.js'
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import { ChevronDownIcon, SwatchIcon, CheckBadgeIcon, WrenchScrewdriverIcon } from '@heroicons/vue/20/solid'
-import { watch } from 'vue'
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  Dialog as MainDialog,
+  DialogPanel,
+  DialogTitle,
+  TransitionRoot,
+  TransitionChild,
+} from '@headlessui/vue'
+import { ChevronDownIcon, SwatchIcon } from '@heroicons/vue/20/solid'
+import { watch, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useApplyTheme } from '@/composables/theme'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const theme = useThemeStore()
 const { selectedTheme } = storeToRefs(theme)
+
+const props = defineProps({
+  viewMode: {
+    type: String,
+    default: 'popup',
+    validator: (value) => ['popup', 'modal'].includes(value),
+  },
+})
 
 // Listen for theme selection and change CSS classes accordingly
 watch(selectedTheme, () => {
   useApplyTheme(selectedTheme.value, theme.availableThemes)
 })
+
+const dialogIsOpen = ref(false)
+const emit = defineEmits(['theme-applied'])
+const setDialogIsOpen = (value) => {
+  dialogIsOpen.value = value
+  if (!value) emit('theme-applied')
+}
 </script>
 
 <style scoped></style>
