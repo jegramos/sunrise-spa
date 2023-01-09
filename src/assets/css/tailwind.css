@@ -87,6 +87,12 @@
 
 @layer components {
   .separator-h {
-    @apply bg-theme-section-hover w-full h-[1px];
+    @apply bg-theme-section-hover h-[1px];
+  }
+
+  .nav-base-icon-button {
+    @apply hover:scale-125 transition-transform duration-150 ease-in
+        focus-visible:outline-none focus-visible:ring-theme-primary
+        focus-visible:ring-1;
   }
 }

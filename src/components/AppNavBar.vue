@@ -22,10 +22,7 @@
             <!-- Start Github link icon -->
             <app-tooltip>
               <template #tooltip-target>
-                <button
-                  class="rounded-3xl text-theme-base w-6 h-6 hover:scale-125 transition-transform duration-150 ease-in focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1"
-                  @click="handleOpenGithubPages"
-                >
+                <button class="rounded-3xl text-theme-base w-6 h-6 nav-base-icon-button" @click="handleOpenGithubPages">
                   <font-awesome-icon icon="fa-brands fa-github-alt" />
                 </button>
               </template>
@@ -39,16 +36,16 @@
             <app-tooltip>
               <template #tooltip-target>
                 <button
-                  class="rounded-3xl text-theme-base ml-1 w-6 h-6 hover:scale-125 transition-transform duration-150 ease-in focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1"
-                  @click="handleOpenFacebookPage"
+                  class="rounded-3xl text-theme-base ml-1 w-6 h-6 nav-base-icon-button"
+                  @click="handleOpenYoutubePage"
                 >
-                  <font-awesome-icon icon="fa-brands fa-facebook" />
+                  <font-awesome-icon icon="fa-brands fa-youtube" />
                 </button>
               </template>
               <template #tooltip-icon>
                 <arrow-top-right-on-square-icon class="h-3 w-3 mr-1" />
               </template>
-              <template #tooltip-text>Visit Facebook</template>
+              <template #tooltip-text>Visit Youtube</template>
             </app-tooltip>
             <!-- End FB link icon -->
           </div>
@@ -105,7 +102,7 @@
             </router-link>
           </li>
           <li class="lg:hidden">
-            <div class="separator-h mb-3"></div>
+            <div class="separator-h mb-3 w-full"></div>
           </li>
           <li class="lg:hidden">
             <app-theme-switcher
@@ -137,7 +134,7 @@ const handleOpenGithubPages = () => {
   window.open(`https://github.com/${githubUser}/sunrise-api#readme`, '_api')
 }
 
-const handleOpenFacebookPage = () => {
+const handleOpenYoutubePage = () => {
   window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_got_em')
 }
 

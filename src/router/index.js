@@ -7,7 +7,7 @@ import BlogsPage from '@/views/BlogsPage.vue'
 
 const routes = [
   {
-    path: '/home',
+    path: '',
     name: 'home',
     component: Home,
     meta: {
