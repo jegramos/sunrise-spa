@@ -10,7 +10,7 @@
       <button
         v-for="social in socials"
         :key="social.name"
-        class="mx-2.5 lg:mx-1.5 nav-base-icon-button rounded-3xl"
+        class="mx-2.5 lg:mx-1.5 h-5 w-5 nav-base-icon-button rounded"
         @click="handleOpenSocial(social.url)"
       >
         <font-awesome-icon :icon="social.icon" class="w-4 h-4"></font-awesome-icon>

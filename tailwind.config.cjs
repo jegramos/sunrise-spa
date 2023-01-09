@@ -30,6 +30,7 @@ module.exports = {
           inverted: withOpacity('--color-text-inverted'),
           tooling: withOpacity('--color-text-tooling'),
           section: withOpacity('--color-bg-content-section'),
+          input: withOpacity('--color-text-input'),
         },
       },
       backgroundColor: {
@@ -45,6 +46,7 @@ module.exports = {
           warning: withOpacity('--color-bg-warning'),
           error: withOpacity('--color-bg-error'),
           inverted: withOpacity('--color-text-base'),
+          input: withOpacity('--color-bg-input'),
         },
       },
       ringColor: {
@@ -82,5 +84,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@headlessui/tailwindcss')],
+  plugins: [require('@headlessui/tailwindcss'), require('@tailwindcss/forms')],
 }

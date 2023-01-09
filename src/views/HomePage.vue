@@ -1,6 +1,6 @@
 <template>
   <h1 class="text-4xl text-center">Content</h1>
-  <div class="px-16 mt-5 max-w-lg italic text-center mx-auto">
+  <div class="mt-5 max-w-lg italic text-center mx-auto">
     <p class="mb-3">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum, nesciunt omnis. Accusantium autem, debitis dicta
       dolore, dolorem eos et excepturi molestiae molestias mollitia nisi odit repellendus tempora. Dignissimos,

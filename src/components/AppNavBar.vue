@@ -1,20 +1,16 @@
 <template>
-  <nav id="app-main-nav" class="px-4 py-3 lg:px-12 fixed w-full z-20 top-0 left-0 bg-theme-section">
+  <nav
+    id="app-main-nav"
+    class="px-4 py-3 lg:px-12 fixed justify-center w-full mx-auto z-20 top-0 left-0 bg-theme-section"
+  >
     <div class="flex flex-wrap items-center justify-between">
       <!-- Start Logo and title -->
-      <div
-        class="flex items-center lg:w-[25%] hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in"
-      >
-        <div class="rounded-3xl p-0.5 ring-2 ring-theme-primary mb-0.5 mr-2">
-          <fire-icon class="text-theme-primary w-5 h-5" />
-        </div>
-        <h5 class="font-logo tracking-wide text-theme-base text-2xl font-extrabold">
-          Camp<span class="font-extrabold text-theme-primary underline decoration-2 underline-offset-4">fire</span>
-        </h5>
-      </div>
+      <app-logo
+        class="lg:w-[30%] text-2xl font-extrabold hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in hover:-translate-y-0.5"
+      />
       <!-- End logo and title -->
       <!-- Start Utils section -->
-      <div class="flex lg:order-2 lg:w-[25%] items-center">
+      <div class="flex lg:order-2 lg:w-[30%] items-center">
         <!-- Start Switcher and icons -->
         <div class="hidden lg:flex lg:items-center lg:justify-end w-full">
           <app-theme-switcher class="mr-4" />
@@ -22,7 +18,10 @@
             <!-- Start Github link icon -->
             <app-tooltip>
               <template #tooltip-target>
-                <button class="rounded-3xl text-theme-base w-6 h-6 nav-base-icon-button" @click="handleOpenGithubPages">
+                <button
+                  class="rounded-3xl xs:block md:hidden lg:block text-theme-base w-6 h-6 nav-base-icon-button"
+                  @click="handleOpenGithubPages"
+                >
                   <font-awesome-icon icon="fa-brands fa-github-alt" />
                 </button>
               </template>
@@ -51,6 +50,15 @@
           </div>
         </div>
         <!-- End Switcher and icons -->
+        <!-- Start Login and Profile section -->
+        <button
+          class="ml-6 hidden lg:flex items-center text-theme-primary border border-theme-primary text-sm py-2 px-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-theme-primary hover:scale-105 transition-all duration-200 hover:bg-theme-primary hover:text-theme-inverted hover:-translate-y-0.5"
+          @click="navigateToLogin"
+        >
+          <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-1.5 font-light h-3 w-3" />
+          <span class="text-xs">LOGIN</span>
+        </button>
+        <!-- End Login and Profile section -->
         <!-- Start mobile hamburger -->
         <button
           id="app-navbar-hamburger-button"
@@ -94,7 +102,7 @@
             <router-link
               :to="{ name: link.name }"
               active-class="bg-theme-primary font-bold text-theme-inverted lg:text-theme-base lg:bg-theme-section lg:mx-0 lg:font-normal lg:underline lg:decoration-2 lg:underline-offset-8 lg:decoration-theme-primary"
-              class="block text-left py-2 pl-6 pr-4 text-theme-base rounded mb-4 lg:mb-0 lg:rounded-xl lg:text-theme-base lg:hover:bg-theme-section-hover lg:hover:scale-105 transition-none hover:transition-all duration-200 ease-in lg:py-1 lg:px-2 focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1 focus-visible:no-underline"
+              class="block text-left py-2 pl-6 pr-4 text-theme-base rounded mb-4 lg:mb-0 lg:rounded-xl lg:text-theme-base lg:hover:-translate-y-0.5 lg:hover:bg-theme-section-hover lg:hover:scale-105 transition-none hover:transition-all duration-200 ease-in lg:py-1 lg:px-2 focus-visible:outline-none focus-visible:ring-theme-primary focus-visible:ring-1 focus-visible:no-underline"
               @click="toggleHamburgerContent"
             >
               <font-awesome-icon :icon="link.icon" class="w-3 h-3 mr-2 lg:hidden"></font-awesome-icon>
@@ -122,11 +130,11 @@
 <script setup>
 import AppThemeSwitcher from '@/components/AppThemeSwitcher.vue'
 import AppTooltip from '@/components/AppTooltip.vue'
-import { FireIcon } from '@heroicons/vue/20/solid'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/20/solid'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import AppLogo from '@/components/AppLogo.vue'
 
 const handleOpenGithubPages = () => {
   const githubUser = import.meta.env.VITE_GITHUB_USER
@@ -177,5 +185,9 @@ const toggleHamburgerContent = () => {
   }
   hamburgerContent.classList.remove('right-[0%]')
   hamburgerContent.classList.add('right-[-200%]')
+}
+
+const navigateToLogin = () => {
+  router.push({ name: 'login' })
 }
 </script>

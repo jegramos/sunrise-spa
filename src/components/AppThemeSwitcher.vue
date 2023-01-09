@@ -4,10 +4,10 @@
     <popover v-if="props.viewMode === 'popup'" class="relative">
       <!-- Start button -->
       <popover-button
-        class="flex items-center bg-theme-section text-theme-base text-sm py-1 px-2 rounded-2xl hover:bg-theme-section-hover hover:scale-105 hover:transition-all focus:outline-none focus-visible:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1"
+        class="flex items-center bg-theme-section text-theme-base text-sm py-1 px-2 rounded-2xl hover:bg-theme-section-hover hover:scale-105 hover:transition-all focus:outline-none focus-visible:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1 hover:-translate-y-0.5"
       >
         <swatch-icon class="w-4 h-4 mr-1" />
-        <div>Select theme</div>
+        <div>Switch theme</div>
         <chevron-down-icon
           class="w-4 h-4 ml-1 text-theme-base ui-open:rotate-180 ui-open:transform transition-all duration-300"
         />
@@ -40,7 +40,7 @@
     <div v-else>
       <button
         type="button"
-        class="flex w-full h-full items-center text-theme-base font-bold py-2 pl-5 pr-4 rounded"
+        class="flex w-full h-full items-center text-theme-base font-bold py-2 pl-5 pr-4 rounded hover:-translate-y-0.5"
         @click="setDialogIsOpen(true)"
       >
         <swatch-icon class="w-3.5 h-3.5 mr-2"></swatch-icon>

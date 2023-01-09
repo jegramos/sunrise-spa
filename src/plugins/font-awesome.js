@@ -16,6 +16,8 @@ import {
   faFeather,
   faCircleQuestion,
   faFillDrip,
+  faRightToBracket,
+  faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -32,5 +34,7 @@ library.add(
   faGoogle,
   faGithub,
   faWhatsapp,
-  faViber
+  faViber,
+  faRightToBracket,
+  faRightFromBracket
 )

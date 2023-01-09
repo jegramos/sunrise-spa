@@ -61,6 +61,7 @@ const routes = [
     component: Login,
     meta: {
       label: 'Login',
+      hideNavBar: true,
     },
   },
   {
@@ -69,6 +70,7 @@ const routes = [
     component: () => import('@/views/ResetPasswordPage.vue'),
     meta: {
       label: 'Reset Password',
+      hideNavBar: true,
     },
   },
   {
@@ -77,6 +79,7 @@ const routes = [
     component: () => import('@/views/ForgotPasswordPage.vue'),
     meta: {
       label: 'Forgot Password',
+      hideNavBar: true,
     },
   },
   {
