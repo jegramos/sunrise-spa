@@ -1,41 +1,74 @@
 <template>
   <section
-    class="w-[75%] mx-auto shadow-sm bg-theme-section py-8 px-4 backdrop-blur-md bg-opacity-75 rounded-lg max-w-screen-lg"
+    class="mx-auto w-[75%] max-w-screen-lg rounded-lg bg-theme-section bg-opacity-75 py-8 px-4 shadow-sm backdrop-blur-md"
   >
     <!-- Start Login form -->
     <div class="grid grid-cols-3">
       <!-- Start form -->
       <div class="col-span-2 flex flex-col items-start justify-center px-6">
-        <app-logo icon-size="5" text-size="2xl"></app-logo>
-        <div class="separator-h w-full my-5"></div>
+        <app-logo
+          class="text-2xl transition-transform duration-200 hover:scale-105 hover:cursor-pointer"
+          @click="$router.push({ name: 'home' })"
+        >
+        </app-logo>
+        <div class="separator-h my-5 w-full"></div>
         <p class="font-bold">Welcome back!</p>
-        <p class="text-theme-muted text-sm mt-1">Please enter your credentials below to start making cool stuff</p>
+        <p class="mt-1 text-sm text-theme-muted">Please enter your credentials below to start making cool stuff</p>
         <!-- Start creds login -->
-        <div class="rounded-lg mt-4 w-full">
-          <form ref="login-form" class="flex justify-between w-[70%]">
-            <div class="w-full mr-3">
-              <input
+        <div class="mt-6 w-full rounded-lg">
+          <form ref="login-form-page" class="flex w-[70%] flex-col justify-between" @submit.prevent>
+            <div class="mb-5 w-full">
+              <cf-text-input
                 id="login-email-or-username-input"
-                type="text"
-                placeholder="Email or Username"
-                class="h-8 rounded-md w-full border-none text-sm px-3 hover:scale-105 transition-transform duration-200 bg-theme-input text-theme-input focus:ring-theme-primary focus:ring-1"
-              />
+                label="Email or username"
+                class="text-sm"
+              ></cf-text-input>
             </div>
-            <div class="flex flex-col w-full">
-              <input
-                id="login-password-input"
-                type="password"
-                placeholder="Password"
-                class="h-8 rounded-md w-full border-none text-sm px-3 bg-theme-input hover:scale-105 hover:-translate-y-0.5 transition-transform duration-200 text-theme-input focus:ring-theme-primary focus:ring-1"
-              />
-              <small class="text-xs text-right font-bold text-opacity-90 text-theme-primary mt-1.5 mr-1"
-                >Forgot password?</small
+            <div class="flex w-full flex-col">
+              <cf-text-input id="login-password-input" label="Password" type="password" class="text-sm"></cf-text-input>
+              <small
+                class="my-1.5 ml-4 text-xs text-theme-base transition-transform duration-100 hover:scale-105 hover:cursor-pointer"
               >
+                <router-link :to="{ name: 'forgot-password' }"> I forgot my password </router-link>
+              </small>
+            </div>
+            <div class="mb-1 flex w-full justify-end">
+              <cf-button class="mt-1 w-[25%] bg-theme-primary text-sm text-theme-inverted">
+                <template #icon>
+                  <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-1.5 h-3 w-3 font-light" />
+                </template>
+                Sign In
+              </cf-button>
             </div>
           </form>
         </div>
         <!-- End creds login -->
         <!-- Start OAuth -->
+        <div class="mt-6 mb-4 flex w-full items-center">
+          <div class="separator-h w-[40%]"></div>
+          <div class="w-[20%] text-center text-xs font-light text-theme-muted">or login with</div>
+          <div class="separator-h w-[40%]"></div>
+        </div>
+        <div class="flex w-full justify-center text-sm text-white">
+          <cf-button class="mr-4 w-full bg-[#C71711]">
+            <template #icon>
+              <font-awesome-icon icon="fa-brands fa-google" class="mr-1 h-3"></font-awesome-icon>
+            </template>
+            Google
+          </cf-button>
+          <cf-button class="mr-4 w-full bg-[#4267B2]">
+            <template #icon>
+              <font-awesome-icon icon="fa-brands fa-facebook" class="mr-1.5 h-3"></font-awesome-icon>
+            </template>
+            Facebook
+          </cf-button>
+          <cf-button class="mr-4 w-full bg-[#172525]">
+            <template #icon>
+              <font-awesome-icon icon="fa-brands fa-github" class="mr-1.5 h-3"></font-awesome-icon>
+            </template>
+            Github
+          </cf-button>
+        </div>
         <!-- End OAuth -->
       </div>
       <!-- End form -->
@@ -47,13 +80,9 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import AppLogo from '@/components/AppLogo.vue'
-
-export default {
-  name: 'LoginView',
-  components: { AppLogo },
-}
+import CfButton from '@/components/campfire/buttons/CfButton.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import CfTextInput from '@/components/campfire/inputs/CfTextInput.vue'
 </script>
-
-<style scoped></style>

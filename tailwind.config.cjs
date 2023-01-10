@@ -8,6 +8,8 @@ function withOpacity(variableName) {
   }
 }
 
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
   mode: 'jit',
   content: ['./index.html', './src/**/*.{vue,jsx,js,ts,tsx}', './node_modules/flowbite/**/*.js'],
@@ -84,5 +86,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@headlessui/tailwindcss'), require('@tailwindcss/forms')],
+  plugins: [
+    require('@headlessui/tailwindcss'),
+    require('@tailwindcss/forms'),
+    plugin(function ({ addVariant }) {
+      addVariant('hocus', ['&:hover', '&:focus']) // custom hover and focus variant
+    }),
+  ],
 }

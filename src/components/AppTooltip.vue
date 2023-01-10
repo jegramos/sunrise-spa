@@ -15,9 +15,9 @@
     <div @mouseover="show = true" @mouseleave="show = false">
       <slot name="tooltip-target"></slot>
     </div>
-    <div class="text-xs bg-theme-tooling text-theme-tooling py-2 px-3 rounded">
-      <float-arrow class="absolute bg-theme-tooling border border-theme-tooling w-3 h-3 rotate-45 ml-0.5" />
-      <div class="items-center flex justify-center">
+    <div class="rounded bg-theme-tooling py-2 px-3 text-xs text-theme-tooling">
+      <float-arrow class="absolute ml-0.5 h-3 w-3 rotate-45 border border-theme-tooling bg-theme-tooling" />
+      <div class="flex items-center justify-center">
         <slot name="tooltip-icon"></slot>
         <slot name="tooltip-text"></slot>
       </div>

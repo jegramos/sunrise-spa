@@ -1,8 +1,8 @@
 <template>
-  <div id="app-wrapper" class="flex flex-col h-screen font-content">
+  <div id="app-wrapper" class="flex h-screen flex-col font-content">
     <nav-bar v-if="!route.meta.hideNavBar"></nav-bar>
     <!-- Start Main Content -->
-    <div :class="`bg-theme-base text-theme-base flex-grow pb-10 px-16 ${route.meta.hideNavBar ? 'pt-8' : 'pt-24'}`">
+    <div :class="`flex-grow bg-theme-base px-16 pb-10 text-theme-base ${route.meta.hideNavBar ? 'pt-8' : 'pt-24'}`">
       <router-view></router-view>
     </div>
     <!-- End Main Content-->

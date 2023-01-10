@@ -18,6 +18,8 @@ import {
   faFillDrip,
   faRightToBracket,
   faRightFromBracket,
+  faEye,
+  faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -36,5 +38,7 @@ library.add(
   faWhatsapp,
   faViber,
   faRightToBracket,
-  faRightFromBracket
+  faRightFromBracket,
+  faEyeSlash,
+  faEye
 )

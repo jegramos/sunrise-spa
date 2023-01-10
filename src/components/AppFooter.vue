@@ -1,24 +1,29 @@
 <template>
   <footer
-    class="bg-theme-section p-3 text-theme-base py-8 px-2 items-center flex flex-col text-theme-muted text-xs uppercase"
+    class="flex flex-col items-center bg-theme-section p-3 py-8 px-2 text-xs uppercase text-theme-base text-theme-muted"
   >
     <span class="font-light"
       >Made by
-      <span class="font-bold ml-0.5">Jego Carlo Ramos</span>
+      <span class="ml-0.5 font-bold">Jego Carlo Ramos</span>
     </span>
-    <div class="socials flex items-center justify-center mt-2">
-      <button
+    <div class="mt-2 flex items-center justify-center">
+      <cf-button
         v-for="social in socials"
         :key="social.name"
-        class="mx-2.5 lg:mx-1.5 h-5 w-5 nav-base-icon-button rounded"
+        icon
+        class="mx-2.5 lg:mx-1.5"
+        :height="5"
+        :width="5"
         @click="handleOpenSocial(social.url)"
       >
-        <font-awesome-icon :icon="social.icon" class="w-4 h-4"></font-awesome-icon>
-      </button>
+        <template #icon>
+          <font-awesome-icon :icon="social.icon" class="h-4 w-4"></font-awesome-icon>
+        </template>
+      </cf-button>
     </div>
-    <div class="separator-h w-[50%] my-4"></div>
+    <div class="separator-h my-4 w-[50%]"></div>
     <div>
-      <span class="tracking-widest font-light"
+      <span class="font-light tracking-widest"
         >&copy; {{ new Date().getFullYear() }} | Campfire | All rights reserved</span
       >
     </div>
@@ -27,6 +32,7 @@
 
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import CfButton from '@/components/campfire/buttons/CfButton.vue'
 
 const socials = [
   { name: 'Linkedin', icon: 'fa-brands fa-linkedin', url: import.meta.env.VITE_LINKEDIN_PROFILE },

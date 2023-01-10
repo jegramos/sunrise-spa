@@ -95,12 +95,12 @@
 
 @layer components {
   .separator-h {
-    @apply bg-theme-section-hover h-[1px];
+    @apply h-[1px] bg-theme-section-hover;
   }
 
   .nav-base-icon-button {
-    @apply hover:scale-125 transition-transform duration-150 ease-in
-        focus-visible:outline-none focus-visible:ring-theme-primary
-        focus-visible:ring-1 hover:-translate-y-0.5;
+    @apply transition-transform duration-150 ease-in hover:-translate-y-0.5
+        hover:scale-125 focus-visible:outline-none
+        focus-visible:ring-1 focus-visible:ring-theme-primary;
   }
 }

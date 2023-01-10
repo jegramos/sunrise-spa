@@ -4,12 +4,12 @@
     <popover v-if="props.viewMode === 'popup'" class="relative">
       <!-- Start button -->
       <popover-button
-        class="flex items-center bg-theme-section text-theme-base text-sm py-1 px-2 rounded-2xl hover:bg-theme-section-hover hover:scale-105 hover:transition-all focus:outline-none focus-visible:outline-none focus-visible:only:ring-theme-primary focus-visible:only:ring-1 hover:-translate-y-0.5"
+        class="flex items-center rounded-2xl bg-theme-section py-1 px-2 text-sm text-theme-base hover:-translate-y-0.5 hover:scale-105 hover:bg-theme-section-hover hover:transition-all focus:outline-none focus-visible:outline-none focus-visible:only:ring-1 focus-visible:only:ring-theme-primary"
       >
-        <swatch-icon class="w-4 h-4 mr-1" />
+        <swatch-icon class="mr-1 h-4 w-4" />
         <div>Switch theme</div>
         <chevron-down-icon
-          class="w-4 h-4 ml-1 text-theme-base ui-open:rotate-180 ui-open:transform transition-all duration-300"
+          class="ml-1 h-4 w-4 text-theme-base transition-all duration-300 ui-open:rotate-180 ui-open:transform"
         />
       </popover-button>
       <!-- End button -->
@@ -24,7 +24,7 @@
       >
         <!-- Start themes list -->
         <popover-panel
-          class="absolute right-0 origin-top-right w-60 z-10 mt-2 pb-1 rounded-lg bg-theme-tooling text-theme-tooling text-sm"
+          class="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-lg bg-theme-tooling pb-1 text-sm text-theme-tooling"
         >
           <!-- Start theme buttons -->
           <theme-buttons />
@@ -40,10 +40,10 @@
     <div v-else>
       <button
         type="button"
-        class="flex w-full h-full items-center text-theme-base font-bold py-2 pl-5 pr-4 rounded hover:-translate-y-0.5"
+        class="flex h-full w-full items-center rounded py-2 pl-5 pr-4 font-bold text-theme-base hover:-translate-y-0.5"
         @click="setDialogIsOpen(true)"
       >
-        <swatch-icon class="w-3.5 h-3.5 mr-2"></swatch-icon>
+        <swatch-icon class="mr-2 h-3.5 w-3.5"></swatch-icon>
         Switch Theme
       </button>
     </div>
@@ -73,9 +73,9 @@
               leave-to="opacity-0 scale-95"
             >
               <dialog-panel
-                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-opacity-75 bg-theme-tooling backdrop-blur-md p-6 text-left align-middle shadow-xl transition-all"
+                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-theme-tooling bg-opacity-75 p-6 text-left align-middle shadow-xl backdrop-blur-md transition-all"
               >
-                <dialog-title as="div" class="text-md font-medium text-theme-tooling text-center mb-2">
+                <dialog-title as="div" class="text-md mb-2 text-center font-medium text-theme-tooling">
                   <span>Tap on the color scheme you like</span>
                 </dialog-title>
                 <div class="mt-2">
@@ -87,10 +87,10 @@
                 <div class="mt-4 px-2">
                   <button
                     type="button"
-                    class="inline-flex w-full justify-center rounded-md border border-transparent bg-theme-primary py-2 text-sm items-center font-medium text-theme-inverted focus:outline-none"
+                    class="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-theme-primary py-2 text-sm font-medium text-theme-inverted focus:outline-none"
                     @click="setDialogIsOpen(false)"
                   >
-                    <font-awesome-icon icon="fa-solid fa-fill-drip" class="h-3 w-3 mr-1.5"></font-awesome-icon>
+                    <font-awesome-icon icon="fa-solid fa-fill-drip" class="mr-1.5 h-3 w-3"></font-awesome-icon>
                     <span>{{ theme.selectedTheme === 'auto' ? 'Let my browser decide' : 'Apply this theme' }}</span>
                   </button>
                 </div>
@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import ThemeButtons from '@/components/app-theme-switcher/ThemeButtons.vue'
+import ThemeButtons from '@/components/campfire/theme-switcher/ThemeButtons.vue'
 import { useThemeStore } from '@/stores/theme.js'
 import {
   Popover,
@@ -120,7 +120,7 @@ import {
 import { ChevronDownIcon, SwatchIcon } from '@heroicons/vue/20/solid'
 import { watch, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useApplyTheme } from '@/composables/theme'
+import { useApplyTheme } from '@/composables/theme.js'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const theme = useThemeStore()
