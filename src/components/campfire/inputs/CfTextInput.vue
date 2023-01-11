@@ -1,14 +1,17 @@
 <template>
-  <div class="relative mt-2 flex flex-col">
+  <div class="relative mt-1 flex flex-col">
     <input
       :id="props.id"
       :type="props.type === 'password' ? (showPassword ? 'text' : 'password') : props.type"
       :placeholder="props.label"
-      class="peer rounded-xl border-none bg-theme-input px-3 py-2.5 text-theme-input placeholder-transparent transition-all duration-200 focus:pl-4 focus:ring-1 focus:ring-theme-primary"
+      autocomplete="off"
+      :class="`peer rounded-xl border-none bg-theme-input pl-3 outline-none ${
+        props.type === 'password' ? 'pr-12' : 'p-3'
+      } py-2.5 text-theme-input placeholder-transparent transition-all duration-200 focus:pl-4 focus:ring-1 focus:ring-theme-primary`"
     />
     <label
       :for="props.id"
-      class="absolute left-1 -top-5 mb-1.5 text-xs text-theme-base transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-5 peer-focus:text-xs"
+      class="absolute left-1 -top-5 mb-1.5 text-xs text-theme-base transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-5 peer-focus:text-xs peer-focus:text-theme-muted"
     >
       {{ props.label }}
     </label>

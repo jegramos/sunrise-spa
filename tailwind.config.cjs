@@ -24,6 +24,18 @@ module.exports = {
         logo: ['Josefin Slab', 'serif'],
         content: ['Lato', 'sans-serif'],
       },
+      colors: {
+        primary: withOpacity('--color-primary'),
+        section: withOpacity('--color-bg-content-section'),
+        base: withOpacity('--color-bg-content-base'),
+        tooling: withOpacity('--color-bg-tooling'),
+        info: withOpacity('--color-bg-info'),
+        success: withOpacity('--color-bg-success'),
+        warning: withOpacity('--color-bg-warning'),
+        error: withOpacity('--color-bg-error'),
+        inverted: withOpacity('--color-text-base'),
+        input: withOpacity('--color-bg-input'),
+      },
       textColor: {
         theme: {
           primary: withOpacity('--color-primary'),
