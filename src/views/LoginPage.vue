@@ -1,11 +1,11 @@
 <template>
   <section
-    class="mx-auto w-[75%] max-w-screen-lg rounded-lg bg-theme-section bg-opacity-75 p-6 px-4 shadow-sm backdrop-blur-md"
+    class="mx-auto w-full max-w-screen-lg rounded-lg bg-transparent px-1 backdrop-blur-md sm:bg-theme-section sm:bg-opacity-75 sm:px-4 sm:py-8 sm:shadow-sm lg:py-4"
   >
     <!-- Start Login form -->
-    <div class="grid grid-cols-3">
+    <div class="flex flex-col px-2 sm:grid sm:grid-cols-3">
       <!-- Start form -->
-      <div class="col-span-2 flex flex-col items-start justify-center px-6">
+      <div class="flex flex-col px-2 sm:col-span-2 sm:items-start sm:justify-center sm:px-6">
         <app-logo
           class="text-2xl transition-transform duration-200 hover:scale-105 hover:cursor-pointer"
           @click="$router.push({ name: 'home' })"
@@ -16,7 +16,12 @@
         <p class="mt-1 text-sm text-theme-muted">Please enter your credentials below to start making cool stuff</p>
         <!-- Start creds login -->
         <div class="mt-6 w-full rounded-lg">
-          <form ref="login-form-page" autocomplete="off" class="flex w-[70%] flex-col justify-between" @submit.prevent>
+          <form
+            ref="login-form-page"
+            autocomplete="off"
+            class="flex w-full flex-col justify-between lg:w-[70%]"
+            @submit.prevent
+          >
             <div class="mb-5 w-full">
               <cf-text-input
                 id="login-email-or-username-input"
@@ -28,11 +33,11 @@
               <cf-text-input id="login-password-input" label="Password" type="password" class="text-sm"></cf-text-input>
             </div>
             <!-- Start action buttons -->
-            <div class="mb-1 mt-3 flex w-full justify-end justify-between">
+            <div class="mb-1 mt-4 flex w-full justify-end justify-between">
               <cf-button class="bg-transparent text-sm italic hover:bg-theme-section-hover">
                 I forgot my password
               </cf-button>
-              <cf-button class="w-[25%] bg-theme-primary text-sm text-theme-inverted">
+              <cf-button class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[25%]">
                 <template #icon>
                   <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-1.5 h-3 w-3 font-light" />
                 </template>
@@ -50,19 +55,19 @@
           <div class="separator-h w-[40%]"></div>
         </div>
         <div class="flex w-full justify-center text-sm text-white">
-          <cf-button class="mr-4 w-full bg-[#C71711]">
+          <cf-button class="mx-1 w-full bg-[#C71711] sm:mx-2">
             <template #icon>
               <font-awesome-icon icon="fa-brands fa-google" class="mr-1 h-3"></font-awesome-icon>
             </template>
             Google
           </cf-button>
-          <cf-button class="mr-4 w-full bg-[#4267B2]">
+          <cf-button class="mx-1 w-full bg-[#4267B2] sm:mx-2">
             <template #icon>
               <font-awesome-icon icon="fa-brands fa-facebook" class="mr-1.5 h-3"></font-awesome-icon>
             </template>
             Facebook
           </cf-button>
-          <cf-button class="mr-4 w-full bg-[#172525]">
+          <cf-button class="mx-1 w-full bg-[#172525] sm:mx-2">
             <template #icon>
               <font-awesome-icon icon="fa-brands fa-github" class="mr-1.5 h-3"></font-awesome-icon>
             </template>
@@ -73,8 +78,10 @@
       </div>
       <!-- End form -->
       <!-- Start graphic -->
-      <div class="flex flex-col rounded-xl bg-theme-tooling bg-opacity-10 py-6 backdrop-blur-md">
-        <login-graphic class="h-[50%] w-full"></login-graphic>
+      <div
+        class="hidden w-full flex-col justify-center rounded-xl bg-theme-tooling bg-opacity-10 py-6 backdrop-blur-md sm:flex"
+      >
+        <login-graphic class="h-[40%] w-full lg:h-[50%]"></login-graphic>
         <div class="flex flex-col items-center justify-center">
           <div class="separator-h my-6 w-[80%]"></div>
           <p class="mb-4 text-sm">You're new to Campfire?</p>
