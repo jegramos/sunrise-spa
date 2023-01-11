@@ -112,7 +112,7 @@
             </router-link>
           </li>
           <li class="lg:hidden">
-            <div class="separator-h mb-3 w-full"></div>
+            <cf-horizontal-separator class="mb-3"></cf-horizontal-separator>
           </li>
           <li class="lg:hidden">
             <app-theme-switcher
@@ -138,6 +138,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AppLogo from '@/components/AppLogo.vue'
 import CfButton from '@/components/campfire/buttons/CfButton.vue'
+import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
 
 const handleOpenGithubPages = () => {
   const githubUser = import.meta.env.VITE_GITHUB_USER

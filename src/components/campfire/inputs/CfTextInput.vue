@@ -1,5 +1,5 @@
 <template>
-  <div class="relative mt-1 flex flex-col">
+  <div class="relative mt-6 flex flex-col">
     <input
       :id="props.id"
       :type="props.type === 'password' ? (showPassword ? 'text' : 'password') : props.type"

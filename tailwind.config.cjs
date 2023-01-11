@@ -96,6 +96,18 @@ module.exports = {
           section: withOpacity('--color-bg-content-section'),
         },
       },
+      ringOffsetColor: {
+        theme: {
+          primary: withOpacity('--color-primary'),
+          section: withOpacity('--color-bg-content-section'),
+          base: withOpacity('--color-bg-content-base'),
+          tooling: withOpacity('--color-bg-tooling'),
+          info: withOpacity('--color-bg-info'),
+          success: withOpacity('--color-bg-success'),
+          warning: withOpacity('--color-bg-warning'),
+          error: withOpacity('--color-bg-error'),
+        },
+      },
     },
   },
   plugins: [

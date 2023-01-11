@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="`${buttonShapeClass} ${buttonSizeClass} flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-1 focus:ring-theme-primary`"
+    :class="`${buttonShapeClass} ${buttonSizeClass} flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-1 focus:ring-theme-primary focus:ring-offset-1 focus:ring-offset-theme-section`"
   >
     <slot name="icon"></slot>
 

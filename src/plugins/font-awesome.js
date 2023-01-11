@@ -20,6 +20,7 @@ import {
   faRightFromBracket,
   faEye,
   faEyeSlash,
+  faPeoplePulling,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -40,5 +41,6 @@ library.add(
   faRightToBracket,
   faRightFromBracket,
   faEyeSlash,
-  faEye
+  faEye,
+  faPeoplePulling
 )

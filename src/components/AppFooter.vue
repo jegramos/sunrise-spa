@@ -21,7 +21,7 @@
         </template>
       </cf-button>
     </div>
-    <div class="separator-h my-4 w-[50%]"></div>
+    <cf-horizontal-separator class="my-4 w-[90%] lg:w-[70%]"></cf-horizontal-separator>
     <div>
       <span class="font-light tracking-widest"
         >&copy; {{ new Date().getFullYear() }} | Campfire | All rights reserved</span
@@ -33,6 +33,7 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import CfButton from '@/components/campfire/buttons/CfButton.vue'
+import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
 
 const socials = [
   { name: 'Linkedin', icon: 'fa-brands fa-linkedin', url: import.meta.env.VITE_LINKEDIN_PROFILE },

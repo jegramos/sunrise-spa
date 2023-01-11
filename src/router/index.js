@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/HomePage.vue'
-import Login from '@/views/LoginPage.vue'
+import AuthenticationPage from '@/views/AuthenticationPage.vue'
 import { vueApp } from '@/app.js'
 import PortfolioPage from '@/views/PortfolioPage.vue'
 import BlogsPage from '@/views/BlogsPage.vue'
@@ -56,13 +56,32 @@ const routes = [
     ],
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login,
+    path: '/auth',
+    name: 'auth',
     meta: {
-      label: 'Login',
+      label: 'Authentication',
       hideNavBar: true,
     },
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: AuthenticationPage,
+        meta: {
+          label: 'Login',
+          hideNavBar: true,
+        },
+      },
+      {
+        path: 'sign-up',
+        name: 'sign-up',
+        component: AuthenticationPage,
+        meta: {
+          label: 'Sign up',
+          hideNavBar: true,
+        },
+      },
+    ],
   },
   {
     path: '/reset-password',
@@ -101,6 +120,13 @@ const appName = import.meta.env.VITE_APP_NAME
 router.afterEach((to) => {
   // Change doc title
   document.title = `${appName} | ${to.meta.label}` || appName
+})
+
+router.beforeEach(async (to) => {
+  if (to.name === 'auth') {
+    // redirect 'domain.com/auth' to 'domain.com/auth/sign-up'
+    return { name: 'sign-up' }
+  }
 })
 
 vueApp.use(router)
