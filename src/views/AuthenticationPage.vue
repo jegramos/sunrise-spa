@@ -6,7 +6,7 @@
       <!-- Start Wrapper -->
       <div class="flex flex-col px-2 sm:grid sm:grid-cols-3">
         <!-- Start form -->
-        <div class="flex flex-col px-2 sm:col-span-2 sm:items-start sm:justify-center sm:pr-8">
+        <div class="flex flex-col px-2 sm:col-span-2 sm:items-start sm:pr-8">
           <div class="flex w-full justify-between">
             <app-logo
               class="text-2xl transition-transform duration-200 hover:scale-105 hover:cursor-pointer"
@@ -25,7 +25,7 @@
           <div v-if="route.name === 'login'">
             <p class="font-bold">Welcome back!</p>
             <p class="mt-1 text-sm text-theme-muted">
-              Please enter your credentials to start making cool and caress your ego
+              Please enter your credentials to start making cool stuff and caress your ego
             </p>
           </div>
           <div v-else>
@@ -35,117 +35,15 @@
             </p>
           </div>
           <!-- End lead text -->
-          <div class="w-full rounded-lg">
-            <!-- Start creds login -->
-            <form
-              v-if="route.name === 'login'"
-              ref="login-form"
-              autocomplete="off"
-              class="flex w-full flex-col justify-between"
-              @submit.prevent
-            >
-              <div class="flex flex-col lg:flex-row">
-                <div class="w-full lg:mr-4">
-                  <cf-text-input
-                    id="login-email-or-username-input"
-                    label="Email or username"
-                    class="text-sm"
-                  ></cf-text-input>
-                </div>
-                <div class="w-full">
-                  <cf-text-input
-                    id="login-password-input"
-                    label="Password"
-                    type="password"
-                    class="text-sm"
-                  ></cf-text-input>
-                </div>
-              </div>
-              <!-- Start action buttons -->
-              <div class="mb-1 mt-4 flex w-full justify-end justify-between">
-                <cf-button class="bg-transparent text-sm italic hover:bg-theme-section-hover">
-                  I forgot my password
-                </cf-button>
-                <cf-button class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[28%] lg:w-[25%]">
-                  <template #icon>
-                    <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-1.5 h-3 w-3 font-light" />
-                  </template>
-                  Login
-                </cf-button>
-              </div>
-              <!-- End action buttons -->
-            </form>
-            <!-- End creds login -->
-            <!-- Start creds sign up -->
-            <form
-              v-else
-              ref="register-form"
-              autocomplete="off"
-              class="flex w-full flex-col justify-between"
-              @submit.prevent
-            >
-              <!-- Start email and username -->
-              <div class="flex flex-col lg:flex-row">
-                <div class="w-full lg:mr-4">
-                  <cf-text-input id="register-email-input" label="Email" class="text-sm"></cf-text-input>
-                </div>
-                <div class="w-full">
-                  <cf-text-input id="register-username-input" label="Username" class="text-sm"></cf-text-input>
-                </div>
-              </div>
-              <!-- End email and username -->
-              <!-- Start first name and last name -->
-              <div class="flex flex-col lg:flex-row">
-                <div class="mr-4 w-full">
-                  <cf-text-input id="register-first-name-input" label="First name" class="text-sm"></cf-text-input>
-                </div>
-                <div class="w-full">
-                  <cf-text-input id="register-last-name-input" label="Last name" class="text-sm"></cf-text-input>
-                </div>
-              </div>
-              <!-- End first name and last name -->
-              <!-- Start password and confirmation -->
-              <div class="flex flex-col lg:flex-row">
-                <div class="mr-4 w-full">
-                  <cf-text-input
-                    id="register-password"
-                    label="Password"
-                    type="password"
-                    class="text-sm"
-                  ></cf-text-input>
-                </div>
-                <div class="w-full">
-                  <cf-text-input
-                    id="register-password-confirmation"
-                    label="Confirm Password"
-                    type="password"
-                    class="text-sm"
-                  ></cf-text-input>
-                </div>
-              </div>
-              <!-- End password and confirmation-->
-              <!-- Start action buttons -->
-              <div class="mb-1 mt-4 flex w-full justify-between">
-                <cf-button
-                  :class="`${
-                    route.name === 'login' ? 'block' : 'invisible'
-                  } bg-transparent text-sm italic hover:bg-theme-section-hover`"
-                >
-                  I forgot my password
-                </cf-button>
-                <cf-button class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[28%] lg:w-[25%]">
-                  <template #icon>
-                    <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-1.5 h-3 w-3 font-light" />
-                  </template>
-                  {{ route.name === 'login' ? 'Sign in' : 'Register' }}
-                </cf-button>
-              </div>
-              <!-- End action buttons -->
-            </form>
-            <!-- End creds sign up -->
-          </div>
           <!-- Start creds sign-up -->
-
+          <div class="w-full rounded-lg">
+            <div v-if="route.name === 'login'">
+              <login-form />
+            </div>
+            <div v-else>
+              <register-form />
+            </div>
+          </div>
           <!-- End creds sign-up -->
           <!-- Start OAuth -->
           <cf-horizontal-separator class="mt-4 mb-6">
@@ -173,7 +71,7 @@
           </div>
           <!-- End OAuth -->
           <!-- Start Sign in / Sign up button (mobile) -->
-          <template class="flex flex-col sm:hidden">
+          <div class="flex flex-col sm:hidden">
             <cf-horizontal-separator class="my-6"> or</cf-horizontal-separator>
             <cf-button
               class="bg-theme-primary text-sm text-theme-inverted"
@@ -181,17 +79,22 @@
             >
               {{ route.name === 'login' ? 'Create an account' : 'Sign in instead' }}
             </cf-button>
-          </template>
+          </div>
           <!-- End Sign in / Sign up button (mobile) -->
         </div>
         <!-- End form -->
         <!-- Start graphic -->
         <div
-          class="hidden w-full flex-col items-center justify-center rounded-xl bg-theme-tooling bg-opacity-10 py-6 backdrop-blur-md sm:flex"
+          class="hidden w-full flex-col justify-center rounded-xl bg-theme-tooling bg-opacity-10 py-6 backdrop-blur-md sm:flex"
         >
-          <login-graphic class="h-[40%] w-full sm:h-[50%] sm:w-[90%]"></login-graphic>
+          <div v-if="route.name === 'login'" key="auth-graphic-login" class="flex w-full items-center">
+            <login-graphic class="mx-4 h-[80%] w-full"></login-graphic>
+          </div>
+          <div v-else key="auth-graphic-register" class="flex w-full items-start lg:items-center">
+            <registration-graphic class="mx-4 h-[80%] w-full"></registration-graphic>
+          </div>
           <div class="flex flex-col items-center justify-center">
-            <div class="separator-h my-6 w-[80%]"></div>
+            <cf-horizontal-separator class="mb-6" />
             <p class="mb-4 text-sm">
               {{ route.name === 'login' ? 'Are you new to Campfire?' : 'Already have an account?' }}
             </p>
@@ -199,10 +102,10 @@
               class="bg-theme-primary text-sm text-theme-inverted"
               @click="route.name === 'login' ? $router.push({ name: 'sign-up' }) : $router.push({ name: 'login' })"
             >
-              {{ route.name === 'login' ? 'Create an account' : 'Sign in instead' }}
+              <span class="mx-2">{{ route.name === 'login' ? 'Create an account' : 'Sign in instead' }}</span>
             </cf-button>
             <p class="mb-2 mt-3 text-xs italic text-theme-muted">
-              {{ route.name === 'login' ? 'In under 3 minutes' : "and let's get back to it" }}
+              {{ route.name === 'login' ? 'It will only take a minute' : "and let's get back to it" }}
             </p>
           </div>
         </div>
@@ -217,10 +120,12 @@
 import AppLogo from '@/components/AppLogo.vue'
 import CfButton from '@/components/campfire/buttons/CfButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import CfTextInput from '@/components/campfire/inputs/CfTextInput.vue'
-import LoginGraphic from '@/components/login-page/LoginGraphic.vue'
+import LoginGraphic from '@/components/authentication-page/LoginGraphic.vue'
 import { useRoute } from 'vue-router'
 import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
+import LoginForm from '@/components/authentication-page/LoginForm.vue'
+import RegisterForm from '@/components/authentication-page/RegisterForm.vue'
+import RegistrationGraphic from '@/components/authentication-page/RegistrationGraphic.vue'
 
 const route = useRoute()
 </script>

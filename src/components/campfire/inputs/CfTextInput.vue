@@ -5,8 +5,8 @@
       :type="props.type === 'password' ? (showPassword ? 'text' : 'password') : props.type"
       :placeholder="props.label"
       autocomplete="off"
-      :class="`peer rounded-xl border-none bg-theme-input pl-3 outline-none ${
-        props.type === 'password' ? 'pr-12' : 'p-3'
+      :class="`peer box-border w-full rounded-xl border-none bg-theme-input pl-3 outline-none ${
+        props.type === 'password' ? 'pr-10' : 'p-3'
       } py-2.5 text-theme-input placeholder-transparent transition-all duration-200 focus:pl-4 focus:ring-1 focus:ring-theme-primary`"
     />
     <label
