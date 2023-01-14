@@ -6,8 +6,12 @@
     leave-to-class="opacity-0"
   >
     <cf-alert-panel v-model="showErrorAlert" dismissible class="z-30 mb-4 w-full" panel-type="error">
-      Incorrect email or password
-      <template #description> Please double check your credentials and try again</template>
+      {{ errorMessage }}
+      <template #description>
+        <div class="flex flex-col">
+          <div v-for="error in errorDetails" :key="error" class="mt-0.5">{{ error }}</div>
+        </div>
+      </template>
     </cf-alert-panel>
   </transition>
   <!-- End alert -->
@@ -96,7 +100,7 @@
             validator.password_confirmation.$invalid ? validator.password_confirmation.$errors[0].$message : null
           "
           @blur="validator.password_confirmation.$touch"
-          @keyup.enter="handleFormSubmission"
+          @keydown.enter.prevent="handleFormSubmission"
         ></cf-text-input>
       </div>
     </div>
@@ -130,8 +134,11 @@ import { computed, reactive, ref } from 'vue'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
 import { useAlphaDashDotRule, usePasswordRule, useUniqueUserIdentifierRule } from '@/composables/custom-validations'
 import { useGetGlobalStringMaxLength } from '@/composables/helpers.js'
+import { useParseApiResponseError } from '@/composables/error-handler.js'
+import { useRouter } from 'vue-router'
 
 const auth = useAuthStore()
+const router = useRouter()
 
 const payload = reactive({
   email: '',
@@ -190,18 +197,27 @@ const formRules = {
 
 const validator = useVuelidate(formRules, payload)
 const showErrorAlert = ref(false)
+const errorMessage = ref(null)
+const errorDetails = ref(null)
 
 // handle form submission
 const isLoading = ref(false)
 
 const handleFormSubmission = async () => {
-  console.log(payload.password)
-  console.log(payload.password_confirmation)
   const valid = await validator.value.$validate()
   if (!valid) return
 
   isLoading.value = true
-  await auth.checkAvailability('username', 'jegramos.pa@gmail.com')
+  const response = await auth.register(payload)
   isLoading.value = false
+
+  if (response.success) {
+    return await router.replace({ name: 'verify-email' })
+  }
+
+  const { message, errors } = useParseApiResponseError(response)
+  showErrorAlert.value = true
+  errorMessage.value = message
+  errorDetails.value = errors
 }
 </script>

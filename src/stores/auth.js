@@ -24,6 +24,24 @@ export const useAuthStore = defineStore('auth', {
 
       return response
     },
+    register: async ({ email, username, password, password_confirmation, first_name, last_name }) => {
+      const { data } = await useApiCall()('auth/register').post({
+        email,
+        username,
+        password,
+        password_confirmation,
+        first_name,
+        last_name,
+        client_name: `${navigator.platform} - Web`,
+      })
+
+      const response = JSON.parse(data.value)
+      if (response.success) {
+        authToken.value = response.data.token
+      }
+
+      return response
+    },
     checkAvailability: async (key, value) => {
       if (!['username', 'email'].includes(key)) throw new Error('Key can only be "username" or "email"')
       const { data } = await useApiCall()(`/availability/${key}?value=${value}`).get()

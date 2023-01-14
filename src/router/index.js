@@ -5,6 +5,11 @@ import { vueApp } from '@/app.js'
 import PortfolioPage from '@/views/PortfolioPage.vue'
 import BlogsPage from '@/views/BlogsPage.vue'
 import { useAuthStore } from '@/stores/auth.js'
+import VerifyEmailPage from '@/views/VerifyEmailPage.vue'
+import { useAuthType, useRole } from '@/composables/enums.js'
+
+const authType = useAuthType()
+const role = useRole()
 
 const routes = [
   {
@@ -14,6 +19,7 @@ const routes = [
     meta: {
       label: 'Home',
       isNavMenu: true,
+      auth: authType.OPEN,
     },
   },
   {
@@ -23,6 +29,7 @@ const routes = [
     meta: {
       label: 'Portfolio',
       isNavMenu: true,
+      auth: authType.AUTHENTICATED,
     },
   },
   {
@@ -32,6 +39,7 @@ const routes = [
     meta: {
       label: 'Blogs',
       isNavMenu: true,
+      auth: authType.AUTHENTICATED,
     },
   },
   {
@@ -41,6 +49,7 @@ const routes = [
     meta: {
       label: 'About',
       isNavMenu: true,
+      auth: authType.OPEN,
     },
   },
   {
@@ -52,6 +61,8 @@ const routes = [
         component: () => import('@/views/UserManagementPage.vue'),
         meta: {
           label: 'Manage Users',
+          auth: authType.AUTHENTICATED,
+          permission: [role.ADMIN, role.SUPER_USER],
         },
       },
     ],
@@ -71,6 +82,7 @@ const routes = [
         meta: {
           label: 'Login',
           hideNavBar: true,
+          auth: authType.UNAUTHENTICATED,
         },
       },
       {
@@ -80,6 +92,17 @@ const routes = [
         meta: {
           label: 'Sign up',
           hideNavBar: true,
+          auth: authType.UNAUTHENTICATED,
+        },
+      },
+      {
+        path: 'verify-email',
+        name: 'verify-email',
+        component: VerifyEmailPage,
+        meta: {
+          label: 'Verify Email',
+          hideNavBar: true,
+          auth: authType.AUTHENTICATED,
         },
       },
     ],
@@ -91,6 +114,7 @@ const routes = [
     meta: {
       label: 'Reset Password',
       hideNavBar: true,
+      auth: authType.UNAUTHENTICATED,
     },
   },
   {
@@ -100,6 +124,7 @@ const routes = [
     meta: {
       label: 'Forgot Password',
       hideNavBar: true,
+      auth: authType.UNAUTHENTICATED,
     },
   },
   {
