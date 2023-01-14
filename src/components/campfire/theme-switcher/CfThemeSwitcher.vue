@@ -73,7 +73,7 @@
               leave-to="opacity-0 scale-95"
             >
               <dialog-panel
-                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-theme-tooling bg-opacity-80 p-6 text-left align-middle shadow-2xl backdrop-blur-md transition-all"
+                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-theme-tooling bg-opacity-80 p-6 text-left align-middle backdrop-blur-md transition-all"
               >
                 <dialog-title as="div" class="text-md mb-2 text-center font-medium text-theme-tooling">
                   <span>Tap on the color scheme you like</span>

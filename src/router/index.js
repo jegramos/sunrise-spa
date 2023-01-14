@@ -4,6 +4,7 @@ import AuthenticationPage from '@/views/AuthenticationPage.vue'
 import { vueApp } from '@/app.js'
 import PortfolioPage from '@/views/PortfolioPage.vue'
 import BlogsPage from '@/views/BlogsPage.vue'
+import { useAuthStore } from '@/stores/auth.js'
 
 const routes = [
   {
@@ -126,6 +127,12 @@ router.beforeEach(async (to) => {
   if (to.name === 'auth') {
     // redirect 'domain.com/auth' to 'domain.com/auth/sign-up'
     return { name: 'sign-up' }
+  }
+
+  // redirect to home if already authenticated
+  const authStore = useAuthStore()
+  if (authStore.isAuthenticated && (to.name === 'login' || to.name === 'sign-up')) {
+    return { name: 'home' }
   }
 })
 

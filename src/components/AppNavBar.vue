@@ -96,7 +96,7 @@
         class="absolute top-[100%] right-[-200%] w-full items-center justify-center bg-theme-section transition-right duration-300 ease-in hover:cursor-pointer lg:static lg:order-1 lg:mt-0 lg:flex lg:w-auto lg:bg-transparent"
       >
         <ul
-          class="mx-2 flex flex-col rounded-lg text-sm shadow-sm lg:mt-0 lg:flex-row lg:space-x-8 lg:bg-theme-section lg:font-medium lg:shadow-none"
+          class="mx-2 flex flex-col rounded-lg text-sm lg:mt-0 lg:flex-row lg:space-x-8 lg:bg-theme-section lg:font-medium lg:shadow-none"
         >
           <!-- Start Account Navlink Section -->
           <!-- End Account Navlink Section -->

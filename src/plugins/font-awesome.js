@@ -21,7 +21,16 @@ import {
   faEye,
   faEyeSlash,
   faPeoplePulling,
+  faSpinner,
+  faFireFlameCurved,
+  faCircleInfo,
+  faTriangleExclamation,
+  faCircleCheck as faCircleCheckSolid,
+  faCircleXmark as faCircleXMarkSolid,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons'
+
+import { faCircleXmark, faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 
 library.add(
   faGithubAlt,
@@ -42,5 +51,14 @@ library.add(
   faRightFromBracket,
   faEyeSlash,
   faEye,
-  faPeoplePulling
+  faPeoplePulling,
+  faSpinner,
+  faCircleCheck,
+  faCircleXmark,
+  faFireFlameCurved,
+  faCircleInfo,
+  faTriangleExclamation,
+  faCircleXMarkSolid,
+  faCircleCheckSolid,
+  faXmark
 )

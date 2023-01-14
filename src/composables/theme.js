@@ -7,7 +7,7 @@ export const useApplyTheme = (selectedTheme, availableThemes) => {
     }
 
     // Add base color to the <body>
-    document.body.classList.add('bg-theme-section', 'dark:theme-dark')
+    document.body.classList.add('bg-theme-base', 'dark:theme-dark')
 
     // Check the system pref if Auto is selected
     if (themeName.key === 'auto') continue

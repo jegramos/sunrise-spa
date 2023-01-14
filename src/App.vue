@@ -7,10 +7,18 @@
         route.meta.hideNavBar ? 'pt-8' : 'pt-24'
       }`"
     >
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <transition
+          enter-active-class="transition duration-300"
+          enter-from-class="translate-x-[20%] opacity-0"
+          leave-to-class="opacity-0"
+        >
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
     <!-- End Main Content-->
-    <footer-component></footer-component>
+    <footer-component class="mt-24"></footer-component>
   </div>
 </template>
 
