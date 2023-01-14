@@ -125,9 +125,11 @@ import CfTextInput from '@/components/campfire/inputs/CfTextInput.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useAuthStore } from '@/stores/auth'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email, helpers } from '@vuelidate/validators'
-import { reactive, ref } from 'vue'
+import { required, email, helpers, minLength, maxLength, sameAs } from '@vuelidate/validators'
+import { computed, reactive, ref } from 'vue'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
+import { useAlphaDashDotRule, usePasswordRule, useUniqueUserIdentifierRule } from '@/composables/custom-validations'
+import { useGetGlobalStringMaxLength } from '@/composables/helpers.js'
 
 const auth = useAuthStore()
 
@@ -141,17 +143,49 @@ const payload = reactive({
 })
 
 // Handle validation
+const globalStringMaxLengthRule = helpers.withMessage(
+  `Must not exceed ${useGetGlobalStringMaxLength()} characters`,
+  maxLength(useGetGlobalStringMaxLength())
+)
 const formRules = {
   $lazy: true,
   email: {
     required: helpers.withMessage('Please enter your email address', required),
     email: helpers.withMessage('Email format is invalid', email),
+    unique: helpers.withAsync(helpers.withMessage('This email is already taken', useUniqueUserIdentifierRule('email'))),
   },
-  username: { required: helpers.withMessage('Please enter your username', required) },
-  first_name: { required: helpers.withMessage('Please enter your first name', required) },
-  last_name: { required: helpers.withMessage('Please enter your last name', required) },
-  password: { required: helpers.withMessage('Please enter your password', required) },
-  password_confirmation: { required: helpers.withMessage('Please confirm your password', required) },
+  username: {
+    required: helpers.withMessage('Please enter your username', required),
+    maxLength: helpers.withMessage('Must not be more than 30 characters long', maxLength(30)),
+    alphaDashDot: helpers.withMessage(
+      'Your username must only contain letters, numbers, dashes, underscores, and dots',
+      useAlphaDashDotRule()
+    ),
+    unique: helpers.withAsync(
+      helpers.withMessage('This username already taken', useUniqueUserIdentifierRule('username'))
+    ),
+  },
+  first_name: {
+    required: helpers.withMessage('Please enter your first name', required),
+    maxLength: globalStringMaxLengthRule,
+  },
+  last_name: {
+    required: helpers.withMessage('Please enter your last name', required),
+    maxLength: globalStringMaxLengthRule,
+  },
+  password: {
+    required: helpers.withMessage('Please enter your password', required),
+    minLength: helpers.withMessage('Must be at least 8 characters long', minLength(8)),
+    maxLength: helpers.withMessage('Must be a maximum of 15 characters', maxLength(15)),
+    password: helpers.withMessage(
+      'Must include at least one number, and one uppercase and lowercase letter',
+      usePasswordRule()
+    ),
+  },
+  password_confirmation: {
+    required: helpers.withMessage('Please confirm your password', required),
+    sameAsPassword: helpers.withMessage('Must match the password field', sameAs(computed(() => payload.password))),
+  },
 }
 
 const validator = useVuelidate(formRules, payload)
@@ -161,6 +195,8 @@ const showErrorAlert = ref(false)
 const isLoading = ref(false)
 
 const handleFormSubmission = async () => {
+  console.log(payload.password)
+  console.log(payload.password_confirmation)
   const valid = await validator.value.$validate()
   if (!valid) return
 
