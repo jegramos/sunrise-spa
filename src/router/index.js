@@ -5,7 +5,7 @@ import { vueApp } from '@/app.js'
 import PortfolioPage from '@/views/PortfolioPage.vue'
 import BlogsPage from '@/views/BlogsPage.vue'
 import { useAuthStore } from '@/stores/auth.js'
-import VerifyEmailPage from '@/views/VerifyEmailPage.vue'
+import VerifyEmailGuardPage from '@/views/misc/VerifyEmailGuardPage.vue'
 import { useAuthType, useRole } from '@/composables/enums.js'
 
 const authType = useAuthType()
@@ -98,7 +98,7 @@ const routes = [
       {
         path: 'verify-email',
         name: 'verify-email',
-        component: VerifyEmailPage,
+        component: VerifyEmailGuardPage,
         meta: {
           label: 'Verify Email',
           hideNavBar: true,
@@ -130,7 +130,7 @@ const routes = [
   {
     path: '/:catchAll(.*)',
     name: 'not-found',
-    component: () => import('@/views/404Page.vue'),
+    component: () => import('@/views/misc/404Page.vue'),
     meta: {
       label: 'Page not found',
     },
