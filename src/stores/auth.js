@@ -7,7 +7,11 @@ export const useAuthStore = defineStore('auth', () => {
   // States. We use localStorage to hydrate state when the page reloads
   // @see https://github.com/vueuse/vueuse/pull/614#issuecomment-875450160 on why we need a serializer for `null` defaults
   const authenticationToken = useStorage('auth-token', null, localStorage, { serializer: StorageSerializers.string })
-  const authenticatedUser = useStorage('auth-user', null, localStorage, { serializer: StorageSerializers.object })
+  const authenticatedUser = useStorage('auth-user', null, localStorage, {
+    serializer: StorageSerializers.object,
+    deep: true,
+    mergeDefaults: true,
+  })
 
   // Computed
   const isAuthenticated = computed(() => {

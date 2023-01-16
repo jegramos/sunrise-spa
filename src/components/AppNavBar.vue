@@ -51,15 +51,33 @@
         </div>
         <!-- End Switcher and icons -->
         <!-- Start Login and Profile section -->
-        <cf-button
-          class="ml-6 hidden items-center border border-theme-primary text-theme-primary hover:bg-theme-primary hover:text-theme-inverted lg:flex"
-          @click="navigateToLogin"
-        >
-          <template #icon>
-            <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-1.5 h-3 w-3 font-light" />
-          </template>
-          <span class="text-xs">LOGIN</span>
-        </cf-button>
+        <div v-if="!auth.isAuthenticated">
+          <cf-button
+            class="ml-6 hidden items-center border border-theme-primary text-theme-primary hover:bg-theme-primary hover:text-theme-inverted lg:flex"
+            @click="navigateToLogin"
+          >
+            <template #icon>
+              <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-1.5 h-3 w-3 font-light" />
+            </template>
+            <span class="text-xs">LOGIN</span>
+          </cf-button>
+        </div>
+        <div v-else class="ml-2.5">
+          <cf-button icon>
+            <template #icon>
+              <cf-avatar
+                :height="8"
+                :width="8"
+                :src="auth?.authenticatedUser?.user_profile?.profile_picture_url"
+                :fake="
+                  !auth?.authenticatedUser?.user_profile?.profile_picture_url
+                    ? auth?.authenticatedUser?.user_profile?.full_name
+                    : null
+                "
+              ></cf-avatar>
+            </template>
+          </cf-button>
+        </div>
         <!-- End Login and Profile section -->
         <!-- Start mobile hamburger -->
         <button
@@ -139,6 +157,10 @@ import { useRouter } from 'vue-router'
 import AppLogo from '@/components/AppLogo.vue'
 import CfButton from '@/components/campfire/buttons/CfButton.vue'
 import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
+import { useAuthStore } from '@/stores/auth'
+import CfAvatar from '@/components/campfire/CfAvatar.vue'
+
+const auth = useAuthStore()
 
 const handleOpenGithubPages = () => {
   const githubUser = import.meta.env.VITE_GITHUB_USER

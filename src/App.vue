@@ -25,15 +25,26 @@
 <script setup>
 import NavBar from './components/AppNavBar.vue'
 import FooterComponent from './components/AppFooter.vue'
-import { onMounted } from 'vue'
+import { onBeforeMount, onMounted } from 'vue'
 import { useThemeStore } from '@/stores/theme'
 import { useApplyTheme } from '@/composables/theme'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { useProfileStore } from '@/stores/profile'
 
 const route = useRoute()
 
+const auth = useAuthStore()
+const profile = useProfileStore()
+onBeforeMount(async () => {
+  // rehydrate profile info on reload if there is an authenticated user
+  if (auth.isAuthenticated) {
+    await profile.fetchProfile()
+  }
+})
+
 const theme = useThemeStore()
-onMounted(() => {
+onMounted(async () => {
   useApplyTheme(theme.selectedTheme, theme.availableThemes)
 })
 </script>
