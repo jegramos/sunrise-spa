@@ -7,6 +7,9 @@ import BlogsPage from '@/views/BlogsPage.vue'
 import { useAuthStore } from '@/stores/auth.js'
 import VerifyEmailGuardPage from '@/views/misc/VerifyEmailGuardPage.vue'
 import { useAuthType, useRole } from '@/composables/enums.js'
+import ProfilePage from '@/views/ProfilePage.vue'
+import NotificationsPage from '@/views/NotificationsPage.vue'
+import SettingsPage from '@/views/SettingsPage.vue'
 
 const authType = useAuthType()
 const role = useRole()
@@ -39,6 +42,36 @@ const routes = [
     meta: {
       label: 'Blogs',
       isNavMenu: true,
+      auth: authType.AUTHENTICATED,
+    },
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfilePage,
+    meta: {
+      label: 'Profile',
+      isNavMenu: false,
+      auth: authType.AUTHENTICATED,
+    },
+  },
+  {
+    path: '/notifications',
+    name: 'notifications',
+    component: NotificationsPage,
+    meta: {
+      label: 'Notifications',
+      isNavMenu: false,
+      auth: authType.AUTHENTICATED,
+    },
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: SettingsPage,
+    meta: {
+      label: 'Settings',
+      isNavMenu: false,
       auth: authType.AUTHENTICATED,
     },
   },

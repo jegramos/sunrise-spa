@@ -56,11 +56,20 @@ export const useAuthStore = defineStore('auth', () => {
     return response
   }
 
+  const logout = async () => {
+    const { statusCode } = await useApiCall(authenticationToken.value)('auth/tokens').delete()
+
+    if (statusCode.value === 204) {
+      authenticationToken.value = null
+      authenticatedUser.value = null
+    }
+  }
+
   const checkAvailability = async (key, value) => {
     if (!['username', 'email'].includes(key)) throw new Error('Key can only be "username" or "email"')
     const { data } = await useApiCall()(`/availability/${key}?value=${value}`).get()
     return JSON.parse(data.value)
   }
 
-  return { authenticationToken, authenticatedUser, isAuthenticated, login, register, checkAvailability }
+  return { authenticationToken, authenticatedUser, isAuthenticated, login, logout, register, checkAvailability }
 })

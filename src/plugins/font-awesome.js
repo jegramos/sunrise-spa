@@ -27,7 +27,12 @@ import {
   faTriangleExclamation,
   faCircleCheck as faCircleCheckSolid,
   faCircleXmark as faCircleXMarkSolid,
+  faIdBadge,
+  faGear,
+  faPowerOff,
   faXmark,
+  faBell,
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faCircleXmark, faCircleCheck } from '@fortawesome/free-regular-svg-icons'
@@ -60,5 +65,10 @@ library.add(
   faTriangleExclamation,
   faCircleXMarkSolid,
   faCircleCheckSolid,
-  faXmark
+  faXmark,
+  faIdBadge,
+  faGear,
+  faPowerOff,
+  faBell,
+  faChevronRight
 )

@@ -1,9 +1,9 @@
 <template>
-  <div :class="`w-${props.width} h-${props.height} flex rounded-full`">
+  <div>
     <!-- Start fake image -->
-    <div v-if="!!props.fake" class="h-full w-full rounded-full">
+    <div v-if="!!props.fake" class="rounded-full">
       <div
-        class="flex h-full w-full items-center justify-center rounded-full bg-theme-primary text-sm text-theme-inverted"
+        :class="`w-${props.width} h-${props.height} flex items-center justify-center rounded-full bg-theme-primary text-lg text-theme-inverted lg:text-sm`"
       >
         {{ displayName }}
       </div>

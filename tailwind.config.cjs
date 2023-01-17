@@ -21,6 +21,7 @@ module.exports = {
     'theme-old',
     { pattern: /bg-theme-(success|error|warning|info|base|section)/ },
     { pattern: /text-theme-(success|error|warning|info|base|section)-panel/ },
+    { pattern: /(w-|h-)./ },
   ],
   theme: {
     extend: {
@@ -130,6 +131,7 @@ module.exports = {
     require('@tailwindcss/forms'),
     plugin(function ({ addVariant }) {
       addVariant('hocus', ['&:hover', '&:focus']) // custom hover and focus variant
+      addVariant('hovus', ['&:hover', '&:focus-visible']) // custom hover and focus-visible variant
     }),
   ],
 }

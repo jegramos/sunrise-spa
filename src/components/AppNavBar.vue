@@ -15,38 +15,16 @@
         <div class="hidden w-full lg:flex lg:items-center lg:justify-end">
           <app-theme-switcher class="mr-4" />
           <div class="flex">
-            <!-- Start Github link icon -->
+            <!-- Start Notification icon -->
             <app-tooltip>
               <template #tooltip-target>
-                <button
-                  class="xs:block nav-base-icon-button h-6 w-6 rounded-3xl text-theme-base md:hidden lg:block"
-                  @click="handleOpenGithubPages"
-                >
-                  <font-awesome-icon icon="fa-brands fa-github-alt" />
+                <button class="xs:block nav-base-icon-button h-6 w-6 rounded-3xl text-theme-base md:hidden lg:block">
+                  <font-awesome-icon icon="fa-solid fa-bell" />
                 </button>
               </template>
-              <template #tooltip-icon>
-                <arrow-top-right-on-square-icon class="mr-1 h-3 w-3" />
-              </template>
-              <template #tooltip-text>Visit Github</template>
+              <template #tooltip-text>View Notifications</template>
             </app-tooltip>
-            <!-- End Github link icon -->
-            <!-- Start FB link icon -->
-            <app-tooltip>
-              <template #tooltip-target>
-                <button
-                  class="nav-base-icon-button ml-1 h-6 w-6 rounded-3xl text-theme-base"
-                  @click="handleOpenYoutubePage"
-                >
-                  <font-awesome-icon icon="fa-brands fa-youtube" />
-                </button>
-              </template>
-              <template #tooltip-icon>
-                <arrow-top-right-on-square-icon class="mr-1 h-3 w-3" />
-              </template>
-              <template #tooltip-text>Visit Youtube</template>
-            </app-tooltip>
-            <!-- End FB link icon -->
+            <!-- End Notification icon -->
           </div>
         </div>
         <!-- End Switcher and icons -->
@@ -62,21 +40,8 @@
             <span class="text-xs">LOGIN</span>
           </cf-button>
         </div>
-        <div v-else class="ml-2.5">
-          <cf-button icon>
-            <template #icon>
-              <cf-avatar
-                :height="8"
-                :width="8"
-                :src="auth?.authenticatedUser?.user_profile?.profile_picture_url"
-                :fake="
-                  !auth?.authenticatedUser?.user_profile?.profile_picture_url
-                    ? auth?.authenticatedUser?.user_profile?.full_name
-                    : null
-                "
-              ></cf-avatar>
-            </template>
-          </cf-button>
+        <div v-else class="ml-4 hidden items-center lg:flex">
+          <cf-profile-menu :avatar-height="8" :avatar-width="8" />
         </div>
         <!-- End Login and Profile section -->
         <!-- Start mobile hamburger -->
@@ -114,10 +79,22 @@
         class="absolute top-[100%] right-[-200%] w-full items-center justify-center bg-theme-section transition-right duration-300 ease-in hover:cursor-pointer lg:static lg:order-1 lg:mt-0 lg:flex lg:w-auto lg:bg-transparent"
       >
         <ul
-          class="mx-2 flex flex-col rounded-lg text-sm lg:mt-0 lg:flex-row lg:space-x-8 lg:bg-theme-section lg:font-medium lg:shadow-none"
+          class="mx-2 flex h-screen flex-col rounded-lg text-sm lg:mt-0 lg:h-auto lg:flex-row lg:space-x-8 lg:bg-theme-section lg:font-medium lg:shadow-none"
         >
-          <!-- Start Account Navlink Section -->
-          <!-- End Account Navlink Section -->
+          <!-- Start Profile Section -->
+          <li v-if="auth.isAuthenticated">
+            <cf-profile-menu
+              view-mode="accordion"
+              class="mb-2 rounded py-2 px-4 text-theme-base lg:hidden"
+              :avatar-width="12"
+              :avatar-height="12"
+              @selected="toggleHamburgerContent"
+            />
+            <cf-horizontal-separator class="mb-4 mt-2 w-full lg:hidden" />
+          </li>
+          <!-- End Profile Section -->
+
+          <!-- Start nav links -->
           <li v-for="link in navLinks" :key="link.name">
             <router-link
               :to="{ name: link.name }"
@@ -129,6 +106,8 @@
               {{ link.label }}
             </router-link>
           </li>
+          <!-- End nav links -->
+          <!-- Start theme switcher -->
           <li class="lg:hidden">
             <cf-horizontal-separator class="mb-3"></cf-horizontal-separator>
           </li>
@@ -138,6 +117,17 @@
               class="mb-4 block w-full bg-theme-section"
               @theme-applied="toggleHamburgerContent"
             />
+          </li>
+          <li class="lg:hidden">
+            <router-link
+              v-if="!auth.isAuthenticated"
+              :to="{ name: 'login' }"
+              class="mb-4 block w-full rounded py-2 pl-6 pr-4 text-left text-theme-base transition-none duration-200 ease-in hover:transition-all focus-visible:no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-primary lg:mb-0 lg:rounded-xl lg:py-1 lg:px-2 lg:text-theme-base lg:hover:-translate-y-0.5 lg:hover:scale-105 lg:hover:bg-theme-section-hover"
+              @click="toggleHamburgerContent"
+            >
+              <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-2 h-3 w-3 lg:hidden"></font-awesome-icon>
+              Login
+            </router-link>
           </li>
           <!-- End Switch theme (mobile) -->
         </ul>
@@ -151,26 +141,15 @@
 import AppThemeSwitcher from '@/components/campfire/theme-switcher/CfThemeSwitcher.vue'
 import AppTooltip from '@/components/AppTooltip.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/20/solid'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AppLogo from '@/components/AppLogo.vue'
 import CfButton from '@/components/campfire/buttons/CfButton.vue'
 import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
 import { useAuthStore } from '@/stores/auth'
-import CfAvatar from '@/components/campfire/CfAvatar.vue'
+import CfProfileMenu from '@/components/campfire/CfProfileMenu.vue'
 
 const auth = useAuthStore()
-
-const handleOpenGithubPages = () => {
-  const githubUser = import.meta.env.VITE_GITHUB_USER
-  window.open(`https://github.com/${githubUser}/sunrise-spa#readme`, '_spa')
-  window.open(`https://github.com/${githubUser}/sunrise-api#readme`, '_api')
-}
-
-const handleOpenYoutubePage = () => {
-  window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_got_em')
-}
 
 const router = useRouter()
 
@@ -212,7 +191,11 @@ const toggleHamburgerContent = () => {
   hamburgerContent.classList.add('right-[-200%]')
 }
 
-const navigateToLogin = () => {
-  router.push({ name: 'login' })
+const navigateToLogin = async (fromMobileView = false) => {
+  if (fromMobileView) {
+    toggleHamburgerContent()
+  }
+
+  await router.push({ name: 'login' })
 }
 </script>

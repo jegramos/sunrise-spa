@@ -40,7 +40,7 @@
     <div v-else>
       <button
         type="button"
-        class="flex h-full w-full items-center rounded py-2 pl-5 pr-4 font-bold text-theme-base hover:-translate-y-0.5"
+        class="flex h-full w-full items-center rounded py-2 pl-6 pr-4 font-bold text-theme-base"
         @click="setDialogIsOpen(true)"
       >
         <swatch-icon class="mr-2 h-3.5 w-3.5"></swatch-icon>

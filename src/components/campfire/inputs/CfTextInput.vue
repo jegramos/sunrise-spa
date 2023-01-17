@@ -109,5 +109,5 @@ const inputStateStyle = computed(() => {
   return inputClass
 })
 
-const showPassword = ref(false)
+let showPassword = ref(false)
 </script>
