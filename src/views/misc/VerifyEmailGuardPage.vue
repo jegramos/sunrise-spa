@@ -1,3 +1,56 @@
 <template>
-  <h1>Welcome, please verify your email address</h1>
+  <div class="text-center font-light leading-relaxed">
+    <div class="mb-6 flex justify-center">
+      <mailbox-graphic class="h-40 sm:h-52 lg:h-60" />
+    </div>
+
+    <h1 class="text-2xl">Almost, there! Please verify your email</h1>
+    <cf-horizontal-separator class="my-4" />
+    <p>
+      We've sent a verification link to
+      <span class="mx-1 font-medium underline underline-offset-4">{{ auth.authenticatedUser.email }}</span>
+      to verify your email address and activate your account. The link in the email will expire in 12 hours.
+    </p>
+    <p class="mt-2">You may need to check your spam folder if you can't find the email in your inbox.</p>
+    <div class="mt-4 flex flex-col items-center justify-center">
+      <p>Still can't find the stupid email?</p>
+      <cf-button
+        class="mt-3 bg-theme-primary font-normal text-theme-inverted"
+        :is-loading="isLoading"
+        @click="handleResendEmailVerification"
+      >
+        <template #icon>
+          <font-awesome-icon icon="fa-solid fa-paper-plane" class="mr-2" />
+        </template>
+        Resend email
+      </cf-button>
+    </div>
+  </div>
 </template>
+
+<script setup>
+import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
+import CfButton from '@/components/campfire/buttons/CfButton.vue'
+import MailboxGraphic from '@/components/email-verification/MailboxGraphic.vue'
+import { useAuthStore } from '@/stores/auth'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { ref } from 'vue'
+import { useGlobalStore } from '@/stores/global'
+
+const auth = useAuthStore()
+const isLoading = ref(false)
+const globalStore = useGlobalStore()
+
+const handleResendEmailVerification = async () => {
+  isLoading.value = true
+  await auth.resendEmailVerification()
+  isLoading.value = false
+  globalStore.pushToastMessage({
+    title: 'Email verification sent',
+    description: "We've sent you another email verification",
+    timeout: 6000,
+    type: 'success',
+    iconClass: 'fa-solid fa-paper-plane',
+  })
+}
+</script>

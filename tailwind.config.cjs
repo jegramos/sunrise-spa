@@ -20,7 +20,7 @@ module.exports = {
     'theme-light',
     'theme-old',
     { pattern: /bg-theme-(success|error|warning|info|base|section)/ },
-    { pattern: /text-theme-(success|error|warning|info|base|section)-panel/ },
+    { pattern: /text-theme-(success|error|warning|info|base|section|tooling)-panel/ },
     { pattern: /(w-|h-)./ },
   ],
   theme: {
@@ -61,6 +61,7 @@ module.exports = {
           'success-panel': withOpacity('--color-text-panel-success'),
           'warning-panel': withOpacity('--color-text-panel-warning'),
           'error-panel': withOpacity('--color-text-panel-error'),
+          'tooling-panel': withOpacity('--color-text-tooling'),
         },
       },
       backgroundColor: {

@@ -49,9 +49,9 @@
       <cf-button class="bg-transparent text-sm italic hover:bg-theme-section-hover"> I forgot my password</cf-button>
       <cf-button
         id="login-page-button"
-        class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[28%] lg:w-[25%]"
+        class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[30%] lg:w-[25%]"
         :is-loading="isLoading"
-        loading-text="Submitting..."
+        loading-text="Loading..."
         @click="handleFormSubmit"
       >
         <template #icon>

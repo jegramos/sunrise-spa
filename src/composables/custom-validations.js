@@ -1,5 +1,5 @@
 import { helpers } from '@vuelidate/validators'
-import { useAuthStore } from '@/stores/auth'
+import { usePublicStore } from '@/stores/public'
 
 // must only have letters, numbers, underscores, dashes, and dots
 export const useAlphaDashDotRule = () => helpers.regex(/^[0-9A-Za-z_\-.]+$/u)
@@ -14,6 +14,6 @@ export const useUniqueUserIdentifierRule = (key) => async (value) => {
     throw new Error(errorMessage)
   }
 
-  const res = await useAuthStore().checkAvailability(key, value)
+  const res = await usePublicStore().checkAvailability(key, value)
   return res.data.is_available
 }

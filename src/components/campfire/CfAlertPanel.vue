@@ -46,7 +46,7 @@ const props = defineProps({
     type: String,
     default: 'base',
     validator: (value) => {
-      return ['base', 'section', 'tooling', 'success', 'error', 'warning', 'info'].includes(value)
+      return ['base', 'section', 'tooling', 'success', 'error', 'warning', 'info', 'tooling'].includes(value)
     },
   },
   dismissible: {

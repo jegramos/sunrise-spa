@@ -5,7 +5,6 @@ import { vueApp } from '@/app.js'
 import PortfolioPage from '@/views/PortfolioPage.vue'
 import BlogsPage from '@/views/BlogsPage.vue'
 import { useAuthStore } from '@/stores/auth.js'
-import VerifyEmailGuardPage from '@/views/misc/VerifyEmailGuardPage.vue'
 import { useAuthType, useRole } from '@/composables/enums.js'
 import ProfilePage from '@/views/ProfilePage.vue'
 import NotificationsPage from '@/views/NotificationsPage.vue'
@@ -130,10 +129,20 @@ const routes = [
       },
       {
         path: 'verify-email',
-        name: 'verify-email',
-        component: VerifyEmailGuardPage,
+        name: 'verify-email-guard',
+        component: () => import('@/views/misc/VerifyEmailGuardPage.vue'),
         meta: {
           label: 'Verify Email',
+          hideNavBar: true,
+          auth: authType.AUTHENTICATED,
+        },
+      },
+      {
+        path: 'email-verification-success',
+        name: 'email-verification-success',
+        component: () => import('@/views/misc/EmailVerificationPage.vue'),
+        meta: {
+          label: 'Email Verification Success',
           hideNavBar: true,
           auth: authType.AUTHENTICATED,
         },
@@ -176,22 +185,33 @@ const router = createRouter({
 })
 
 const appName = import.meta.env.VITE_APP_NAME
-router.afterEach((to) => {
-  // Change doc title
-  document.title = `${appName} | ${to.meta.label}` || appName
-})
 
 router.beforeEach(async (to) => {
   if (to.name === 'auth') {
-    // redirect 'domain.com/auth' to 'domain.com/auth/sign-up'
+    // Redirect 'domain.com/auth' to 'domain.com/auth/sign-up'
     return { name: 'sign-up' }
   }
 
-  // redirect to home if already authenticated
+  // Block access to sing-up, login, reset & forgot password, verify email
   const authStore = useAuthStore()
-  if (authStore.isAuthenticated && (to.name === 'login' || to.name === 'sign-up')) {
-    return { name: 'home' }
+  if (authStore.isAuthenticated && to.meta.auth === authType.UNAUTHENTICATED) {
+    return false
   }
+
+  if (to.meta.auth === authType.AUTHENTICATED && !authStore.isAuthenticated) {
+    return false
+  }
+
+  // Users must also have their emails verified to access auth routes (Except for the VerifyEmailGuard Page)
+  if (to.meta.auth === authType.AUTHENTICATED && to.name !== 'verify-email-guard') {
+    console.log('got here')
+    console.log('route-to', to.name)
+    console.log('email-verified-at', authStore.authenticatedUser.email_verified_at)
+    if (!authStore.authenticatedUser.email_verified_at) return { name: 'verify-email-guard' }
+  }
+
+  // Change the browser tab title
+  document.title = `${appName} | ${to.meta.label}` || appName
 })
 
 vueApp.use(router)

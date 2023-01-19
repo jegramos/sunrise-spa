@@ -212,7 +212,7 @@ const handleFormSubmission = async () => {
   isLoading.value = false
 
   if (response.success) {
-    return await router.replace({ name: 'verify-email' })
+    return await router.replace({ name: 'home' })
   }
 
   const { message, errors } = useParseApiResponseError(response)

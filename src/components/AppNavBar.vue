@@ -122,7 +122,7 @@
             <router-link
               v-if="!auth.isAuthenticated"
               :to="{ name: 'login' }"
-              class="mb-4 block w-full rounded py-2 pl-6 pr-4 text-left text-theme-base transition-none duration-200 ease-in hover:transition-all focus-visible:no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-primary lg:mb-0 lg:rounded-xl lg:py-1 lg:px-2 lg:text-theme-base lg:hover:-translate-y-0.5 lg:hover:scale-105 lg:hover:bg-theme-section-hover"
+              class="mb-4 block w-full rounded py-2 pl-6 pr-4 text-left font-bold text-theme-base transition-none duration-200 ease-in hover:transition-all focus-visible:no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-primary lg:mb-0 lg:rounded-xl lg:py-1 lg:px-2 lg:text-theme-base lg:hover:-translate-y-0.5 lg:hover:scale-105 lg:hover:bg-theme-section-hover"
               @click="toggleHamburgerContent"
             >
               <font-awesome-icon icon="fa-solid fa-right-to-bracket" class="mr-2 h-3 w-3 lg:hidden"></font-awesome-icon>
@@ -140,14 +140,14 @@
 <script setup>
 import AppThemeSwitcher from '@/components/campfire/theme-switcher/CfThemeSwitcher.vue'
 import AppTooltip from '@/components/AppTooltip.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import AppLogo from '@/components/AppLogo.vue'
 import CfButton from '@/components/campfire/buttons/CfButton.vue'
 import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
-import { useAuthStore } from '@/stores/auth'
 import CfProfileMenu from '@/components/campfire/CfProfileMenu.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
 

@@ -33,6 +33,7 @@ import {
   faXmark,
   faBell,
   faChevronRight,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faCircleXmark, faCircleCheck } from '@fortawesome/free-regular-svg-icons'
@@ -70,5 +71,6 @@ library.add(
   faGear,
   faPowerOff,
   faBell,
-  faChevronRight
+  faChevronRight,
+  faPaperPlane
 )

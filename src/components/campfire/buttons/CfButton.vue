@@ -1,6 +1,6 @@
 <template>
   <button
-    :disabled="isLoading || props.disabled"
+    :disabled="props.isLoading || props.disabled"
     :class="`${buttonShapeAndEffectClass} ${buttonSizeClass} flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-1 focus-visible:ring-theme-primary focus-visible:ring-offset-1 focus-visible:ring-offset-theme-section`"
   >
     <template v-if="!props.isLoading">
@@ -49,7 +49,7 @@ const props = defineProps({
 
 const buttonShapeAndEffectClass = computed(() => {
   if (props.isLoading) {
-    // disable hover effects if in loading state
+    // Disable hover effects if in loading state
     return 'py-2 px-3 rounded-xl hover:scale-100 hover:-translate-y-0'
   }
 

@@ -1,5 +1,8 @@
 <template>
   <div id="app-wrapper" class="flex h-screen flex-col font-content">
+    <!-- Start global toast messages -->
+    <cf-toast-message-list />
+    <!-- ENd global toast messages -->
     <nav-bar v-if="!route.meta.hideNavBar"></nav-bar>
     <!-- Start Main Content -->
     <div
@@ -31,6 +34,7 @@ import { useApplyTheme } from '@/composables/theme'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useProfileStore } from '@/stores/profile'
+import CfToastMessageList from '@/components/toast-message/CfToastMessageList.vue'
 
 const route = useRoute()
 
@@ -38,7 +42,7 @@ const auth = useAuthStore()
 const profile = useProfileStore()
 onBeforeMount(async () => {
   // rehydrate profile info on reload if there is an authenticated user
-  if (auth.isAuthenticated) {
+  if (auth.isAuthenticated && auth.authenticatedUser.email_verified_at) {
     await profile.fetchProfile()
   }
 })
