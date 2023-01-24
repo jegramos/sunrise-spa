@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup>
-import CfToastMessage from '@/components/email-verification/CfToastMessage.vue'
+import CfToastMessage from '@/components/toast-message/CfToastMessage.vue'
 import { useGlobalStore } from '@/stores/global'
 import { computed } from 'vue'
 

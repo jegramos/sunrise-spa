@@ -2,7 +2,10 @@
   <div id="app-wrapper" class="flex h-screen flex-col font-content">
     <!-- Start global toast messages -->
     <cf-toast-message-list />
-    <!-- ENd global toast messages -->
+    <!-- End global toast messages -->
+    <!-- Start login modal -->
+    <app-login-modal />
+    <!-- End login modal -->
     <nav-bar v-if="!route.meta.hideNavBar"></nav-bar>
     <!-- Start Main Content -->
     <div
@@ -35,6 +38,7 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useProfileStore } from '@/stores/profile'
 import CfToastMessageList from '@/components/toast-message/CfToastMessageList.vue'
+import AppLoginModal from '@/components/AppLoginModal.vue'
 
 const route = useRoute()
 

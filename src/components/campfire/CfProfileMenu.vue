@@ -42,9 +42,9 @@
             <button
               v-for="menu in linkMenus"
               :key="menu.name"
-              :class="`mx-2 mb-1 flex items-center justify-between rounded-lg px-2 py-2 px-6 text-left transition-colors duration-100 ${
-                $route.name === menu.route.name ? 'bg-theme-primary text-theme-inverted' : ''
-              } hover:bg-theme-primary hover:text-theme-inverted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-primary`"
+              :class="`mx-2 mb-1 flex items-center justify-between rounded-lg px-2 py-2 px-6 text-left transition-all duration-200 ${
+                $route.name === menu.route.name ? 'bg-theme-primary text-theme-inverted' : 'hover:scale-105'
+              } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-primary`"
               @click="$router.push(menu.route)"
             >
               <span>
@@ -55,7 +55,7 @@
             </button>
             <!-- End link menus -->
             <button
-              class="mx-2 rounded-lg px-2 py-2 px-6 text-left hover:bg-theme-primary hover:text-theme-inverted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-primary"
+              class="mx-2 rounded-lg px-2 py-2 px-6 text-left transition-all duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-primary"
               @click="handleLogout(close)"
             >
               <font-awesome-icon icon="fa-solid fa-power-off" class="mr-2"></font-awesome-icon>

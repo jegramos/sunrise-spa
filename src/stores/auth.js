@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { useApiCall } from '@/composables/network.js'
 import { StorageSerializers, useStorage } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
   // States. We use localStorage to hydrate state when the page reloads
@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
     deep: true,
     mergeDefaults: true,
   })
+  const authExpired = ref(false)
 
   // Computed
   const isAuthenticated = computed(() => {
@@ -20,14 +21,16 @@ export const useAuthStore = defineStore('auth', () => {
 
   // Actions
   const login = async ({ email, password }) => {
-    const { data } = await useApiCall()('auth/tokens').post({
-      email,
-      password,
-      with_user: true,
-      client_name: `${navigator.platform} - Web`,
-    })
+    const { data } = await useApiCall('auth/tokens')
+      .post({
+        email,
+        password,
+        with_user: true,
+        client_name: `${navigator.platform} - Web`,
+      })
+      .json()
 
-    const response = JSON.parse(data.value)
+    const response = data.value
     if (response.success) {
       authenticationToken.value = response.data.token
       authenticatedUser.value = response.data.user
@@ -37,17 +40,19 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const register = async ({ email, username, password, password_confirmation, first_name, last_name }) => {
-    const { data } = await useApiCall()('auth/register').post({
-      email,
-      username,
-      password,
-      password_confirmation,
-      first_name,
-      last_name,
-      client_name: `${navigator.platform} - Web`,
-    })
+    const { data } = await useApiCall('auth/register')
+      .post({
+        email,
+        username,
+        password,
+        password_confirmation,
+        first_name,
+        last_name,
+        client_name: `${navigator.platform} - Web`,
+      })
+      .json()
 
-    const response = JSON.parse(data.value)
+    const response = data.value
     if (response.success) {
       authenticationToken.value = response.data.token
       authenticatedUser.value = response.data.user
@@ -57,20 +62,21 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const logout = async () => {
-    await useApiCall(authenticationToken.value)('auth/tokens').delete()
+    await useApiCall('auth/tokens', authenticationToken.value).delete()
     authenticationToken.value = null
     authenticatedUser.value = null
   }
 
   const resendEmailVerification = async () => {
-    const { data } = await useApiCall(authenticationToken.value)('auth/email/send-verification').get()
-    const response = JSON.parse(data.value)
+    const { data } = await useApiCall('auth/email/send-verification', authenticationToken.value).get().json()
+    const response = data.value
     return response.success
   }
 
   return {
     authenticationToken,
     authenticatedUser,
+    authExpired,
     isAuthenticated,
     login,
     logout,

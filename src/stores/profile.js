@@ -7,9 +7,9 @@ export const useProfileStore = defineStore('profile', () => {
   // we make it reactive again by wrapping storeToRefs()
   const auth = storeToRefs(useAuthStore())
   const fetchProfile = async () => {
-    const { data } = await useApiCall(auth.authenticationToken.value)('/profile').get()
+    const { data } = await useApiCall('/profile', auth.authenticationToken.value).get().json()
 
-    const response = JSON.parse(data.value)
+    const response = data.value
     if (response.success) {
       auth.authenticatedUser.value = response.data
     }

@@ -8,7 +8,7 @@
       autocomplete="off"
       :required="required"
       :class="`peer box-border w-full rounded-xl border-none bg-theme-input pl-3 outline-none ${
-        props.type === 'password' ? 'pr-10' : 'p-3'
+        props.type === 'password' ? 'pr-10' : 'pr-3'
       } ${inputStateStyle} py-2.5 text-theme-input placeholder-transparent transition-transform duration-200 focus:pl-4 focus:ring-1 focus:ring-theme-primary`"
       @input="$emit('update:modelValue', $event.target.value)"
       @blur="$emit('blur', $event)"
@@ -17,7 +17,7 @@
     <!-- Start animated label -->
     <label
       :for="props.id"
-      class="absolute left-1 -top-5 mb-1.5 text-xs text-theme-base transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-5 peer-focus:text-xs peer-focus:text-theme-muted"
+      class="absolute left-1 -top-5 mb-1.5 text-xs text-theme-base transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-5 peer-focus:text-xs"
     >
       {{ props.label }}
     </label>
@@ -95,6 +95,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  border: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const inputStateStyle = computed(() => {
@@ -104,6 +108,11 @@ const inputStateStyle = computed(() => {
     inputClass = 'ring-1 ring-theme-error'
   } else if (props.success) {
     inputClass = 'ring-1 ring-theme-success'
+  }
+
+  // append ring color
+  if (props.border && !(props.success || props.invalid)) {
+    inputClass = 'ring-1 ring-theme-section'
   }
 
   return inputClass
