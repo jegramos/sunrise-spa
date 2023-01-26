@@ -31,14 +31,14 @@
 <script setup>
 import NavBar from './components/AppNavBar.vue'
 import FooterComponent from './components/AppFooter.vue'
+import CfToastMessageList from '@/components/toast-message/CfToastMessageList.vue'
+import AppLoginModal from '@/components/AppLoginModal.vue'
 import { onBeforeMount, onMounted } from 'vue'
 import { useThemeStore } from '@/stores/theme'
 import { useApplyTheme } from '@/composables/theme'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useProfileStore } from '@/stores/profile'
-import CfToastMessageList from '@/components/toast-message/CfToastMessageList.vue'
-import AppLoginModal from '@/components/AppLoginModal.vue'
 
 const route = useRoute()
 

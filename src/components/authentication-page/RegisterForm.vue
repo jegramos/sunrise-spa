@@ -25,14 +25,17 @@
     <!-- Start email and username -->
     <div class="flex flex-col sm:flex-row">
       <div class="w-full sm:mr-2">
+        <!-- Note: We have @focusin for email and username to prevent too many API calls to check for uniqueness -->
         <cf-text-input
           v-model="payload.email"
           name="register-email-input"
           label="Email"
           class="text-sm"
           :invalid="validator.email.$invalid"
-          :invalid-text="validator.email.$invalid ? validator.email.$errors[0].$message : null"
+          :invalid-text="validator.email.$errors[0]?.$message"
+          :success="!validator.email.$invalid && validator.email.$dirty && !validator.email.$pending"
           @blur="validator.email.$touch"
+          @focusin="validator.email.$dirty = false"
         ></cf-text-input>
       </div>
       <div class="w-full sm:ml-2">
@@ -42,8 +45,10 @@
           label="Username"
           class="text-sm"
           :invalid="validator.username.$invalid"
-          :invalid-text="validator.username.$invalid ? validator.username.$errors[0].$message : null"
+          :invalid-text="validator.username.$errors[0]?.$message"
+          :success="!validator.username.$invalid && validator.username.$dirty && !validator.username.$pending"
           @blur="validator.username.$touch"
+          @focusin="validator.username.$dirty = false"
         ></cf-text-input>
       </div>
     </div>
@@ -212,7 +217,7 @@ const handleFormSubmission = async () => {
   isLoading.value = false
 
   if (response.success) {
-    return await router.replace({ name: 'home' })
+    return await router.replace({ name: 'verify-email-guard' })
   }
 
   const { message, errors } = useParseApiResponseError(response)

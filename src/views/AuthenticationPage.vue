@@ -110,13 +110,13 @@
 <script setup>
 import AppLogo from '@/components/AppLogo.vue'
 import CfButton from '@/components/campfire/buttons/CfButton.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import LoginGraphic from '@/components/authentication-page/LoginGraphic.vue'
-import { useRoute, useRouter } from 'vue-router'
 import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
 import LoginForm from '@/components/authentication-page/LoginForm.vue'
 import RegisterForm from '@/components/authentication-page/RegisterForm.vue'
 import RegistrationGraphic from '@/components/authentication-page/RegistrationGraphic.vue'
+import LoginGraphic from '@/components/authentication-page/LoginGraphic.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { useRoute, useRouter } from 'vue-router'
 import { TransitionRoot } from '@headlessui/vue'
 import { ref } from 'vue'
 

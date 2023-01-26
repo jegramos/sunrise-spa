@@ -98,6 +98,4 @@ if (props.timeout !== Infinity) {
     emit('update:modelValue', false)
   }, props.timeout)
 }
-
-console.log(props.iconClass)
 </script>

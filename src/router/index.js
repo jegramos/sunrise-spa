@@ -128,7 +128,7 @@ const routes = [
         },
       },
       {
-        path: 'verify-email',
+        path: 'verify-email-guard',
         name: 'verify-email-guard',
         component: () => import('@/views/misc/VerifyEmailGuardPage.vue'),
         meta: {
@@ -138,9 +138,19 @@ const routes = [
         },
       },
       {
+        path: 'verify-email/:id/:hash',
+        name: 'process-email-verification',
+        component: () => import('@/views/misc/ProcessEmailVerificationPage.vue'),
+        meta: {
+          label: 'Email Verification In-progress',
+          hideNavBar: true,
+          auth: authType.OPEN,
+        },
+      },
+      {
         path: 'email-verification-success',
         name: 'email-verification-success',
-        component: () => import('@/views/misc/EmailVerificationPage.vue'),
+        component: () => import('@/views/misc/EmailVerificationPageSuccess.vue'),
         meta: {
           label: 'Email Verification Success',
           hideNavBar: true,
@@ -186,27 +196,25 @@ const router = createRouter({
 
 const appName = import.meta.env.VITE_APP_NAME
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from) => {
   if (to.name === 'auth') {
     // Redirect 'domain.com/auth' to 'domain.com/auth/sign-up'
     return { name: 'sign-up' }
   }
 
-  // Block access to sing-up, login, reset & forgot password, verify email
+  // Block access to sign-up, login, reset & forgot password, verify email
   const authStore = useAuthStore()
   if (authStore.isAuthenticated && to.meta.auth === authType.UNAUTHENTICATED) {
-    return false
+    return from
   }
 
   if (to.meta.auth === authType.AUTHENTICATED && !authStore.isAuthenticated) {
-    return false
+    return { name: 'login' }
   }
 
-  // Users must also have their emails verified to access auth routes (Except for the VerifyEmailGuard Page)
-  if (to.meta.auth === authType.AUTHENTICATED && to.name !== 'verify-email-guard') {
-    console.log('got here')
-    console.log('route-to', to.name)
-    console.log('email-verified-at', authStore.authenticatedUser.email_verified_at)
+  // Users must also have their emails verified to access auth routes (Except for the VerifyEmailGuard and Process Page)
+  const omittedVerificationPages = ['verify-email-guard']
+  if (to.meta.auth === authType.AUTHENTICATED && !omittedVerificationPages.includes(to.name)) {
     if (!authStore.authenticatedUser.email_verified_at) return { name: 'verify-email-guard' }
   }
 

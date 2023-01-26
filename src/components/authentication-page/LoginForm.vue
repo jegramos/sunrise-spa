@@ -72,7 +72,7 @@ import { reactive, ref } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
 
 const payload = reactive({
@@ -98,6 +98,8 @@ const validator = useVuelidate(formRules, payload)
 // Handle form submission
 const showErrorAlert = ref(false)
 const router = useRouter()
+const route = useRoute()
+
 const handleFormSubmit = async () => {
   const valid = await validator.value.$validate()
   if (!valid) return
@@ -108,7 +110,23 @@ const handleFormSubmit = async () => {
   isLoading.value = false
 
   if (response.success) {
-    return await router.replace({ name: 'home' })
+    // Handle route redirection from email verification page
+    if (route.query.from_email_verification) {
+      return await router.replace({
+        name: 'process-email-verification',
+        params: {
+          id: route.query.id,
+          hash: route.query.hash,
+        },
+        query: {
+          signature: route.query.signature,
+          expires: route.query.expires,
+        },
+      })
+    }
+
+    if (auth.authenticatedUser.email_verified_at) return await router.replace({ name: 'home' })
+    else return await router.replace({ name: 'verify-email-guard' })
   }
 
   showErrorAlert.value = true

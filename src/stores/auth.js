@@ -73,6 +73,12 @@ export const useAuthStore = defineStore('auth', () => {
     return response.success
   }
 
+  const verifyEmail = async ({ id, hash, signature, expires }) => {
+    const url = `auth/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`
+    const { data } = await useApiCall(url, authenticationToken.value).get().json()
+    return data.value
+  }
+
   return {
     authenticationToken,
     authenticatedUser,
@@ -82,5 +88,6 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     register,
     resendEmailVerification,
+    verifyEmail,
   }
 })

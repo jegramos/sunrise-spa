@@ -18,7 +18,6 @@ export const useApiCall = (uri, authToken = null) => {
     },
     // Intercept when the auth token expires
     onFetchError(ctx) {
-      console.log('fired', ctx)
       const authToken = useAuthStore().authenticationToken
       if (authToken && ctx?.data?.error_code === 'UNAUTHORIZED_ERROR' && ctx?.response?.status === 401) {
         useAuthStore().authExpired = true

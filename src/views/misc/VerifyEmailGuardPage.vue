@@ -9,13 +9,17 @@
     <p>
       We've sent a verification link to
       <span class="mx-1 font-medium underline underline-offset-4">{{ auth.authenticatedUser.email }}</span>
-      to verify your email address and activate your account. The link in the email will expire in 12 hours.
+      to verify your email address and activate your account.
     </p>
-    <p class="mt-2">You may need to check your spam folder if you can't find the email in your inbox.</p>
+    <p class="mt-2">
+      The link in the email will expire in 12 hours. You may need to check your spam folder if you can't find the email
+      in your inbox.
+    </p>
     <div class="mt-4 flex flex-col items-center justify-center">
       <p>Still can't find the stupid email?</p>
       <cf-button
-        class="mt-3 bg-theme-primary font-normal text-theme-inverted"
+        class="mt-4 bg-theme-primary font-normal text-theme-inverted"
+        :disabled="sendEmailButtonIsLocked"
         :is-loading="isLoading"
         @click="handleResendEmailVerification"
       >
@@ -24,6 +28,9 @@
         </template>
         Resend email
       </cf-button>
+      <p v-if="sendEmailButtonIsLocked" class="mt-3 text-sm italic text-theme-muted">
+        You can send again after <span class="font-bold">{{ sendEmailButtonTimer }}</span> seconds
+      </p>
     </div>
   </div>
 </template>
@@ -34,13 +41,21 @@ import CfButton from '@/components/campfire/buttons/CfButton.vue'
 import MailboxGraphic from '@/components/email-verification/MailboxGraphic.vue'
 import { useAuthStore } from '@/stores/auth'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 import { useGlobalStore } from '@/stores/global'
 
 const auth = useAuthStore()
 const isLoading = ref(false)
 const globalStore = useGlobalStore()
+const sendEmailButtonIsLocked = ref(false)
+const sendEmailButtonTimer = ref(45)
+let emailButtonLockTimerId = null
 
+const resetSendEmailButtonLock = () => {
+  clearInterval(emailButtonLockTimerId)
+  sendEmailButtonIsLocked.value = false
+  sendEmailButtonTimer.value = 45
+}
 const handleResendEmailVerification = async () => {
   isLoading.value = true
   await auth.resendEmailVerification()
@@ -52,5 +67,18 @@ const handleResendEmailVerification = async () => {
     type: 'success',
     iconClass: 'fa-solid fa-paper-plane',
   })
+
+  // Lock the button for 30 seconds
+  sendEmailButtonIsLocked.value = true
+  emailButtonLockTimerId = setInterval(async () => {
+    sendEmailButtonTimer.value -= 1
+    if (sendEmailButtonTimer.value <= 0) {
+      resetSendEmailButtonLock()
+    }
+  }, 1000)
 }
+
+onUnmounted(() => {
+  resetSendEmailButtonLock()
+})
 </script>
