@@ -20,8 +20,7 @@
         <cf-alert-panel v-model="showErrorAlert" dismissible class="z-30 mb-4" panel-type="error">
           Unable to reset your password
           <template #description>
-            Please make sure that an the request link has not expired. <br />Also check the most recent email in your
-            inbox if you've requested multiple times.
+            The link has either expired, so please double check your inbox, or you've entered an incorrect email
           </template>
         </cf-alert-panel>
       </transition>
@@ -147,7 +146,7 @@ const handleFormSubmit = async () => {
   isLoading.value = false
 
   // If it's a validation error, then the email is incorrect (or someone is trying to guess an email)
-  if (!response.success && response.error_code !== 'VALIDATION_ERROR') {
+  if (!response.success) {
     return (showErrorAlert.value = true)
   }
 
