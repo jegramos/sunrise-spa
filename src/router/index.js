@@ -197,6 +197,9 @@ const router = createRouter({
 const appName = import.meta.env.VITE_APP_NAME
 
 router.beforeEach(async (to, from) => {
+  // Always scroll to the top of the page
+  window.scrollTo(0, 0)
+
   if (to.name === 'auth') {
     // Redirect 'domain.com/auth' to 'domain.com/auth/sign-up'
     return { name: 'sign-up' }
