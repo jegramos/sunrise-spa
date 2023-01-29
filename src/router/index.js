@@ -157,27 +157,27 @@ const routes = [
           auth: authType.AUTHENTICATED,
         },
       },
+      {
+        path: 'reset-password',
+        name: 'reset-password',
+        component: () => import('@/views/ResetPasswordPage.vue'),
+        meta: {
+          label: 'Reset Password',
+          hideNavBar: true,
+          auth: authType.UNAUTHENTICATED,
+        },
+      },
+      {
+        path: 'forgot-password',
+        name: 'forgot-password',
+        component: () => import('@/views/ForgotPasswordPage.vue'),
+        meta: {
+          label: 'Forgot Password',
+          hideNavBar: true,
+          auth: authType.UNAUTHENTICATED,
+        },
+      },
     ],
-  },
-  {
-    path: '/reset-password',
-    name: 'ResetPassword',
-    component: () => import('@/views/ResetPasswordPage.vue'),
-    meta: {
-      label: 'Reset Password',
-      hideNavBar: true,
-      auth: authType.UNAUTHENTICATED,
-    },
-  },
-  {
-    path: '/forgot-password',
-    name: 'forgot-password',
-    component: () => import('@/views/ForgotPasswordPage.vue'),
-    meta: {
-      label: 'Forgot Password',
-      hideNavBar: true,
-      auth: authType.UNAUTHENTICATED,
-    },
   },
   {
     path: '/:catchAll(.*)',

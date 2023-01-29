@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`${positionClass} fixed z-20 flex h-auto w-full max-w-sm flex-col rounded-2xl px-3 sm:w-[43%] sm:px-0 lg:w-[30%]`"
+    :class="`${positionClass} fixed z-20 flex h-auto w-full flex-col rounded-2xl px-3 sm:w-[43%] sm:px-0 lg:w-[30%]`"
   >
     <transition-group
       name="toast-messages"

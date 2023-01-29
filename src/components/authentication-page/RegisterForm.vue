@@ -188,7 +188,7 @@ const formRules = {
   password: {
     required: helpers.withMessage('Please enter your password', required),
     minLength: helpers.withMessage('Must be at least 8 characters long', minLength(8)),
-    maxLength: helpers.withMessage('Must be a maximum of 15 characters', maxLength(15)),
+    maxLength: helpers.withMessage('Must be a maximum of 50 characters', maxLength(50)),
     password: helpers.withMessage(
       'Must include at least one number, and one uppercase and lowercase letter',
       usePasswordRule()

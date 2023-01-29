@@ -79,6 +79,24 @@ export const useAuthStore = defineStore('auth', () => {
     return data.value
   }
 
+  const requestForgotPassword = async ({ email }) => {
+    const { data } = await useApiCall('auth/forgot-password').post({ email }).json()
+    return data.value
+  }
+
+  const resetPassword = async ({ email, token, password, password_confirmation }) => {
+    const { data } = await useApiCall('auth/reset-password')
+      .post({
+        email,
+        token,
+        password,
+        password_confirmation,
+      })
+      .json()
+
+    return data.value
+  }
+
   return {
     authenticationToken,
     authenticatedUser,
@@ -89,5 +107,7 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     resendEmailVerification,
     verifyEmail,
+    requestForgotPassword,
+    resetPassword,
   }
 })

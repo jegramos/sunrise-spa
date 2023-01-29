@@ -68,7 +68,7 @@ const handleResendEmailVerification = async () => {
     iconClass: 'fa-solid fa-paper-plane',
   })
 
-  // Lock the button for 30 seconds
+  // Lock the button for 45 seconds
   sendEmailButtonIsLocked.value = true
   emailButtonLockTimerId = setInterval(async () => {
     sendEmailButtonTimer.value -= 1

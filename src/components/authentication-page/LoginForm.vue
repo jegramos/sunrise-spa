@@ -39,14 +39,19 @@
           class="text-sm"
           :invalid="validator.password.$invalid"
           :invalid-text="validator.password.$invalid ? validator.password.$errors[0].$message : null"
-          @keyup.enter="handleFormSubmit"
+          @keydown.enter.prevent="handleFormSubmit"
           @blur="validator.password.$touch"
         ></cf-text-input>
       </div>
     </div>
     <!-- Start action buttons -->
     <div class="mb-1 mt-4 flex w-full justify-end justify-between">
-      <cf-button class="bg-transparent text-sm italic hover:bg-theme-section-hover"> I forgot my password</cf-button>
+      <cf-button
+        class="bg-transparent text-sm italic hover:bg-theme-section-hover"
+        @click="router.push({ name: 'forgot-password' })"
+      >
+        I forgot my password
+      </cf-button>
       <cf-button
         id="login-page-button"
         class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[30%] lg:w-[25%]"
