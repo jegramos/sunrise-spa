@@ -1,5 +1,8 @@
 <template>
   <div id="app-wrapper" class="flex h-screen flex-col font-content">
+    <!-- Start Fullscreen loader -->
+    <cf-full-screen-loader :is-open="appIsLoading"></cf-full-screen-loader>
+    <!-- End Fullscreen loader -->
     <!-- Start global toast messages -->
     <cf-toast-message-list />
     <!-- End global toast messages -->
@@ -33,17 +36,24 @@ import NavBar from './components/AppNavBar.vue'
 import FooterComponent from './components/AppFooter.vue'
 import CfToastMessageList from '@/components/toast-message/CfToastMessageList.vue'
 import AppLoginModal from '@/components/AppLoginModal.vue'
-import { onBeforeMount, onMounted } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { useThemeStore } from '@/stores/theme'
-import { useApplyTheme } from '@/composables/theme'
+import { useApplyTheme, useGetThemeFromAppSettings } from '@/composables/theme'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useProfileStore } from '@/stores/profile'
+import { useSettingsStore } from '@/stores/settings.js'
+import { useSleep } from '@/composables/helpers.js'
+import CfFullScreenLoader from '@/components/campfire/CfFullScreenLoader.vue'
+
+const appIsLoading = ref(true)
 
 const route = useRoute()
 
 const auth = useAuthStore()
 const profile = useProfileStore()
+const settings = useSettingsStore()
+
 onBeforeMount(async () => {
   // rehydrate profile info on reload if there is an authenticated user
   if (auth.isAuthenticated && auth.authenticatedUser.email_verified_at) {
@@ -53,6 +63,14 @@ onBeforeMount(async () => {
 
 const theme = useThemeStore()
 onMounted(async () => {
-  useApplyTheme(theme.selectedTheme, theme.availableThemes)
+  // fetch app settings (ex. themes)
+  await settings.fetchSettings()
+
+  // To make sure the animation is not janky
+  await useSleep()(0.5)
+
+  const selectedTheme = useGetThemeFromAppSettings()
+  useApplyTheme(selectedTheme, theme.availableThemes)
+  appIsLoading.value = false
 })
 </script>

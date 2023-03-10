@@ -6,6 +6,7 @@ export const useProfileStore = defineStore('profile', () => {
   // VueUse's useStorage() loses reactivity after serialization,
   // we make it reactive again by wrapping storeToRefs()
   const auth = storeToRefs(useAuthStore())
+
   const fetchProfile = async () => {
     const { data } = await useApiCall('/profile', auth.authenticationToken.value).get().json()
 

@@ -20,15 +20,11 @@ export const useAuthStore = defineStore('auth', () => {
   })
 
   // Actions
-  const login = async ({ email, password }) => {
-    const { data } = await useApiCall('auth/tokens')
-      .post({
-        email,
-        password,
-        with_user: true,
-        client_name: `${navigator.platform} - Web`,
-      })
-      .json()
+  const login = async (payload) => {
+    payload.with_user = true
+    payload.client_name = `${navigator.platform} - Web`
+
+    const { data } = await useApiCall('auth/tokens').post(payload).json()
 
     const response = data.value
     if (response.success) {

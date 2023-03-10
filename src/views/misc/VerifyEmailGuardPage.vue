@@ -58,8 +58,11 @@ const resetSendEmailButtonLock = () => {
 }
 const handleResendEmailVerification = async () => {
   isLoading.value = true
-  await auth.resendEmailVerification()
+  const success = await auth.resendEmailVerification()
   isLoading.value = false
+
+  if (!success) return false
+
   globalStore.pushToastMessage({
     title: 'Email verification sent',
     description: "We've sent you another email verification",

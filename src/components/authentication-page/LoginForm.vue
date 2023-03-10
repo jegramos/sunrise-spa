@@ -25,7 +25,7 @@
           :invalid="validator.email.$invalid"
           :invalid-text="validator.email.$invalid ? validator.email.$errors[0].$message : null"
           name="email"
-          label="Email"
+          label="Email or mobile number"
           class="text-sm"
           @blur="validator.email.$touch"
         ></cf-text-input>
@@ -75,10 +75,11 @@ import CfButton from '@/components/campfire/buttons/CfButton.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { reactive, ref } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email, helpers } from '@vuelidate/validators'
+import { required, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '@/stores/auth'
 import { useRoute, useRouter } from 'vue-router'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
+import { useIsValidMobileNumber } from '@/composables/helpers.js'
 
 const payload = reactive({
   email: '',
@@ -89,8 +90,7 @@ const payload = reactive({
 const formRules = {
   $lazy: true,
   email: {
-    required: helpers.withMessage('Please enter your email address', required),
-    email: helpers.withMessage('Please enter a valid email address', email),
+    required: helpers.withMessage('Email address or mobile number required', required),
   },
   password: {
     required: helpers.withMessage('Please enter your password', required),
@@ -110,8 +110,9 @@ const handleFormSubmit = async () => {
   if (!valid) return
 
   isLoading.value = true
+  const body = manageIfEmailIsPhoneNumber(Object.assign({}, payload))
   const auth = useAuthStore()
-  const response = await auth.login(payload)
+  const response = await auth.login(body)
   isLoading.value = false
 
   if (response.success) {
@@ -135,5 +136,14 @@ const handleFormSubmit = async () => {
   }
 
   showErrorAlert.value = true
+}
+
+const manageIfEmailIsPhoneNumber = (payload) => {
+  const isMobileNumber = useIsValidMobileNumber()
+  if (isMobileNumber(payload.email)) {
+    payload.mobile_number = payload.email
+    delete payload.email
+  }
+  return payload
 }
 </script>

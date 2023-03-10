@@ -1,3 +1,16 @@
+import { useSettingsStore } from '@/stores/settings.js'
+
+export const useGetThemeFromAppSettings = () => {
+  const settingsStore = useSettingsStore()
+  if (!settingsStore.appSettings) return null
+
+  for (const setting of settingsStore.appSettings) {
+    if (setting.name === 'theme') return setting.value
+  }
+
+  return null
+}
+
 export const useApplyTheme = (selectedTheme, availableThemes) => {
   // remove existing theme classes
   for (const themeName of availableThemes) {

@@ -18,7 +18,7 @@ module.exports = {
     'theme-space',
     'theme-dark',
     'theme-light',
-    'theme-old',
+    'theme-old-school',
     { pattern: /bg-theme-(success|error|warning|info|base|section)/ },
     { pattern: /text-theme-(success|error|warning|info|base|section|tooling)-panel/ },
     { pattern: /(w-|h-)./ },

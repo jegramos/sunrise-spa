@@ -37,6 +37,7 @@ import {
   faScroll,
   faKey,
   faFingerprint,
+  faFire,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faCircleXmark, faCircleCheck } from '@fortawesome/free-regular-svg-icons'
@@ -78,5 +79,6 @@ library.add(
   faPaperPlane,
   faScroll,
   faKey,
-  faFingerprint
+  faFingerprint,
+  faFire
 )

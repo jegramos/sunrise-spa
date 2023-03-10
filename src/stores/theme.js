@@ -1,12 +1,17 @@
 import { defineStore } from 'pinia'
-import { useColorMode } from '@vueuse/core'
+// import { useColorMode } from '@vueuse/core'
+import { ref } from 'vue'
+import { useGetThemeFromAppSettings } from '@/composables/theme.js'
 
 export const useThemeStore = defineStore('theme', () => {
   // States
-  const selectedTheme = useColorMode({
-    modes: { dark: 'dark', space: 'space' },
-    emitAuto: true,
-  })
+  const selectedTheme = ref(useGetThemeFromAppSettings())
+
+  // const selectedTheme = useColorMode({
+  //   modes: { dark: 'dark', space: 'space' },
+  //   emitAuto: true,
+  // })
+
   const availableThemes = [
     {
       key: 'dark',
@@ -14,7 +19,7 @@ export const useThemeStore = defineStore('theme', () => {
     },
     { key: 'light', name: 'Light' },
     { key: 'space', name: 'Space' },
-    { key: 'old', name: 'Old School' },
+    { key: 'old-school', name: 'Old School' },
     { key: 'auto', name: 'System Preference' },
   ]
 
