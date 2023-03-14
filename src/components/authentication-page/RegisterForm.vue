@@ -22,7 +22,7 @@
     </p>
   </div>
   <form id="register-page-form" autocomplete="off" class="flex w-full flex-col justify-between" @submit.prevent>
-    <!-- Start email and username -->
+    <!-- Start email and mobile number -->
     <div class="flex flex-col sm:flex-row">
       <div class="w-full sm:mr-2">
         <!-- Note: We have @focusin for email and username to prevent too many API calls to check for uniqueness -->
@@ -36,23 +36,28 @@
           :success="!validator.email.$invalid && validator.email.$dirty && !validator.email.$pending"
           @blur="validator.email.$touch"
           @focusin="validator.email.$dirty = false"
-        ></cf-text-input>
+        >
+        </cf-text-input>
       </div>
       <div class="w-full sm:ml-2">
-        <cf-text-input
-          v-model="payload.username"
-          name="username"
-          label="Username"
-          class="text-sm"
-          :invalid="validator.username.$invalid"
-          :invalid-text="validator.username.$errors[0]?.$message"
-          :success="!validator.username.$invalid && validator.username.$dirty && !validator.username.$pending"
-          @blur="validator.username.$touch"
-          @focusin="validator.username.$dirty = false"
-        ></cf-text-input>
+        <cf-text-input-group
+          v-model="payload.mobile_number"
+          name="mobile_number"
+          label="Mobile Number"
+          prefix="+63"
+          mask="### ### ####"
+          :invalid="validator.mobile_number.$invalid"
+          :invalid-text="validator.mobile_number.$errors[0]?.$message"
+          :success="
+            !validator.mobile_number.$invalid && validator.mobile_number.$dirty && !validator.mobile_number.$pending
+          "
+          @blur="validator.mobile_number.$touch"
+          @focusin="validator.mobile_number.$dirty = false"
+        >
+        </cf-text-input-group>
       </div>
     </div>
-    <!-- End email and username -->
+    <!-- End email and mobile_number -->
     <!-- Start first name and last name -->
     <div class="flex flex-col sm:flex-row">
       <div class="w-full sm:mr-2">
@@ -111,7 +116,7 @@
     </div>
     <!-- End password and confirmation-->
     <!-- Start action buttons -->
-    <div class="mb-1 mt-4 flex w-full justify-end">
+    <div class="mb-1 mt-4 flex w-full justify-end lg:mt-8">
       <cf-button
         id="register-page-button"
         class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[28%] lg:w-[25%]"
@@ -137,17 +142,18 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email, helpers, minLength, maxLength, sameAs } from '@vuelidate/validators'
 import { computed, reactive, ref } from 'vue'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
-import { useAlphaDashDotRule, usePasswordRule, useUniqueUserIdentifierRule } from '@/composables/custom-validations'
+import { useMobilePhoneRule, usePasswordRule, useUniqueUserIdentifierRule } from '@/composables/custom-validations'
 import { useGetGlobalStringMaxLength } from '@/composables/helpers.js'
 import { useParseApiResponseError } from '@/composables/error-handler.js'
 import { useRouter } from 'vue-router'
+import CfTextInputGroup from '@/components/campfire/inputs/CfTextInputGroup.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
 
 const payload = reactive({
   email: '',
-  username: '',
+  mobile_number: '',
   first_name: '',
   last_name: '',
   password: '',
@@ -166,16 +172,12 @@ const formRules = {
     email: helpers.withMessage('Email format is invalid', email),
     unique: helpers.withAsync(helpers.withMessage('This email is already taken', useUniqueUserIdentifierRule('email'))),
   },
-  username: {
-    required: helpers.withMessage('Please enter your username', required),
-    maxLength: helpers.withMessage('Must not be more than 30 characters long', maxLength(30)),
-    alphaDashDot: helpers.withMessage(
-      'Your username must only contain letters, numbers, dashes, underscores, and dots',
-      useAlphaDashDotRule()
-    ),
+  mobile_number: {
+    required: helpers.withMessage('Please enter your mobile number', required),
     unique: helpers.withAsync(
-      helpers.withMessage('This username already taken', useUniqueUserIdentifierRule('username'))
+      helpers.withMessage('This mobile number is already taken', useUniqueUserIdentifierRule('mobile_number'))
     ),
+    mobile_number: helpers.withMessage('Invalid phone number format', useMobilePhoneRule),
   },
   first_name: {
     required: helpers.withMessage('Please enter your first name', required),

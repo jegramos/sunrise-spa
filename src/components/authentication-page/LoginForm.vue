@@ -6,20 +6,20 @@
     leave-to-class="opacity-0"
   >
     <cf-alert-panel v-model="showErrorAlert" dismissible class="z-30 mb-4 w-full" panel-type="error">
-      Incorrect email or password
-      <template #description> Please double check your credentials and try again</template>
+      Incorrect credentials
+      <template #description> Please double check your email/mobile number and password</template>
     </cf-alert-panel>
   </transition>
   <!-- End alert -->
   <div v-if="!showErrorAlert">
     <p class="font-bold">Welcome back!</p>
     <p class="mt-1 text-sm text-theme-muted">
-      Please enter your credentials to start making cool stuff and caress your ego
+      You're free to use your email address or mobile number for signing in your account
     </p>
   </div>
-  <form id="login-page-form" autocomplete="off" class="flex w-full flex-col justify-between" @submit.prevent>
-    <div class="flex flex-col lg:flex-row">
-      <div class="w-full lg:mr-4">
+  <form id="login-page-form" autocomplete="off" class="flex h-full w-full flex-col justify-between" @submit.prevent>
+    <div class="flex flex-col">
+      <div class="w-full lg:mt-2">
         <cf-text-input
           v-model="payload.email"
           :invalid="validator.email.$invalid"
@@ -30,7 +30,7 @@
           @blur="validator.email.$touch"
         ></cf-text-input>
       </div>
-      <div class="w-full">
+      <div class="w-full lg:mt-2">
         <cf-text-input
           v-model="payload.password"
           name="password"
@@ -45,7 +45,7 @@
       </div>
     </div>
     <!-- Start action buttons -->
-    <div class="mb-1 mt-4 flex w-full justify-end justify-between">
+    <div class="mb-1 mt-6 flex w-full justify-end justify-between lg:mt-0">
       <cf-button
         class="bg-transparent text-sm italic hover:bg-theme-section-hover"
         @click="router.push({ name: 'forgot-password' })"

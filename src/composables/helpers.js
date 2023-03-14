@@ -14,7 +14,16 @@ export const useSleep = () => {
 }
 
 export const useIsValidMobileNumber = () => (value) => {
-  const phone = parsePhoneNumber(value, 'PH')
+  let phone
+
+  // The library throws a NOT_A_NUMBER error if it can't parse
+  // the value properly
+  try {
+    phone = parsePhoneNumber(value, 'PH')
+  } catch (err) {
+    return false
+  }
+
   if (!phone) return false
 
   return isValidPhoneNumber(value, 'PH')

@@ -1,27 +1,36 @@
 <template>
-  <div class="relative mt-6 flex flex-col">
+  <div class="relative mt-8 flex flex-col">
     <!-- Start input field -->
-    <input
-      :name="props.name"
-      :type="props.type === 'password' ? (showPassword ? 'text' : 'password') : props.type"
-      :placeholder="props.label"
-      autocomplete="off"
-      :required="required"
-      :class="`peer box-border w-full rounded-xl border-none bg-theme-input pl-3 outline-none ${
-        props.type === 'password' ? 'pr-10' : 'pr-3'
-      } ${inputStateStyle} py-2.5 text-theme-input placeholder-transparent transition-transform duration-200 focus:pl-4 focus:ring-1 focus:ring-theme-primary`"
-      @input="$emit('update:modelValue', $event.target.value)"
-      @blur="$emit('blur', $event)"
-    />
-    <!-- End input field -->
-    <!-- Start animated label -->
-    <label
-      :for="props.id"
-      class="absolute left-1 -top-5 mb-1.5 text-xs text-theme-base transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-5 peer-focus:text-xs"
-    >
-      {{ props.label }}
-    </label>
-    <!-- End animated label -->
+    <div class="relative flex">
+      <input
+        ref="inputBox"
+        v-maska
+        :data-maska="props.mask"
+        :name="props.name"
+        :type="props.type === 'password' ? (showPassword ? 'text' : 'password') : props.type"
+        :placeholder="props.label"
+        autocomplete="off"
+        :required="required"
+        :class="`peer box-border w-full rounded-xl border-none pl-3 outline-none
+        ${props.transparent ? 'bg-inherit' : 'bg-theme-input'} ${props.outlined ? 'ring-1 ring-theme-primary' : ''} ${
+          props.type === 'password' ? 'pr-10' : 'pr-3'
+        } ${inputStateStyle} py-2.5 text-theme-input placeholder-transparent transition-transform duration-200 focus:ring-1 focus:ring-theme-primary`"
+        @input="$emit('update:modelValue', $event.target.value)"
+        @blur="$emit('blur', $event)"
+      />
+      <!-- End input field -->
+      <!-- Start animated label -->
+      <label
+        :for="props.id"
+        :class="`absolute left-1 -top-6 mb-1.5 text-xs ${
+          props.outlined ? 'text-theme-primary' : 'text-theme-base'
+        } transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-6 peer-focus:text-xs`"
+        @click="focusOnInputBox"
+      >
+        {{ props.label }}
+      </label>
+      <!-- End animated label -->
+    </div>
     <!-- Start validation messages -->
     <small v-if="props.invalid && props.invalidText" class="mt-1.5 ml-1 text-xs text-theme-error">
       <font-awesome-icon icon="fa-regular fa-circle-xmark" class="mr-0.5"></font-awesome-icon>
@@ -52,6 +61,7 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed, ref } from 'vue'
+import { vMaska } from 'maska'
 
 defineEmits(['update:modelValue', 'blur'])
 
@@ -99,6 +109,18 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  outlined: {
+    type: Boolean,
+    default: false,
+  },
+  transparent: {
+    type: Boolean,
+    default: false,
+  },
+  mask: {
+    type: String,
+    default: null,
+  },
 })
 
 const inputStateStyle = computed(() => {
@@ -119,4 +141,10 @@ const inputStateStyle = computed(() => {
 })
 
 let showPassword = ref(false)
+
+const inputBox = ref(null)
+const focusOnInputBox = () => {
+  inputBox.value.focus()
+  console.log('cocked')
+}
 </script>

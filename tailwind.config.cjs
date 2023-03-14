@@ -101,6 +101,7 @@ module.exports = {
           inverted: withOpacity('--color-text-inverted'),
           tooling: withOpacity('--color-bg-tooling'),
           'tooling-text': withOpacity('--color-text-tooling'),
+          'input-text': withOpacity('--color-text-input'),
         },
       },
       textDecorationColor: {

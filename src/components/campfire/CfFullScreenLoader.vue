@@ -18,5 +18,10 @@
 import { Dialog as MainDialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-const props = defineProps(['isOpen'])
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    required: true,
+  },
+})
 </script>

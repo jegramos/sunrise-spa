@@ -26,47 +26,20 @@
               </app-logo>
               <cf-button class="text-xs font-bold italic text-theme-base" @click="router.push({ name: 'home' })">
                 <template #icon>
-                  <font-awesome-icon icon="fa-solid fa-people-pulling" class="mr-1.5" />
+                  <font-awesome-icon icon="fa-solid fa-angle-left" class="mr-1 mt-0.5" />
                 </template>
-                get me outta here
+                Back to home
               </cf-button>
             </div>
             <cf-horizontal-separator class="my-5"></cf-horizontal-separator>
-            <!-- Start creds sign-up -->
-            <div class="w-full rounded-lg">
-              <div v-if="isLoginRoute">
-                <login-form />
-              </div>
-              <div v-else>
-                <register-form />
-              </div>
-            </div>
-            <!-- End creds sign-up -->
-            <!-- Start OAuth -->
-            <cf-horizontal-separator class="mt-4 mb-6">
-              {{ isLoginRoute ? 'or login with' : 'or register with' }}
-            </cf-horizontal-separator>
-            <div class="flex w-full justify-center text-sm text-white">
-              <cf-button class="mx-1 w-full bg-[#C71711] sm:mx-2">
-                <template #icon>
-                  <font-awesome-icon icon="fa-brands fa-google" class="mr-1 h-3"></font-awesome-icon>
-                </template>
-                Google
-              </cf-button>
-              <cf-button class="mx-1 w-full bg-[#4267B2] sm:mx-2">
-                <template #icon>
-                  <font-awesome-icon icon="fa-brands fa-facebook" class="mr-1.5 h-3"></font-awesome-icon>
-                </template>
-                Facebook
-              </cf-button>
-              <cf-button class="mx-1 w-full bg-[#172525] sm:mx-2">
-                <template #icon>
-                  <font-awesome-icon icon="fa-brands fa-github" class="mr-1.5 h-3"></font-awesome-icon>
-                </template>
-                Github
-              </cf-button>
-            </div>
-            <!-- End OAuth -->
+            <!-- Start creds login / sign-up -->
+            <template v-if="isLoginRoute">
+              <login-form />
+            </template>
+            <template v-else>
+              <register-form />
+            </template>
+            <!-- End creds login / sign-up -->
             <!-- Start Sign in / Sign up button (mobile) -->
             <div class="flex flex-col sm:hidden">
               <cf-horizontal-separator class="my-6"> or</cf-horizontal-separator>

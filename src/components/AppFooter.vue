@@ -4,7 +4,7 @@
   >
     <span class="font-light"
       >Made by
-      <span class="ml-0.5 font-bold">Jego Carlo Ramos</span>
+      <span class="ml-0.5 font-bold">Team Campfire</span>
     </span>
     <div class="mt-2 flex items-center justify-center">
       <cf-button

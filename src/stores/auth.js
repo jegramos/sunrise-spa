@@ -35,17 +35,9 @@ export const useAuthStore = defineStore('auth', () => {
     return response
   }
 
-  const register = async ({ email, username, password, password_confirmation, first_name, last_name }) => {
+  const register = async (payload) => {
     const { data } = await useApiCall('auth/register')
-      .post({
-        email,
-        username,
-        password,
-        password_confirmation,
-        first_name,
-        last_name,
-        client_name: `${navigator.platform} - Web`,
-      })
+      .post({ ...payload, client_name: `${navigator.platform} - Web` })
       .json()
 
     const response = data.value

@@ -35,7 +35,7 @@
           <div class="flex flex-col">
             <div class="flex flex-col items-center justify-center px-1 text-theme-tooling">
               <span class="font-bold">{{ auth.authenticatedUser.user_profile.full_name }}</span>
-              <span class="italic">@{{ auth.authenticatedUser.username }}</span>
+              <span class="italic">{{ auth.authenticatedUser.email }}</span>
             </div>
             <cf-horizontal-separator class="mt-4 mb-2" />
             <!-- Start link menus -->
@@ -85,7 +85,7 @@
           />
           <div class="flex flex-col justify-center text-left">
             <span class="font-bold">{{ auth.authenticatedUser.user_profile.full_name }}</span>
-            <span class="italic">@{{ auth.authenticatedUser.username }}</span>
+            <span class="italic">{{ auth.authenticatedUser.email }}</span>
           </div>
         </div>
         <font-awesome-icon
