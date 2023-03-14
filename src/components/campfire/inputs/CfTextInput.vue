@@ -61,6 +61,9 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed, ref } from 'vue'
+
+// PhpStorm fails to see v-maska and data-maska usage
+// noinspection ES6UnusedImports
 import { vMaska } from 'maska'
 
 defineEmits(['update:modelValue', 'blur'])
@@ -145,6 +148,5 @@ let showPassword = ref(false)
 const inputBox = ref(null)
 const focusOnInputBox = () => {
   inputBox.value.focus()
-  console.log('cocked')
 }
 </script>
