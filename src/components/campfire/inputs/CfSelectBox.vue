@@ -1,0 +1,171 @@
+<template>
+  <div class="relative mt-8 flex flex-col">
+    <div class="relative flex flex-col">
+      <!-- Start List box -->
+      <listbox
+        class="w-full"
+        :model-value="props.modelValue"
+        :multiple="props.multiple"
+        @update:model-value="(value) => emits('update:modelValue', value)"
+      >
+        <div class="relative">
+          <listbox-button
+            :class="`relative box-border h-11 w-full cursor-pointer rounded-xl bg-theme-input py-3 px-4 text-left text-theme-input placeholder-transparent outline-none transition-transform duration-200 ui-open:ring-1 ui-open:ring-theme-primary ${inputStateStyle}`"
+          >
+            <span v-if="label" class="block truncate">{{ label }}</span>
+            <span v-else class="block truncate transition-transform duration-200 ui-open:invisible">{{
+              props.label
+            }}</span>
+            <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <chevron-down-icon
+                class="h-5 w-5 text-theme-input transition-all duration-300 ui-open:rotate-180 ui-open:transform"
+                aria-hidden="true"
+              />
+            </span>
+          </listbox-button>
+          <!-- Start animated label -->
+          <label
+            :for="props.id"
+            :class="`absolute top-3 left-4 mb-1.5 text-theme-input transition-all duration-200 ui-open:left-1 ui-open:-top-6 ui-open:block ui-open:text-xs ${
+              props.modelValue ? 'left-1 -top-6 text-xs' : ''
+            }`"
+            @click="focusOnInputBox"
+          >
+            {{ props.label }}
+          </label>
+          <!-- End animated label -->
+          <transition
+            enter-active-class="transition duration-200 ease-out"
+            enter-from-class="translate-y-2 opacity-0"
+            enter-to-class="translate-y-0 opacity-100"
+            leave-active-class="transition duration-100 ease-in"
+            leave-from-class="translate-y-0 opacity-100"
+            leave-to-class="translate-y-2 opacity-0"
+          >
+            <listbox-options
+              class="absolute z-20 mt-1.5 max-h-60 w-full overflow-auto rounded-xl bg-theme-input py-1 text-theme-input shadow-lg ring-1 ring-theme-primary focus:outline-none"
+              @blur="emits('blur', $event)"
+            >
+              <listbox-option
+                v-for="option in props.options"
+                v-slot="{ active, selected }"
+                :key="option.value"
+                :value="option.value"
+                as="template"
+              >
+                <li
+                  :class="`relative my-1 mx-2 cursor-pointer select-none rounded-lg py-2 pl-10 pr-4 transition-all ${
+                    active ? 'bg-theme-primary text-theme-inverted' : 'text-theme-input'
+                  }`"
+                >
+                  <span :class="[selected ? 'font-medium' : 'font-normal', 'block truncate']">{{ option.label }}</span>
+                  <span
+                    v-if="selected"
+                    :class="`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                      active ? 'text-theme-inverted' : 'text-theme-primary'
+                    }`"
+                  >
+                    <check-icon class="h-5 w-5" aria-hidden="true" />
+                  </span>
+                </li>
+              </listbox-option>
+            </listbox-options>
+          </transition>
+        </div>
+      </listbox>
+      <!-- End List box -->
+      <!-- Start validation messages -->
+      <small v-if="props.invalid && props.invalidText" class="mt-1.5 ml-1 text-xs text-theme-error">
+        <font-awesome-icon icon="fa-regular fa-circle-xmark" class="mr-0.5"></font-awesome-icon>
+        {{ props.invalidText }}
+      </small>
+      <small v-if="props.success && props.successText" class="mt-1.5 ml-1 text-xs text-theme-success">
+        <font-awesome-icon icon="fa-regular fa-circle-check" class="mr-0.5"></font-awesome-icon>
+        {{ props.successText }}
+      </small>
+      <!-- End validation messages -->
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
+import { computed } from 'vue'
+import { ChevronDownIcon, CheckIcon } from '@heroicons/vue/20/solid'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+const emits = defineEmits(['update:modelValue', 'blur'])
+
+const props = defineProps({
+  modelValue: {
+    type: undefined, // This accepts any type
+    default: null,
+  },
+  options: {
+    type: Array,
+    required: true,
+  },
+  label: {
+    type: [String, Number],
+    default: 'Select an option',
+  },
+  multiple: {
+    type: Boolean,
+    default: false,
+  },
+  invalid: {
+    type: Boolean,
+    default: false,
+  },
+  invalidText: {
+    type: String,
+    default: null,
+  },
+  success: {
+    type: Boolean,
+    default: false,
+  },
+  successText: {
+    type: String,
+    default: null,
+  },
+  transparent: {
+    type: Boolean,
+    default: false,
+  },
+  outlined: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const label = computed(() => {
+  return props.options
+    .filter((option) => {
+      if (Array.isArray(props.modelValue)) {
+        return props.modelValue.includes(option.value)
+      }
+
+      return props.modelValue === option.value
+    })
+    .map((option) => option.label)
+    .join(', ')
+})
+
+const inputStateStyle = computed(() => {
+  let inputClass = 'focus:ring-1 focus:ring-theme-primary'
+
+  if (props.invalid) {
+    inputClass = 'ring-1 ring-theme-error'
+  } else if (props.success) {
+    inputClass = 'ring-1 ring-theme-success'
+  }
+
+  // append ring color
+  if (props.border && !(props.success || props.invalid)) {
+    inputClass = 'ring-1 ring-theme-section'
+  }
+
+  return inputClass
+})
+</script>

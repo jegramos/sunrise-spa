@@ -16,17 +16,21 @@
   </transition>
   <!-- End alert -->
   <div v-if="!showErrorAlert">
-    <p class="font-bold">Welcome, my dude!</p>
-    <p class="mt-1 text-sm text-theme-muted">
-      Please fill-in this short form and be part of something... ugh... great?
-    </p>
+    <p class="font-bold">Welcome to Campfire!</p>
+    <p class="mt-1 text-sm text-theme-muted">Please fill-in this short form accurately to create your account</p>
   </div>
   <form id="register-page-form" autocomplete="off" class="flex w-full flex-col justify-between" @submit.prevent>
+    <!-- Start Credentials -->
+    <cf-horizontal-separator class="mt-5">
+      <font-awesome-icon icon="fa-solid fa-key" class="mr-1 text-xs"></font-awesome-icon>
+      <span class="font-bold tracking-wide">Credentials</span>
+    </cf-horizontal-separator>
     <!-- Start email and mobile number -->
     <div class="flex flex-col sm:flex-row">
       <div class="w-full sm:mr-2">
         <!-- Note: We have @focusin for email and username to prevent too many API calls to check for uniqueness -->
         <cf-text-input
+          :id="getId('email-input')"
           v-model="payload.email"
           name="register-email-input"
           label="Email"
@@ -34,60 +38,38 @@
           :invalid="validator.email.$invalid"
           :invalid-text="validator.email.$errors[0]?.$message"
           :success="!validator.email.$invalid && validator.email.$dirty && !validator.email.$pending"
+          success-text="Email address available"
           @blur="validator.email.$touch"
           @focusin="validator.email.$dirty = false"
         >
         </cf-text-input>
       </div>
       <div class="w-full sm:ml-2">
-        <cf-text-input-group
+        <cf-text-input
+          :id="getId('mobile-number-input')"
           v-model="payload.mobile_number"
-          name="mobile_number"
+          name="mobile-number"
           label="Mobile Number"
-          prefix="+63"
-          mask="### ### ####"
+          mask="+63 ### ### ####"
+          initial-value="+63"
           :invalid="validator.mobile_number.$invalid"
           :invalid-text="validator.mobile_number.$errors[0]?.$message"
           :success="
             !validator.mobile_number.$invalid && validator.mobile_number.$dirty && !validator.mobile_number.$pending
           "
+          success-text="Mobile number available"
           @blur="validator.mobile_number.$touch"
           @focusin="validator.mobile_number.$dirty = false"
         >
-        </cf-text-input-group>
+        </cf-text-input>
       </div>
     </div>
     <!-- End email and mobile_number -->
-    <!-- Start first name and last name -->
-    <div class="flex flex-col sm:flex-row">
-      <div class="w-full sm:mr-2">
-        <cf-text-input
-          v-model="payload.first_name"
-          name="first-name"
-          label="First name"
-          class="text-sm"
-          :invalid="validator.first_name.$invalid"
-          :invalid-text="validator.first_name.$invalid ? validator.first_name.$errors[0].$message : null"
-          @blur="validator.first_name.$touch"
-        ></cf-text-input>
-      </div>
-      <div class="w-full sm:ml-2">
-        <cf-text-input
-          v-model="payload.last_name"
-          name="last-name"
-          label="Last name"
-          class="text-sm"
-          :invalid="validator.last_name.$invalid"
-          :invalid-text="validator.last_name.$invalid ? validator.last_name.$errors[0].$message : null"
-          @blur="validator.last_name.$touch"
-        ></cf-text-input>
-      </div>
-    </div>
-    <!-- End first name and last name -->
     <!-- Start password and confirmation -->
     <div class="flex flex-col sm:flex-row">
       <div class="w-full sm:mr-2">
         <cf-text-input
+          :id="getId('password-input')"
           v-model="payload.password"
           name="password"
           label="Password"
@@ -100,6 +82,7 @@
       </div>
       <div class="w-full sm:ml-2">
         <cf-text-input
+          :id="getId('password-confirmation-input')"
           v-model="payload.password_confirmation"
           name="password-confirmation"
           label="Confirm Password"
@@ -115,10 +98,94 @@
       </div>
     </div>
     <!-- End password and confirmation-->
+    <!-- End credentials -->
+
+    <!-- Start Basic info -->
+    <cf-horizontal-separator class="mt-8">
+      <font-awesome-icon icon="fa-solid fa-id-badge" class="mr-1 text-xs"></font-awesome-icon>
+      <span class="font-bold tracking-wide">Basic Information</span>
+    </cf-horizontal-separator>
+    <!-- Start first name and last name -->
+    <div class="flex flex-col sm:flex-row">
+      <div class="w-full sm:mr-2">
+        <cf-text-input
+          :id="getId('first-name-input')"
+          v-model="payload.first_name"
+          name="first-name"
+          label="First name"
+          class="text-sm"
+          :invalid="validator.first_name.$invalid"
+          :invalid-text="validator.first_name.$invalid ? validator.first_name.$errors[0].$message : null"
+          @blur="validator.first_name.$touch"
+        ></cf-text-input>
+      </div>
+      <div class="w-full sm:ml-2">
+        <cf-text-input
+          :id="getId('last-name-input')"
+          v-model="payload.last_name"
+          name="last-name"
+          label="Last name"
+          class="text-sm"
+          :invalid="validator.last_name.$invalid"
+          :invalid-text="validator.last_name.$invalid ? validator.last_name.$errors[0].$message : null"
+          @blur="validator.last_name.$touch"
+        ></cf-text-input>
+      </div>
+    </div>
+    <!-- End first name and last name -->
+    <!-- Start middle name -->
+    <div class="flex">
+      <div class="w-full sm:mr-2 sm:w-[48%]">
+        <cf-text-input
+          :id="getId('middle-name-input')"
+          v-model="payload.middle_name"
+          name="middle-name"
+          label="Middle name"
+          class="text-sm"
+          :invalid="validator.middle_name.$invalid"
+          :invalid-text="validator.middle_name.$invalid ? validator.middle_name.$errors[0].$message : null"
+          @blur="validator.middle_name.$touch"
+        ></cf-text-input>
+      </div>
+    </div>
+    <!-- End middle name -->
+    <!-- Start birthday name and sex -->
+    <div class="flex flex-col sm:flex-row">
+      <div class="w-full sm:mr-2">
+        <cf-text-input
+          :id="getId('birthday-input')"
+          v-model="payload.birthday"
+          name="birthday"
+          label="Birthday"
+          class="text-sm"
+          mask="####-##-##"
+          eager-mask
+          initial-value="yyyy-mm-dd"
+          :invalid="validator.birthday.$invalid"
+          :invalid-text="validator.birthday.$invalid ? validator.birthday.$errors[0].$message : null"
+          @blur="validator.birthday.$touch"
+        ></cf-text-input>
+      </div>
+      <div class="w-full sm:ml-2">
+        <cf-select-box
+          :id="getId('sex-input')"
+          v-model="payload.sex"
+          name="sex"
+          class="text-sm"
+          label="Sex"
+          :options="genderOptions"
+          :invalid="validator.sex.$invalid"
+          :invalid-text="validator.sex.$invalid ? validator.sex.$errors[0].$message : null"
+          @blur="validator.sex.$touch"
+        />
+      </div>
+    </div>
+    <!-- End birthday and sex -->
+    <!-- End basic info -->
     <!-- Start action buttons -->
-    <div class="mb-1 mt-4 flex w-full justify-end lg:mt-8">
+    <div class="mb-1 mt-8 flex w-full justify-end lg:mt-8">
       <cf-button
-        id="register-page-button"
+        :id="getId('register-button')"
         class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[28%] lg:w-[25%]"
         :is-loading="isLoading"
         @click="handleFormSubmission"
@@ -142,12 +209,19 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email, helpers, minLength, maxLength, sameAs } from '@vuelidate/validators'
 import { computed, reactive, ref } from 'vue'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
-import { useMobilePhoneRule, usePasswordRule, useUniqueUserIdentifierRule } from '@/composables/custom-validations'
-import { useGetGlobalStringMaxLength } from '@/composables/helpers.js'
+import {
+  useDateFormatRule,
+  useMobilePhoneRule,
+  usePasswordRule,
+  useUniqueUserIdentifierRule,
+} from '@/composables/custom-validations'
+import { useGetGlobalStringMaxLength, usePrependOrAppendOnce } from '@/composables/helpers.js'
 import { useParseApiResponseError } from '@/composables/error-handler.js'
 import { useRouter } from 'vue-router'
-import CfTextInputGroup from '@/components/campfire/inputs/CfTextInputGroup.vue'
+import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
+import CfSelectBox from '@/components/campfire/inputs/CfSelectBox.vue'
 
+const getId = usePrependOrAppendOnce('components-authentication-page-register-form')
 const auth = useAuthStore()
 const router = useRouter()
 
@@ -156,6 +230,9 @@ const payload = reactive({
   mobile_number: '',
   first_name: '',
   last_name: '',
+  middle_name: '',
+  birthday: '',
+  sex: '',
   password: '',
   password_confirmation: '',
 })
@@ -177,7 +254,7 @@ const formRules = {
     unique: helpers.withAsync(
       helpers.withMessage('This mobile number is already taken', useUniqueUserIdentifierRule('mobile_number'))
     ),
-    mobile_number: helpers.withMessage('Invalid phone number format', useMobilePhoneRule),
+    mobile_number: helpers.withMessage('Must be formatted as +63 ### #### ###', useMobilePhoneRule),
   },
   first_name: {
     required: helpers.withMessage('Please enter your first name', required),
@@ -186,6 +263,16 @@ const formRules = {
   last_name: {
     required: helpers.withMessage('Please enter your last name', required),
     maxLength: globalStringMaxLengthRule,
+  },
+  middle_name: {
+    maxLength: globalStringMaxLengthRule,
+  },
+  birthday: {
+    required: helpers.withMessage('Please enter your birthday', required),
+    date_format: helpers.withMessage('Please enter your birthday as yyyy-mm-dd', useDateFormatRule),
+  },
+  sex: {
+    required: helpers.withMessage('Please select an option', required),
   },
   password: {
     required: helpers.withMessage('Please enter your password', required),
@@ -227,4 +314,9 @@ const handleFormSubmission = async () => {
   errorMessage.value = message
   errorDetails.value = errors
 }
+
+const genderOptions = [
+  { label: 'Male', value: 'male' },
+  { label: 'Female', value: 'female' },
+]
 </script>

@@ -19,6 +19,8 @@
       :success="props.success"
       :success-text="props.successText"
       :mask="props.mask"
+      :eager-mask="props.eagerMask"
+      :initial-value="props.initialValue"
       class="w-full"
       @blur="$emit('blur', $event)"
     >
@@ -91,6 +93,14 @@ const props = defineProps({
     default: false,
   },
   mask: {
+    type: String,
+    default: null,
+  },
+  eagerMask: {
+    type: Boolean,
+    default: false,
+  },
+  initialValue: {
     type: String,
     default: null,
   },

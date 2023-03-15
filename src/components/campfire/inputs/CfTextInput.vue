@@ -3,28 +3,29 @@
     <!-- Start input field -->
     <div class="relative flex">
       <input
+        :id="props.id"
         ref="inputBox"
         v-maska
         :data-maska="props.mask"
+        :data-maska-eager="props.eagerMask"
         :name="props.name"
         :type="props.type === 'password' ? (showPassword ? 'text' : 'password') : props.type"
         :placeholder="props.label"
         autocomplete="off"
         :required="required"
-        :class="`peer box-border w-full rounded-xl border-none pl-3 outline-none
-        ${props.transparent ? 'bg-inherit' : 'bg-theme-input'} ${props.outlined ? 'ring-1 ring-theme-primary' : ''} ${
+        :class="`peer box-border w-full rounded-xl border-none bg-theme-input pl-3 outline-none ${
           props.type === 'password' ? 'pr-10' : 'pr-3'
         } ${inputStateStyle} py-2.5 text-theme-input placeholder-transparent transition-transform duration-200 focus:ring-1 focus:ring-theme-primary`"
         @input="$emit('update:modelValue', $event.target.value)"
         @blur="$emit('blur', $event)"
+        @focus="!$event.target.value ? ($event.target.value = props.initialValue) : null"
+        @focusout="$event.target.value === props.initialValue ? ($event.target.value = null) : null"
       />
       <!-- End input field -->
       <!-- Start animated label -->
       <label
         :for="props.id"
-        :class="`absolute left-1 -top-6 mb-1.5 text-xs ${
-          props.outlined ? 'text-theme-primary' : 'text-theme-base'
-        } transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-6 peer-focus:text-xs`"
+        :class="`absolute left-1 -top-6 mb-1.5 text-xs text-theme-base transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-6 peer-focus:text-xs`"
         @click="focusOnInputBox"
       >
         {{ props.label }}
@@ -73,6 +74,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  id: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -112,15 +117,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  outlined: {
-    type: Boolean,
-    default: false,
-  },
-  transparent: {
-    type: Boolean,
-    default: false,
-  },
   mask: {
+    type: String,
+    default: null,
+  },
+  eagerMask: {
+    type: Boolean,
+    default: false,
+  },
+  initialValue: {
     type: String,
     default: null,
   },

@@ -28,3 +28,12 @@ export const useIsValidMobileNumber = () => (value) => {
 
   return isValidPhoneNumber(value, 'PH')
 }
+
+export const usePrependOrAppendOnce = (affix, type = 'append') => {
+  if (!['append', 'prepend'].includes(type)) {
+    throw new Error('Valid values are `prepend` and `append`')
+  }
+  return (value) => {
+    return type === 'append' ? `${value}-${affix}` : `${affix}-${value}`
+  }
+}

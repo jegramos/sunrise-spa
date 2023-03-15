@@ -21,6 +21,7 @@
     <div class="flex flex-col">
       <div class="w-full lg:mt-2">
         <cf-text-input
+          :id="getId('email-mobile-input')"
           v-model="payload.email"
           :invalid="validator.email.$invalid"
           :invalid-text="validator.email.$invalid ? validator.email.$errors[0].$message : null"
@@ -32,6 +33,7 @@
       </div>
       <div class="w-full lg:mt-2">
         <cf-text-input
+          :id="getId('password-input')"
           v-model="payload.password"
           name="password"
           label="Password"
@@ -47,13 +49,14 @@
     <!-- Start action buttons -->
     <div class="mb-1 mt-6 flex w-full justify-end justify-between lg:mt-0">
       <cf-button
+        :id="getId('forgot-password-button')"
         class="bg-transparent text-sm italic hover:bg-theme-section-hover"
         @click="router.push({ name: 'forgot-password' })"
       >
         I forgot my password
       </cf-button>
       <cf-button
-        id="login-page-button"
+        :id="getId('login-button')"
         class="w-[35%] bg-theme-primary text-sm text-theme-inverted sm:w-[30%] lg:w-[25%]"
         :is-loading="isLoading"
         loading-text="Loading..."
@@ -79,7 +82,9 @@ import { required, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '@/stores/auth'
 import { useRoute, useRouter } from 'vue-router'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
-import { useIsValidMobileNumber } from '@/composables/helpers.js'
+import { usePrependOrAppendOnce, useIsValidMobileNumber } from '@/composables/helpers.js'
+
+const getId = usePrependOrAppendOnce('components-authentication-page-login-form')
 
 const payload = reactive({
   email: '',
