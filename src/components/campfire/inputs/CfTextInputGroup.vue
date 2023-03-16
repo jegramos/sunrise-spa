@@ -9,10 +9,12 @@
       <span class="tracking-wide text-theme-input text-theme-primary">{{ props.prefix }}</span>
     </div>
     <cf-text-input
+      :id="getId(props.id)"
       v-model="inputText"
       :name="props.name"
       :label="props.label"
       :type="props.type"
+      :border="props.border"
       :required="props.required"
       :invalid="props.invalid"
       :invalid-text="props.invalidText"
@@ -39,11 +41,18 @@
 <script setup>
 import CfTextInput from '@/components/campfire/inputs/CfTextInput.vue'
 import { ref, watch } from 'vue'
+import { usePrependOrAppendOnce } from '@/composables/helpers.js'
+
+const getId = usePrependOrAppendOnce('components-campfire-inputs-cf-text-input')
 
 const props = defineProps({
   modelValue: {
     type: String,
     default: null,
+  },
+  id: {
+    type: String,
+    required: true,
   },
   prefix: {
     type: String,

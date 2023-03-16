@@ -40,9 +40,10 @@ import {
   faFire,
   faAngleLeft,
   faCaretLeft,
+  faLocationDot,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { faCircleXmark, faCircleCheck } from '@fortawesome/free-regular-svg-icons'
+import { faCircleXmark, faCircleCheck, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 
 library.add(
   faGithubAlt,
@@ -81,8 +82,10 @@ library.add(
   faPaperPlane,
   faScroll,
   faKey,
+  faLocationDot,
   faFingerprint,
   faFire,
   faAngleLeft,
-  faCaretLeft
+  faCaretLeft,
+  faTrashCan
 )

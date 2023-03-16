@@ -51,13 +51,11 @@
           </div>
           <!-- End form -->
           <!-- Start graphic -->
-          <div
-            class="hidden w-full flex-col justify-center rounded-xl bg-theme-tooling bg-opacity-10 py-6 backdrop-blur-md sm:flex"
-          >
+          <div class="hidden w-full flex-col rounded-xl bg-theme-tooling bg-opacity-10 py-6 backdrop-blur-md sm:flex">
             <div v-if="isLoginRoute" key="auth-graphic-login" class="flex w-full items-center">
               <login-graphic class="mx-4 h-[80%] w-full"></login-graphic>
             </div>
-            <div v-else key="auth-graphic-register" class="flex w-full items-start lg:items-center">
+            <div v-else key="auth-graphic-register" class="mt-20 flex w-full items-start lg:items-center">
               <registration-graphic class="mx-4 h-[80%] w-full"></registration-graphic>
             </div>
             <div class="mt-4 flex flex-col items-center justify-center">

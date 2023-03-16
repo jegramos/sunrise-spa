@@ -3,6 +3,7 @@
     <div class="relative flex flex-col">
       <!-- Start List box -->
       <listbox
+        :id="props.id"
         class="w-full"
         :model-value="props.modelValue"
         :multiple="props.multiple"
@@ -10,9 +11,9 @@
       >
         <div class="relative">
           <listbox-button
-            :class="`relative box-border h-11 w-full cursor-pointer rounded-xl bg-theme-input py-3 px-4 text-left text-theme-input placeholder-transparent outline-none transition-transform duration-200 ui-open:ring-1 ui-open:ring-theme-primary ${inputStateStyle}`"
+            :class="`relative box-border h-11 w-full cursor-pointer rounded-xl bg-theme-input py-3 px-4 text-left text-theme-input outline-none transition-transform duration-200 ui-open:ring-1 ui-open:ring-theme-primary ${inputStateStyle}`"
           >
-            <span v-if="label" class="block truncate">{{ label }}</span>
+            <span v-if="displayValue" class="block truncate">{{ displayValue }}</span>
             <span v-else class="block truncate transition-transform duration-200 ui-open:invisible">{{
               props.label
             }}</span>
@@ -26,10 +27,9 @@
           <!-- Start animated label -->
           <label
             :for="props.id"
-            :class="`absolute top-3 left-4 mb-1.5 text-theme-input transition-all duration-200 ui-open:left-1 ui-open:-top-6 ui-open:block ui-open:text-xs ${
+            :class="`invisible absolute top-3 left-4 mb-1.5 text-theme-input transition-all duration-200 ui-open:visible ui-open:left-1 ui-open:-top-6 ui-open:text-xs ${
               props.modelValue ? 'left-1 -top-6 text-xs' : ''
             }`"
-            @click="focusOnInputBox"
           >
             {{ props.label }}
           </label>
@@ -101,6 +101,10 @@ const props = defineProps({
     type: undefined, // This accepts any type
     default: null,
   },
+  id: {
+    type: String,
+    required: true,
+  },
   options: {
     type: Array,
     required: true,
@@ -121,6 +125,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  border: {
+    type: Boolean,
+    default: false,
+  },
   success: {
     type: Boolean,
     default: false,
@@ -129,17 +137,9 @@ const props = defineProps({
     type: String,
     default: null,
   },
-  transparent: {
-    type: Boolean,
-    default: false,
-  },
-  outlined: {
-    type: Boolean,
-    default: false,
-  },
 })
 
-const label = computed(() => {
+const displayValue = computed(() => {
   return props.options
     .filter((option) => {
       if (Array.isArray(props.modelValue)) {

@@ -21,7 +21,7 @@
   </div>
   <form id="register-page-form" autocomplete="off" class="flex w-full flex-col justify-between" @submit.prevent>
     <!-- Start Credentials -->
-    <cf-horizontal-separator class="mt-5">
+    <cf-horizontal-separator class="mt-8">
       <font-awesome-icon icon="fa-solid fa-key" class="mr-1 text-xs"></font-awesome-icon>
       <span class="font-bold tracking-wide">Credentials</span>
     </cf-horizontal-separator>
@@ -133,9 +133,9 @@
       </div>
     </div>
     <!-- End first name and last name -->
-    <!-- Start middle name -->
-    <div class="flex">
-      <div class="w-full sm:mr-2 sm:w-[48%]">
+    <!-- Start middle name and birthday -->
+    <div class="flex flex-col sm:flex-row">
+      <div class="w-full sm:mr-2">
         <cf-text-input
           :id="getId('middle-name-input')"
           v-model="payload.middle_name"
@@ -147,11 +147,7 @@
           @blur="validator.middle_name.$touch"
         ></cf-text-input>
       </div>
-    </div>
-    <!-- End middle name -->
-    <!-- Start birthday name and sex -->
-    <div class="flex flex-col sm:flex-row">
-      <div class="w-full sm:mr-2">
+      <div class="w-full sm:ml-2">
         <cf-text-input
           :id="getId('birthday-input')"
           v-model="payload.birthday"
@@ -166,7 +162,11 @@
           @blur="validator.birthday.$touch"
         ></cf-text-input>
       </div>
-      <div class="w-full sm:ml-2">
+    </div>
+    <!-- End middle name and birthday -->
+    <!-- Start gender -->
+    <div class="flex">
+      <div class="w-full sm:mr-2 sm:w-[48.5%]">
         <cf-select-box
           :id="getId('sex-input')"
           v-model="payload.sex"
@@ -180,8 +180,70 @@
         />
       </div>
     </div>
-    <!-- End birthday and sex -->
+    <!-- End gender -->
     <!-- End basic info -->
+
+    <!-- Start address -->
+    <cf-horizontal-separator class="mt-8">
+      <font-awesome-icon icon="fa-solid fa-location-dot" class="mr-1 text-xs"></font-awesome-icon>
+      <span class="font-bold tracking-wide">Address</span>
+    </cf-horizontal-separator>
+    <!-- Start Home Address & Barangay -->
+    <div class="flex flex-col sm:flex-row">
+      <div class="w-full sm:mr-2">
+        <cf-text-input
+          :id="getId('home-address-input')"
+          v-model="payload.home_address"
+          name="home-address"
+          label="Home Address"
+          class="text-sm"
+          :invalid="validator.home_address.$invalid"
+          :invalid-text="validator.home_address.$invalid ? validator.home_address.$errors[0].$message : null"
+          @blur="validator.home_address.$touch"
+        ></cf-text-input>
+      </div>
+      <div class="w-full sm:ml-2">
+        <cf-text-input
+          :id="getId('barangay-input')"
+          v-model="payload.barangay"
+          name="barangay"
+          label="Barangay"
+          class="text-sm"
+          :invalid="validator.barangay.$invalid"
+          :invalid-text="validator.barangay.$invalid ? validator.barangay.$errors[0].$message : null"
+          @blur="validator.barangay.$touch"
+        ></cf-text-input>
+      </div>
+    </div>
+    <!-- End Home Address & Barangay -->
+    <!-- Start first City and Region -->
+    <div class="flex flex-col sm:flex-row">
+      <div class="w-full sm:mr-2">
+        <cf-combo-box
+          :id="getId('city-input')"
+          v-model="payload.city_id"
+          name="city"
+          label="City"
+          class="text-sm"
+          :options="cityOptions"
+          :invalid="validator.city_id.$invalid"
+          :invalid-text="validator.city_id.$invalid ? validator.city_id.$errors[0].$message : null"
+          @blur="validator.city_id.$touch"
+        ></cf-combo-box>
+      </div>
+      <div class="w-full sm:ml-2">
+        <cf-combo-box
+          :id="getId('province-input')"
+          v-model="payload.province_id"
+          :options="provinceOptions"
+          :invalid="validator.province_id.$invalid"
+          :invalid-text="validator.province_id.$invalid ? validator.province_id.$errors[0].$message : null"
+          class="text-sm"
+        ></cf-combo-box>
+      </div>
+    </div>
+    <!-- End City and Region -->
+
     <!-- Start action buttons -->
     <div class="mb-1 mt-8 flex w-full justify-end lg:mt-8">
       <cf-button
@@ -220,6 +282,7 @@ import { useParseApiResponseError } from '@/composables/error-handler.js'
 import { useRouter } from 'vue-router'
 import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
 import CfSelectBox from '@/components/campfire/inputs/CfSelectBox.vue'
+import CfComboBox from '@/components/campfire/inputs/CfComboBox.vue'
 
 const getId = usePrependOrAppendOnce('components-authentication-page-register-form')
 const auth = useAuthStore()
@@ -235,6 +298,10 @@ const payload = reactive({
   sex: '',
   password: '',
   password_confirmation: '',
+  home_address: '',
+  city_id: '',
+  province_id: '',
+  barangay: '',
 })
 
 // Handle validation
@@ -287,6 +354,20 @@ const formRules = {
     required: helpers.withMessage('Please confirm your password', required),
     sameAsPassword: helpers.withMessage('Must match the password field', sameAs(computed(() => payload.password))),
   },
+  home_address: {
+    required: helpers.withMessage('Please enter your home address', required),
+    maxLength: globalStringMaxLengthRule,
+  },
+  barangay: {
+    required: helpers.withMessage('Please enter your barangay', required),
+    maxLength: globalStringMaxLengthRule,
+  },
+  city_id: {
+    required: helpers.withMessage('Please enter your city', required),
+  },
+  province_id: {
+    required: helpers.withMessage('Please enter your province', required),
+  },
 }
 
 const validator = useVuelidate(formRules, payload)
@@ -318,5 +399,23 @@ const handleFormSubmission = async () => {
 const genderOptions = [
   { label: 'Male', value: 'male' },
   { label: 'Female', value: 'female' },
+]
+
+const cityOptions = [
+  { label: 'Manila City', value: 1 },
+  { label: 'Tarlac City', value: 2 },
+  { label: 'Pateros', value: 3 },
+  { label: 'Quezon City', value: 4 },
+  { label: 'Zarraga', value: 5 },
+  { label: 'Villagis', value: 6 },
+]
+
+const provinceOptions = [
+  { label: 'Manila City', value: 1 },
+  { label: 'Tarlac City', value: 2 },
+  { label: 'Pateros', value: 3 },
+  { label: 'Quezon City', value: 4 },
+  { label: 'Zarraga', value: 5 },
+  { label: 'Villagis', value: 6 },
 ]
 </script>

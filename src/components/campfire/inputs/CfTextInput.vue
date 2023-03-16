@@ -16,8 +16,8 @@
         :class="`peer box-border w-full rounded-xl border-none bg-theme-input pl-3 outline-none ${
           props.type === 'password' ? 'pr-10' : 'pr-3'
         } ${inputStateStyle} py-2.5 text-theme-input placeholder-transparent transition-transform duration-200 focus:ring-1 focus:ring-theme-primary`"
-        @input="$emit('update:modelValue', $event.target.value)"
-        @blur="$emit('blur', $event)"
+        @input="emits('update:modelValue', $event.target.value)"
+        @blur="emits('blur', $event)"
         @focus="!$event.target.value ? ($event.target.value = props.initialValue) : null"
         @focusout="$event.target.value === props.initialValue ? ($event.target.value = null) : null"
       />
@@ -67,7 +67,7 @@ import { computed, ref } from 'vue'
 // noinspection ES6UnusedImports
 import { vMaska } from 'maska'
 
-defineEmits(['update:modelValue', 'blur'])
+const emits = defineEmits(['update:modelValue', 'blur'])
 
 const props = defineProps({
   modelValue: {
