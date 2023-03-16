@@ -12,6 +12,7 @@
       :id="getId(props.id)"
       v-model="inputText"
       :name="props.name"
+      :disabled="props.disabled"
       :label="props.label"
       :type="props.type"
       :border="props.border"
@@ -112,6 +113,10 @@ const props = defineProps({
   initialValue: {
     type: String,
     default: null,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 })
 

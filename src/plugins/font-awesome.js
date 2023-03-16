@@ -41,6 +41,7 @@ import {
   faAngleLeft,
   faCaretLeft,
   faLocationDot,
+  faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faCircleXmark, faCircleCheck, faTrashCan } from '@fortawesome/free-regular-svg-icons'
@@ -87,5 +88,6 @@ library.add(
   faFire,
   faAngleLeft,
   faCaretLeft,
-  faTrashCan
+  faTrashCan,
+  faInfoCircle
 )

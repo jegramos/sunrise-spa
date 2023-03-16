@@ -6,6 +6,7 @@
         :id="props.id"
         ref="inputBox"
         v-maska
+        :disabled="props.disabled"
         :data-maska="props.mask"
         :data-maska-eager="props.eagerMask"
         :name="props.name"
@@ -15,6 +16,8 @@
         :required="required"
         :class="`peer box-border w-full rounded-xl border-none bg-theme-input pl-3 outline-none ${
           props.type === 'password' ? 'pr-10' : 'pr-3'
+        } ${
+          props.disabled ? 'cursor-not-allowed' : 'cursor-text'
         } ${inputStateStyle} py-2.5 text-theme-input placeholder-transparent transition-transform duration-200 focus:ring-1 focus:ring-theme-primary`"
         @input="emits('update:modelValue', $event.target.value)"
         @blur="emits('blur', $event)"
@@ -25,7 +28,9 @@
       <!-- Start animated label -->
       <label
         :for="props.id"
-        :class="`absolute left-1 -top-6 mb-1.5 text-xs text-theme-base transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-6 peer-focus:text-xs`"
+        :class="`absolute left-1 -top-6 mb-1.5 text-xs text-theme-base transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-placeholder-shown:text-sm peer-focus:left-1 peer-focus:-top-6 peer-focus:text-xs ${
+          props.disabled ? 'cursor-not-allowed text-opacity-30' : 'cursor-default'
+        }`"
         @click="focusOnInputBox"
       >
         {{ props.label }}
@@ -46,14 +51,22 @@
     <font-awesome-icon
       v-if="props.type === 'password' && !showPassword"
       icon="fa-solid fa-eye"
-      class="absolute top-3.5 right-4 h-4 w-4 text-theme-input transition-transform duration-200 hover:scale-125 hover:cursor-pointer"
-      @click="showPassword = !showPassword"
+      :class="`absolute top-3.5 right-4 h-4 w-4 text-theme-input ${
+        props.disabled
+          ? 'text-opacity-30 hover:cursor-not-allowed'
+          : 'transition-transform duration-200 hover:scale-125 hover:cursor-pointer'
+      }`"
+      @click="handleTogglePasswordVisibility"
     ></font-awesome-icon>
     <font-awesome-icon
       v-if="props.type === 'password' && showPassword"
       icon="fa-solid fa-eye-slash"
-      class="absolute top-3.5 right-4 h-4 w-4 text-theme-input transition-transform duration-200 hover:scale-125 hover:cursor-pointer"
-      @click="showPassword = !showPassword"
+      :class="`absolute top-3.5 right-4 h-4 w-4 text-theme-input ${
+        props.disabled
+          ? 'text-opacity-30 hover:cursor-not-allowed'
+          : 'transition-transform duration-200 hover:scale-125 hover:cursor-pointer'
+      }`"
+      @click="handleTogglePasswordVisibility"
     ></font-awesome-icon>
     <!-- End password visibility switch  -->
   </div>
@@ -129,6 +142,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const inputStateStyle = computed(() => {
@@ -149,6 +166,10 @@ const inputStateStyle = computed(() => {
 })
 
 let showPassword = ref(false)
+const handleTogglePasswordVisibility = () => {
+  if (props.disabled) return
+  showPassword.value = !showPassword.value
+}
 
 const inputBox = ref(null)
 const focusOnInputBox = () => {

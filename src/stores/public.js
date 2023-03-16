@@ -14,5 +14,20 @@ export const usePublicStore = defineStore('public', () => {
     return data.value
   }
 
-  return { checkAvailability }
+  const fetchCities = async () => {
+    const { data } = await useApiCall('/address/cities').get().json()
+    return data.value
+  }
+
+  const fetchProvinces = async () => {
+    const { data } = await useApiCall('/address/provinces').get().json()
+    return data.value
+  }
+
+  const fetchRegions = async () => {
+    const { data } = await useApiCall('/address/regions').get().json()
+    return data.value
+  }
+
+  return { checkAvailability, fetchCities, fetchProvinces, fetchRegions }
 })

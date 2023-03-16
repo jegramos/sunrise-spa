@@ -223,11 +223,14 @@
           :id="getId('city-input')"
           v-model="payload.city_id"
           name="city"
-          label="City"
-          class="text-sm"
+          label="City or Municipality"
+          text-classes="text-sm"
+          :is-loading="cityOptionsIsLoading"
+          :disabled="cityOptionsIsLoading"
           :options="cityOptions"
           :invalid="validator.city_id.$invalid"
           :invalid-text="validator.city_id.$invalid ? validator.city_id.$errors[0].$message : null"
+          :filter-limit="15"
           @blur="validator.city_id.$touch"
         ></cf-combo-box>
       </div>
@@ -235,10 +238,15 @@
         <cf-combo-box
           :id="getId('province-input')"
           v-model="payload.province_id"
+          name="province"
+          label="Province"
+          text-classes="text-sm"
+          :is-loading="provinceOptionsIsLoading"
+          :disabled="provinceOptionsIsLoading"
           :options="provinceOptions"
           :invalid="validator.province_id.$invalid"
           :invalid-text="validator.province_id.$invalid ? validator.province_id.$errors[0].$message : null"
-          class="text-sm"
+          @blur="validator.province_id.$touch"
         ></cf-combo-box>
       </div>
     </div>
@@ -269,7 +277,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useAuthStore } from '@/stores/auth'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, helpers, minLength, maxLength, sameAs } from '@vuelidate/validators'
-import { computed, reactive, ref } from 'vue'
+import { computed, onBeforeMount, reactive, ref } from 'vue'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
 import {
   useDateFormatRule,
@@ -283,6 +291,7 @@ import { useRouter } from 'vue-router'
 import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
 import CfSelectBox from '@/components/campfire/inputs/CfSelectBox.vue'
 import CfComboBox from '@/components/campfire/inputs/CfComboBox.vue'
+import { usePublicStore } from '@/stores/public.js'
 
 const getId = usePrependOrAppendOnce('components-authentication-page-register-form')
 const auth = useAuthStore()
@@ -401,21 +410,42 @@ const genderOptions = [
   { label: 'Female', value: 'female' },
 ]
 
-const cityOptions = [
-  { label: 'Manila City', value: 1 },
-  { label: 'Tarlac City', value: 2 },
-  { label: 'Pateros', value: 3 },
-  { label: 'Quezon City', value: 4 },
-  { label: 'Zarraga', value: 5 },
-  { label: 'Villagis', value: 6 },
-]
+// Address fields
+const publicStore = usePublicStore()
 
-const provinceOptions = [
-  { label: 'Manila City', value: 1 },
-  { label: 'Tarlac City', value: 2 },
-  { label: 'Pateros', value: 3 },
-  { label: 'Quezon City', value: 4 },
-  { label: 'Zarraga', value: 5 },
-  { label: 'Villagis', value: 6 },
-]
+const cityOptions = ref([])
+const provinceOptions = ref([])
+const cityOptionsIsLoading = ref(true)
+const provinceOptionsIsLoading = ref(true)
+
+const handleCitiesFetch = async () => {
+  const cityRes = await publicStore.fetchCities()
+  cityRes.data.forEach((city) => {
+    // check for duplicate city names and add the province as badge
+    const reducesCities = cityRes.data.map((city) => city.name)
+    const hasDuplicateName = reducesCities.filter((rc) => rc === city.name).length > 1
+
+    if (!hasDuplicateName) {
+      return cityOptions.value.push({ value: city.id, label: city.name })
+    }
+
+    // Get the province name via the province_id
+    const provinceName = provinceOptions.value.find((p) => p.value === city.province_id)?.label
+    cityOptions.value.push({ value: city.id, label: city.name, badge: provinceName })
+  })
+  cityOptionsIsLoading.value = false
+}
+
+const handleProvincesFetch = async () => {
+  const provinceRes = await publicStore.fetchProvinces()
+  provinceRes.data.forEach((province) => {
+    provinceOptions.value.push({ value: province.id, label: province.name })
+  })
+  provinceOptionsIsLoading.value = false
+}
+
+onBeforeMount(async () => {
+  await handleProvincesFetch()
+  await handleCitiesFetch()
+})
 </script>

@@ -2,6 +2,7 @@
   <div class="relative mt-8 flex flex-col">
     <combobox
       nullable
+      :disabled="props.disabled"
       :model-value="props.modelValue"
       @update:model-value="(value) => emits('update:modelValue', value)"
     >
@@ -9,17 +10,47 @@
         <div :class="`relative w-full overflow-hidden rounded-xl bg-theme-input text-left ${inputStateStyle}`">
           <combobox-input
             :id="props.id"
-            class="w-full border-none bg-inherit py-3 pl-4 text-sm outline-none focus:ring-1"
-            :display-value="() => displayValue || props.label"
+            :disabled="props.disabled"
+            :class="`w-full border-none bg-inherit py-3 pl-4 outline-none focus:ring-1 ${props.textClasses} ${
+              props.disabled ? 'cursor-not-allowed opacity-30' : ''
+            }`"
+            :display-value="() => displayValue || (inputBoxInFocus ? '' : props.label)"
             @change="query = $event.target.value"
             @blur="emits('blur', $event)"
-            @focusin="handleInputBoxFocusIn"
-            @focusout="inputBoxInFocus = false"
+            @focusin="inputBoxInFocus = true"
+            @focusout="handleInputBoxFocusOut"
           />
           <combobox-button class="absolute inset-y-0 right-0 flex items-center pr-2">
-            <chevron-up-down-icon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+            <!-- Start dropdown button -->
+            <template v-if="!props.isLoading">
+              <chevron-up-down-icon
+                :class="`h-5 w-5 text-theme-input transition-all duration-300 ui-open:rotate-180 ui-open:transform ${
+                  props.disabled ? 'cursor-not-allowed text-opacity-30' : ''
+                }`"
+                aria-hidden="true"
+              />
+            </template>
+            <template v-else>
+              <arrow-path-icon
+                :class="`mr-1 h-4 w-4 animate-spin text-theme-input ${
+                  props.disabled ? 'cursor-not-allowed text-opacity-30' : ''
+                }`"
+                aria-hidden="true"
+              />
+            </template>
+            <!-- End dropdown button -->
           </combobox-button>
         </div>
+        <!-- Start animated label -->
+        <label
+          :for="props.id"
+          :class="`absolute top-3 left-4 mb-1.5 text-theme-input transition-all duration-200 ${
+            inputBoxInFocus || props.modelValue ? 'left-1 -top-6 text-xs' : 'invisible'
+          }`"
+        >
+          {{ props.label }}
+        </label>
+        <!-- End animated label -->
         <transition-root
           leave="transition ease-in duration-100"
           leave-from="opacity-100"
@@ -29,11 +60,24 @@
           <combobox-options
             class="absolute z-20 mt-2 max-h-60 w-full overflow-auto rounded-xl bg-theme-input py-1 text-theme-input ring-1 ring-theme-primary focus:outline-none"
           >
+            <!-- Start limit indication -->
+            <template
+              v-if="
+                props.filterLimit > 0 &&
+                props.filterLimit === filteredOptions.length &&
+                props.filterLimit < props.options.length
+              "
+            >
+              <div class="mr-2 cursor-default select-none py-3 text-center text-xs italic text-theme-primary">
+                &lt;&lt;<span class="mx-1">Showing the first {{ props.filterLimit }} results</span>&gt;&gt;
+              </div>
+            </template>
+            <!-- End limit indication -->
             <div
               v-if="filteredOptions.length === 0 && query !== ''"
               class="relative cursor-default select-none py-2 px-4 text-theme-input"
             >
-              <font-awesome-icon icon="fa-regular fa-trash-can" class="mr-2 text-xs" />
+              <font-awesome-icon icon="fa-regular fa-trash-can" class="mr-2 mb-0.5 text-xs" />
               Nothing found
             </div>
 
@@ -60,6 +104,14 @@
                 >
                   <check-icon class="h-5 w-5" aria-hidden="true" />
                 </span>
+                <!-- Start additional context -->
+                <span
+                  v-if="option.badge"
+                  class="absolute inset-y-2.5 right-0 z-10 mr-1 flex flex h-5 items-center rounded-lg bg-theme-warning px-1 text-xs text-theme-warning-panel"
+                >
+                  {{ option.badge }}
+                </span>
+                <!-- End additional context -->
               </li>
             </combobox-option>
           </combobox-options>
@@ -89,8 +141,9 @@ import {
   ComboboxOption,
   TransitionRoot,
 } from '@headlessui/vue'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+import { CheckIcon, ChevronUpDownIcon, ArrowPathIcon } from '@heroicons/vue/20/solid'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { useSleep } from '@/composables/helpers.js'
 
 const emits = defineEmits(['update:modelValue', 'blur'])
 const props = defineProps({
@@ -130,12 +183,32 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  textClasses: {
+    type: String,
+    default: '',
+  },
+  filterLimit: {
+    type: Number,
+    default: 0,
+  },
 })
 
 const inputBoxInFocus = ref(false)
-const handleInputBoxFocusIn = () => {
-  inputBoxInFocus.value = true
-  console.log(inputBoxInFocus)
+
+// we add a bit of a delay after focusing out so that
+// we don't get flickers in ring color changes
+const handleInputBoxFocusOut = async () => {
+  const sleep = useSleep()
+  await sleep(0.2)
+  inputBoxInFocus.value = false
 }
 
 const inputStateStyle = computed(() => {
@@ -162,11 +235,27 @@ const inputStateStyle = computed(() => {
 
 const displayValue = computed(() => props.options.find((option) => props.modelValue === option.value)?.label)
 const query = ref('')
-const filteredOptions = computed(() =>
-  query.value === ''
-    ? props.options
-    : props.options.filter((option) =>
+
+const filteredOptions = computed(() => {
+  // The options may contain thousands of elements that could slow
+  // the component down. Consumers of this component may choose to add a filter limit
+  // for optimizing loading time
+  const hasFilterLimit = props.filterLimit > 0
+
+  if (query.value === '') {
+    return hasFilterLimit ? props.options.slice(0, props.filterLimit) : props.options
+  }
+
+  if (hasFilterLimit) {
+    return props.options
+      .filter((option) =>
         option.label.toLowerCase().replace(/\s+/g, '').includes(query.value.toLowerCase().replace(/\s+/g, ''))
       )
-)
+      .slice(0, props.filterLimit)
+  }
+
+  return props.options.filter((option) =>
+    option.label.toLowerCase().replace(/\s+/g, '').includes(query.value.toLowerCase().replace(/\s+/g, ''))
+  )
+})
 </script>

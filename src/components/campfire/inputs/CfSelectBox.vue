@@ -4,6 +4,7 @@
       <!-- Start List box -->
       <listbox
         :id="props.id"
+        :disabled="props.disabled"
         class="w-full"
         :model-value="props.modelValue"
         :multiple="props.multiple"
@@ -11,7 +12,9 @@
       >
         <div class="relative">
           <listbox-button
-            :class="`relative box-border h-11 w-full cursor-pointer rounded-xl bg-theme-input py-3 px-4 text-left text-theme-input outline-none transition-transform duration-200 ui-open:ring-1 ui-open:ring-theme-primary ${inputStateStyle}`"
+            :class="`relative box-border h-11 w-full rounded-xl bg-theme-input py-3 px-4 text-left text-theme-input outline-none transition-transform duration-200 ui-open:ring-1 ui-open:ring-theme-primary ${inputStateStyle}  ${
+              props.disabled ? 'cursor-not-allowed text-opacity-30' : 'cursor-pointer'
+            }`"
           >
             <span v-if="displayValue" class="block truncate">{{ displayValue }}</span>
             <span v-else class="block truncate transition-transform duration-200 ui-open:invisible">{{
@@ -19,7 +22,9 @@
             }}</span>
             <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <chevron-down-icon
-                class="h-5 w-5 text-theme-input transition-all duration-300 ui-open:rotate-180 ui-open:transform"
+                :class="`h-5 w-5 text-theme-input transition-all duration-300 ui-open:rotate-180 ui-open:transform ${
+                  props.disabled ? 'text-opacity-30' : ''
+                }`"
                 aria-hidden="true"
               />
             </span>
@@ -27,9 +32,9 @@
           <!-- Start animated label -->
           <label
             :for="props.id"
-            :class="`invisible absolute top-3 left-4 mb-1.5 text-theme-input transition-all duration-200 ui-open:visible ui-open:left-1 ui-open:-top-6 ui-open:text-xs ${
-              props.modelValue ? 'left-1 -top-6 text-xs' : ''
-            }`"
+            :class="`absolute top-3 left-4 mb-1.5 text-theme-input transition-all duration-200 ${
+              props.modelValue ? '-top-6 left-1 text-xs' : 'invisible'
+            } ui-open:visible ui-open:left-1 ui-open:-top-6 ui-open:text-xs`"
           >
             {{ props.label }}
           </label>
@@ -44,7 +49,7 @@
           >
             <listbox-options
               class="absolute z-20 mt-1.5 max-h-60 w-full overflow-auto rounded-xl bg-theme-input py-1 text-theme-input shadow-lg ring-1 ring-theme-primary focus:outline-none"
-              @blur="emits('blur', $event)"
+              @blur="handleBlur($event)"
             >
               <listbox-option
                 v-for="option in props.options"
@@ -90,9 +95,10 @@
 
 <script setup>
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { ChevronDownIcon, CheckIcon } from '@heroicons/vue/20/solid'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { useSleep } from '@/composables/helpers.js'
 
 const emits = defineEmits(['update:modelValue', 'blur'])
 
@@ -137,12 +143,17 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const displayValue = computed(() => {
   return props.options
     .filter((option) => {
       if (Array.isArray(props.modelValue)) {
+        // noinspection JSUnresolvedFunction
         return props.modelValue.includes(option.value)
       }
 
@@ -168,4 +179,20 @@ const inputStateStyle = computed(() => {
 
   return inputClass
 })
+
+const handleBlur = async (event) => {
+  // have some delay when selecting from empty to <any value>
+  // this is to cure my OCD for the tiny jitter in animation
+  const sleep = useSleep()
+  await sleep(0.3)
+  emits('blur', event)
+}
+
+watch(
+  () => props.modelValue,
+  () => {
+    // TODO: delete
+    console.log('modelValue:', props.modelValue)
+  }
+)
 </script>
