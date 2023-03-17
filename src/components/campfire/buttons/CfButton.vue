@@ -50,7 +50,7 @@ const props = defineProps({
 const buttonShapeAndEffectClass = computed(() => {
   if (props.isLoading || props.disabled) {
     // Disable hover effects if in loading state
-    return 'py-2 px-3 rounded-xl hover:scale-100 hover:-translate-y-0 hover:cursor-not-allowed bg-opacity-70'
+    return 'py-2 px-3 rounded-xl text-opacity-[50%] hover:scale-100 hover:-translate-y-0 hover:cursor-not-allowed bg-opacity-70'
   }
 
   if (props.icon) {

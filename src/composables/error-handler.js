@@ -1,4 +1,4 @@
-export const useParseApiResponseError = (response) => {
+export const useParseApiResponseError = () => (response) => {
   const message = getErrorMessage(response.error_code)
   const errors = []
   if (Array.isArray(response.errors) && !!response.errors.length) {
@@ -6,8 +6,6 @@ export const useParseApiResponseError = (response) => {
       errors.push(error.messages)
     }
   }
-
-  console.log(errors)
 
   return { code: response.errorCode, message, errors: errors.flat() }
 }

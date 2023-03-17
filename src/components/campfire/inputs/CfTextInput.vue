@@ -21,8 +21,8 @@
         } ${inputStateStyle} py-2.5 text-theme-input placeholder-transparent transition-transform duration-200 focus:ring-1 focus:ring-theme-primary`"
         @input="emits('update:modelValue', $event.target.value)"
         @blur="emits('blur', $event)"
-        @focus="!$event.target.value ? ($event.target.value = props.initialValue) : null"
-        @focusout="$event.target.value === props.initialValue ? ($event.target.value = null) : null"
+        @focus="!$event.target.value ? ($event.target.value = props.initialValue) : ''"
+        @focusout="$event.target.value === props.initialValue ? ($event.target.value = null) : ''"
       />
       <!-- End input field -->
       <!-- Start animated label -->

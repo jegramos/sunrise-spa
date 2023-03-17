@@ -1,22 +1,29 @@
 import { helpers } from '@vuelidate/validators'
 import { usePublicStore } from '@/stores/public'
-import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js'
+import { parsePhoneNumber } from 'libphonenumber-js/max'
 
 // must have one lowercase & uppercase letter, one number
 export const usePasswordRule = () => helpers.regex(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/)
 
-export const useMobilePhoneRule = (value) => {
+// validate a certain count of digits
+export const useDigitCountRule = (numOfDigits) => (value) => {
+  const pattern = '^\\d{' + numOfDigits + '}$'
+  const regex = new RegExp(pattern)
+  return regex.test(value)
+}
+
+export const useMobilePhoneRule = (value, country = 'PH') => {
   let phone
 
   try {
-    phone = parsePhoneNumber(value, 'PH')
+    phone = parsePhoneNumber(value, country)
   } catch (err) {
     return false
   }
 
   if (!phone) return false
 
-  return isValidPhoneNumber(value, 'PH')
+  return phone.isValid()
 }
 
 export const useDateFormatRule = (value) => {

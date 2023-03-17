@@ -36,6 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const register = async (payload) => {
+    console.log(payload)
     const { data } = await useApiCall('auth/register')
       .post({ ...payload, client_name: `${navigator.platform} - Web` })
       .json()

@@ -11,7 +11,7 @@
           <combobox-input
             :id="props.id"
             :disabled="props.disabled"
-            :class="`w-full border-none bg-inherit py-3 pl-4 outline-none focus:ring-1 ${props.textClasses} ${
+            :class="`w-full border-none bg-inherit py-3 pl-3 outline-none focus:ring-1 ${props.textClasses} ${
               props.disabled ? 'cursor-not-allowed opacity-30' : ''
             }`"
             :display-value="() => displayValue || (inputBoxInFocus ? '' : props.label)"
@@ -68,16 +68,16 @@
                 props.filterLimit < props.options.length
               "
             >
-              <div class="mr-2 cursor-default select-none py-3 text-center text-xs italic text-theme-primary">
+              <div class="mr-2 cursor-default select-none py-2 text-center text-xs italic text-theme-primary">
                 &lt;&lt;<span class="mx-1">Showing the first {{ props.filterLimit }} results</span>&gt;&gt;
               </div>
             </template>
             <!-- End limit indication -->
             <div
               v-if="filteredOptions.length === 0 && query !== ''"
-              class="relative cursor-default select-none py-2 px-4 text-theme-input"
+              :class="`relative cursor-default select-none py-2 px-4 text-theme-input ${props.textClasses}`"
             >
-              <font-awesome-icon icon="fa-regular fa-trash-can" class="mr-2 mb-0.5 text-xs" />
+              <font-awesome-icon icon="fa-regular fa-trash-can" class="mr-1 mb-0.5 text-xs" />
               Nothing found
             </div>
 
@@ -89,29 +89,29 @@
               :value="option.value"
             >
               <li
-                :class="`relative mx-2 my-1 cursor-default select-none rounded-lg py-2 pl-10 pr-4 ${
-                  active ? 'bg-theme-primary text-theme-inverted' : 'text-theme-input'
-                }`"
+                :class="`relative mx-1 my-1 cursor-default select-none rounded-lg py-2 pl-10 pr-3 ${
+                  props.textClasses
+                } ${active ? 'bg-theme-primary text-theme-inverted' : 'text-theme-input'}`"
               >
-                <span class="block truncate" :class="{ 'font-medium': selected, 'font-normal': !selected }">
+                <span class="block truncate" :class="`${selected ? 'font-medium' : 'font-normal'}`">
                   {{ option.label }}
                 </span>
                 <span
                   v-if="selected"
-                  :class="`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                  :class="`absolute inset-y-0 left-0 flex items-center pl-4 ${
                     active ? 'text-theme-inverted' : 'text-them-input'
                   }`"
                 >
                   <check-icon class="h-5 w-5" aria-hidden="true" />
                 </span>
-                <!-- Start additional context -->
+                <!-- Start badge -->
                 <span
                   v-if="option.badge"
                   class="absolute inset-y-2.5 right-0 z-10 mr-1 flex flex h-5 items-center rounded-lg bg-theme-warning px-1 text-xs text-theme-warning-panel"
                 >
                   {{ option.badge }}
                 </span>
-                <!-- End additional context -->
+                <!-- End badge -->
               </li>
             </combobox-option>
           </combobox-options>

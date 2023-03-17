@@ -12,7 +12,7 @@
       >
         <div class="relative">
           <listbox-button
-            :class="`relative box-border h-11 w-full rounded-xl bg-theme-input py-3 px-4 text-left text-theme-input outline-none transition-transform duration-200 ui-open:ring-1 ui-open:ring-theme-primary ${inputStateStyle}  ${
+            :class="`relative box-border h-11 w-full rounded-xl bg-theme-input py-3 px-3 text-left text-theme-input outline-none transition-transform duration-200 ui-open:ring-1 ui-open:ring-theme-primary ${inputStateStyle}  ${
               props.disabled ? 'cursor-not-allowed text-opacity-30' : 'cursor-pointer'
             }`"
           >

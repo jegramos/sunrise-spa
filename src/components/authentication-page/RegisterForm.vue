@@ -216,7 +216,7 @@
       </div>
     </div>
     <!-- End Home Address & Barangay -->
-    <!-- Start first City and Region -->
+    <!-- Start City and Province -->
     <div class="flex flex-col sm:flex-row">
       <div class="w-full sm:mr-2">
         <cf-combo-box
@@ -250,7 +250,39 @@
         ></cf-combo-box>
       </div>
     </div>
-    <!-- End City and Region -->
+    <!-- End City and Province -->
+    <!-- Start Region and Postal Code -->
+    <div class="flex flex-col sm:flex-row">
+      <div class="w-full sm:mr-2">
+        <cf-combo-box
+          :id="getId('region-input')"
+          v-model="payload.region_id"
+          name="region"
+          label="Region"
+          text-classes="text-sm"
+          :is-loading="regionOptionsIsLoading"
+          :disabled="regionOptionsIsLoading"
+          :options="regionOptions"
+          :invalid="validator.region_id.$invalid"
+          :invalid-text="validator.region_id.$invalid ? validator.region_id.$errors[0].$message : null"
+          @blur="validator.region_id.$touch"
+        ></cf-combo-box>
+      </div>
+      <div class="w-full sm:ml-2">
+        <cf-text-input
+          :id="getId('postal-code-input')"
+          v-model="payload.postal_code"
+          name="postal-code"
+          label="Zip Code"
+          class="text-sm"
+          mask="####"
+          :invalid="validator.postal_code.$invalid"
+          :invalid-text="validator.postal_code.$invalid ? validator.postal_code.$errors[0].$message : null"
+          @blur="validator.postal_code.$touch"
+        ></cf-text-input>
+      </div>
+    </div>
+    <!-- End Region and Postal Code -->
 
     <!-- Start action buttons -->
     <div class="mb-1 mt-8 flex w-full justify-end lg:mt-8">
@@ -281,11 +313,12 @@ import { computed, onBeforeMount, reactive, ref } from 'vue'
 import CfAlertPanel from '@/components/campfire/CfAlertPanel.vue'
 import {
   useDateFormatRule,
+  useDigitCountRule,
   useMobilePhoneRule,
   usePasswordRule,
   useUniqueUserIdentifierRule,
 } from '@/composables/custom-validations'
-import { useGetGlobalStringMaxLength, usePrependOrAppendOnce } from '@/composables/helpers.js'
+import { useE164PhoneFormat, useGetGlobalStringMaxLength, usePrependOrAppendOnce } from '@/composables/helpers.js'
 import { useParseApiResponseError } from '@/composables/error-handler.js'
 import { useRouter } from 'vue-router'
 import CfHorizontalSeparator from '@/components/campfire/separators/CfHorizontalSeparator.vue'
@@ -310,13 +343,16 @@ const payload = reactive({
   home_address: '',
   city_id: '',
   province_id: '',
+  region_id: '',
+  postal_code: '',
   barangay: '',
 })
 
 // Handle validation
+const globalStringMaxLength = useGetGlobalStringMaxLength()
 const globalStringMaxLengthRule = helpers.withMessage(
-  `Must not exceed ${useGetGlobalStringMaxLength()} characters`,
-  maxLength(useGetGlobalStringMaxLength())
+  `Must not exceed ${globalStringMaxLength()} characters`,
+  maxLength(globalStringMaxLength())
 )
 const formRules = {
   $lazy: true,
@@ -377,6 +413,13 @@ const formRules = {
   province_id: {
     required: helpers.withMessage('Please enter your province', required),
   },
+  region_id: {
+    required: helpers.withMessage('Please enter your region', required),
+  },
+  postal_code: {
+    required: helpers.withMessage('Please enter your zip code', required),
+    digitCount: helpers.withMessage('Enter your 4-digit zip code', useDigitCountRule(4)),
+  },
 }
 
 const validator = useVuelidate(formRules, payload)
@@ -392,6 +435,9 @@ const handleFormSubmission = async () => {
   if (!valid) return
 
   isLoading.value = true
+  // format the mobile number
+  payload.mobile_number = useE164PhoneFormat()(payload.mobile_number)
+
   const response = await auth.register(payload)
   isLoading.value = false
 
@@ -399,7 +445,8 @@ const handleFormSubmission = async () => {
     return await router.replace({ name: 'verify-email-guard' })
   }
 
-  const { message, errors } = useParseApiResponseError(response)
+  const parseApiResponseError = useParseApiResponseError()
+  const { message, errors } = parseApiResponseError(response)
   showErrorAlert.value = true
   errorMessage.value = message
   errorDetails.value = errors
@@ -415,8 +462,10 @@ const publicStore = usePublicStore()
 
 const cityOptions = ref([])
 const provinceOptions = ref([])
+const regionOptions = ref([])
 const cityOptionsIsLoading = ref(true)
 const provinceOptionsIsLoading = ref(true)
+const regionOptionsIsLoading = ref(true)
 
 const handleCitiesFetch = async () => {
   const cityRes = await publicStore.fetchCities()
@@ -444,8 +493,18 @@ const handleProvincesFetch = async () => {
   provinceOptionsIsLoading.value = false
 }
 
+const handleRegionsFetch = async () => {
+  const regionsRes = await publicStore.fetchRegions()
+  regionsRes.data.forEach((region) => {
+    regionOptions.value.push({ value: region.id, label: region.name })
+  })
+  regionOptionsIsLoading.value = false
+}
+
 onBeforeMount(async () => {
+  // provinces needs to be fetched first as the badges of the cities
+  // depend on this list
   await handleProvincesFetch()
-  await handleCitiesFetch()
+  await Promise.allSettled([handleCitiesFetch(), handleRegionsFetch()])
 })
 </script>
