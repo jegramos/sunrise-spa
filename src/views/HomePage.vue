@@ -1,9 +1,8 @@
 <template>
-  <h1 class="text-4xl text-center">Content</h1>
-  <h2>Dark Mode: {{ isDark ? 'On' : 'Off' }}</h2>
+  <div>
+    <h1 class="text-center text-4xl">Home</h1>
+    <div class="mx-auto mt-5 max-w-lg text-center italic">
+      <p>This is your home</p>
+    </div>
+  </div>
 </template>
-
-<script setup>
-import { useDark } from '@vueuse/core'
-const isDark = useDark()
-</script>

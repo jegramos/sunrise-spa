@@ -1,81 +1,31 @@
-import { useColorMode } from '@vueuse/core'
+import { useSettingsStore } from '@/stores/settings.js'
 
-const availableThemes = ['light', 'dark', 'space']
-const theme = useColorMode({
-  modes: {
-    // custom colors
-    dark: 'dark',
-    space: 'space',
-    auto: 'auto',
-  },
-})
+export const useGetThemeFromAppSettings = () => {
+  const settingsStore = useSettingsStore()
+  if (!settingsStore.appSettings) return null
 
-export const useInitTheme = () => {
-  if (!theme) theme.value = 'auto'
-
-  if (theme && availableThemes.includes(theme.value)) {
-    const themeName = `theme-${theme.value}`
-    document.getElementById('app-wrapper').classList.add(themeName)
-    setupThemeSwitcherTooltipText(theme.value)
-    setupThemeSwitcherIcon(theme.value)
+  for (const setting of settingsStore.appSettings) {
+    if (setting.name === 'theme') return setting.value
   }
 
-  return { theme }
+  return null
 }
 
-export const useCycleThemes = () => {
-  const themeLength = availableThemes.length
-  const currentThemeIndex = availableThemes.indexOf(theme.value)
-  const isLastElement = themeLength - 1 === currentThemeIndex
-
-  if (availableThemes.indexOf(theme.value) > -1) {
-    const nextTheme = !isLastElement ? availableThemes[currentThemeIndex + 1] : availableThemes[0]
-    theme.value = nextTheme
-    const themeName = `theme-${nextTheme}`
-
-    // remove existing theme classes
-    for (const classTheme of availableThemes) {
-      document.getElementById('app-wrapper').classList.remove(`theme-${classTheme}`)
+export const useApplyTheme = (selectedTheme, availableThemes) => {
+  // remove existing theme classes
+  for (const themeName of availableThemes) {
+    if (selectedTheme !== themeName.key) {
+      document.body.classList.remove(`theme-${themeName.key}`)
+      continue
     }
 
-    // set the tooltip text for the theme mode switcher
-    setupThemeSwitcherTooltipText(nextTheme)
+    // Add base color to the <body>
+    document.body.classList.add('bg-theme-base', 'dark:theme-dark')
 
-    // set the theme switcher icon
-    setupThemeSwitcherIcon(nextTheme)
+    // Check the system pref if Auto is selected
+    if (themeName.key === 'auto') continue
 
-    // don't add any new classes for night mode, we'll use the default one
-    if (nextTheme === 'light') {
-      return { theme }
-    }
-
-    // we add the theme-${name} class for every other themes
-    document.getElementById('app-wrapper').classList.add(themeName)
-    return { theme }
-  }
-}
-
-const setupThemeSwitcherTooltipText = (currentTheme) => {
-  const nextIndex = availableThemes.indexOf(currentTheme) + 1
-  const nextTheme =
-    nextIndex < availableThemes.length ? availableThemes[availableThemes.indexOf(currentTheme) + 1] : availableThemes[0]
-
-  const themeName = nextTheme[0].toUpperCase() + nextTheme.substring(1)
-  document.getElementById('theme-switcher-tooltip-text').innerText = `Switch to ${themeName} theme`
-}
-
-const setupThemeSwitcherIcon = (currentTheme) => {
-  const nextIndex = availableThemes.indexOf(currentTheme) + 1
-  const nextTheme =
-    nextIndex < availableThemes.length ? availableThemes[availableThemes.indexOf(currentTheme) + 1] : availableThemes[0]
-
-  // we're using classname instead of id because hero icons does not render the id attribute of SGVs
-  document.getElementsByClassName(`theme-switcher-${nextTheme}-icon`).item(0).classList.remove('hidden')
-
-  // hide the inactive theme icons
-  for (const availableTheme of availableThemes) {
-    if (nextTheme !== availableTheme) {
-      document.getElementsByClassName(`theme-switcher-${availableTheme}-icon`).item(0).classList.add('hidden')
-    }
+    // Inject the selected class to the parent tag
+    document.body.classList.add(`theme-${themeName.key}`)
   }
 }
